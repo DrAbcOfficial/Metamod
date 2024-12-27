@@ -22,62 +22,62 @@ internal class NativeInterface
         return 0;
     }
     [UnmanagedCallersOnly(EntryPoint = "Meta_Attach", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_Meta_Attach(PLUG_LOADTIME now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
+    internal static int Native_Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
     {
-        return 1;
+        return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "Meta_Detach", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_Meta_Detach(PLUG_LOADTIME now, PL_UNLOAD_REASON reason)
+    internal static int Native_Meta_Detach(PluginLoadTime now, PluginUnloadReason reason)
     {
-        return 1;
+        return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI", CallConvs = [typeof(CallConvCdecl)])]
     internal static int Native_GetEntityAPI(nint pFunctionTable, int interfaceVersion)
     {
-        return 1;
+        return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI2", CallConvs = [typeof(CallConvCdecl)])]
     internal static int Native_GetEntityAPI2(nint pFunctionTable, nint interfaceVersion)
     {
-        return 1;
+        return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetNewDLLFunctions", CallConvs = [typeof(CallConvCdecl)])]
     internal static int Native_GetNewDLLFunctions(nint pNewFunctionTable, nint interfaceVersion)
     {
-        return 1;
+        return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI_Post", CallConvs = [typeof(CallConvCdecl)])]
     internal static int Native_GetEntityAPI_Post(nint pFunctionTable, int interfaceVersion)
     {
-        return 1;
+        return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI2_Post", CallConvs = [typeof(CallConvCdecl)])]
     internal static int Native_GetEntityAPI2_Post(nint pFunctionTable, nint interfaceVersion)
     {
-        return 1;
+        return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetNewDLLFunctions_Post", CallConvs = [typeof(CallConvCdecl)])]
     internal static int Native_GetNewDLLFunctions_Post(nint pNewFunctionTable, nint interfaceVersion)
     {
-        return 1;
+        return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEngineFunctions", CallConvs = [typeof(CallConvCdecl)])]
     internal static int Native_GetEngineFunctions(nint pengfuncsFromEngine, nint interfaceVersion)
     {
-        return 1;
+        return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEngineFunctions_Post", CallConvs = [typeof(CallConvCdecl)])]
     internal static int Native_GetEngineFunctions_Post(nint pengfuncsFromEngine, nint interfaceVersion)
     {
-        return 1;
+        return 0;
     }
 }
