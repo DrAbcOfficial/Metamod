@@ -72,7 +72,7 @@ internal unsafe struct NativeDllFuncs
     internal InconsistentFileDelegate pfnInconsistentFile;
     internal AllowLagCompensationDelegate pfnAllowLagCompensation;
 
-
+#pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void GameInitDelegate();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -188,4 +188,5 @@ internal unsafe struct NativeDllFuncs
     internal delegate int InconsistentFileDelegate(NativeEdict* player, byte* filename, byte* disconnect_message);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int AllowLagCompensationDelegate();
+#pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 }

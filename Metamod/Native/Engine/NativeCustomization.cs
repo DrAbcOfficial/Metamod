@@ -5,6 +5,7 @@ namespace Metamod.Native.Engine;
 
 
 [StructLayout(LayoutKind.Sequential)]
+#pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 internal unsafe struct NativeCustomization
 {
     internal QBoolean bInUse;     // Is this customization in use;
@@ -17,3 +18,4 @@ internal unsafe struct NativeCustomization
     internal nint pBuffer;       // Buffer that holds the data for the customization (the raw .wad data)
     internal NativeCustomization* pNext; // Next in chain
 }
+#pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针

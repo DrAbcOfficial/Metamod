@@ -58,6 +58,7 @@ internal struct NativeMetaUtilFuncs
     internal GetBoneMatrixDelegate pfnGetBoneMatrix;
     internal GetEngineTypeDelegate pfnGetEngineType;
 
+#pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal unsafe delegate void LogDelegate(NativePluginInfo* plid, byte* fmt);
 
@@ -200,6 +201,7 @@ internal struct NativeMetaUtilFuncs
     // 2024-10 Added by hzqst
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal unsafe delegate byte* GetEngineTypeDelegate();
+#pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 }
 
 #region Delegate For Delegate

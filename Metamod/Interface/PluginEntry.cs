@@ -3,6 +3,7 @@ using Metamod.Native.Engine;
 using Metamod.Native.Metamod;
 using Metamod.Struct.Engine;
 using Metamod.Struct.Metamod;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Metamod.Interface;
