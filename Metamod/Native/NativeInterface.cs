@@ -1,4 +1,7 @@
 ﻿using Metamod.Enum.Metamod;
+using Metamod.Native.Engine;
+using Metamod.Native.Game;
+using Metamod.Native.Metamod;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,8 +9,9 @@ namespace Metamod.Native;
 
 internal class NativeInterface
 {
+#pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
     [UnmanagedCallersOnly(EntryPoint = "GiveFnptrsToDll")]
-    internal static void Native_GiveFnptrsToDll(nint pengfuncsFromEngine, nint pGlobals)
+    internal unsafe static void Native_GiveFnptrsToDll(NativeEngineFuncs* pengfuncsFromEngine, NativeGlobalVars* pGlobals)
     {
 
     }
@@ -17,12 +21,12 @@ internal class NativeInterface
 
     }
     [UnmanagedCallersOnly(EntryPoint = "Meta_Query", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_Meta_Query(nint interfaceVersion, nint plinfo, nint pMetaUtilFuncs)
+    internal unsafe static int Native_Meta_Query(byte* interfaceVersion, NativePluginInfo** plinfo, NativeMetaUtilFuncs* pMetaUtilFuncs)
     {
         return 0;
     }
     [UnmanagedCallersOnly(EntryPoint = "Meta_Attach", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
+    internal unsafe static int Native_Meta_Attach(PluginLoadTime now, NativeMetaFuncs* pFunctionTable, NativeMetaGlobals* pMGlobals, NativeGameDllFuncs* pGamedllFuncs)
     {
         return 0;
     }
@@ -34,50 +38,51 @@ internal class NativeInterface
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_GetEntityAPI(nint pFunctionTable, int interfaceVersion)
+    internal unsafe static int Native_GetEntityAPI(NativeDllFuncs* pFunctionTable, int interfaceVersion)
     {
         return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI2", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_GetEntityAPI2(nint pFunctionTable, nint interfaceVersion)
+    internal unsafe static int Native_GetEntityAPI2(NativeDllFuncs* pFunctionTable, int* interfaceVersion)
     {
         return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetNewDLLFunctions", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_GetNewDLLFunctions(nint pNewFunctionTable, nint interfaceVersion)
+    internal unsafe static int Native_GetNewDLLFunctions(NativeNewDllFuncs* pNewFunctionTable, int* interfaceVersion)
     {
         return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI_Post", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_GetEntityAPI_Post(nint pFunctionTable, int interfaceVersion)
+    internal unsafe static int Native_GetEntityAPI_Post(NativeDllFuncs* pFunctionTable, int* interfaceVersion)
     {
         return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI2_Post", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_GetEntityAPI2_Post(nint pFunctionTable, nint interfaceVersion)
+    internal unsafe static int Native_GetEntityAPI2_Post(NativeDllFuncs* pFunctionTable, int* interfaceVersion)
     {
         return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetNewDLLFunctions_Post", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_GetNewDLLFunctions_Post(nint pNewFunctionTable, nint interfaceVersion)
+    internal unsafe static int Native_GetNewDLLFunctions_Post(NativeNewDllFuncs* pNewFunctionTable, int* interfaceVersion)
     {
         return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEngineFunctions", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_GetEngineFunctions(nint pengfuncsFromEngine, nint interfaceVersion)
+    internal unsafe static int Native_GetEngineFunctions(NativeEngineFuncs* pengfuncsFromEngine, int* interfaceVersion)
     {
         return 0;
     }
 
     [UnmanagedCallersOnly(EntryPoint = "GetEngineFunctions_Post", CallConvs = [typeof(CallConvCdecl)])]
-    internal static int Native_GetEngineFunctions_Post(nint pengfuncsFromEngine, nint interfaceVersion)
+    internal unsafe static int Native_GetEngineFunctions_Post(NativeEngineFuncs* pengfuncsFromEngine, int* interfaceVersion)
     {
         return 0;
     }
+#pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 }

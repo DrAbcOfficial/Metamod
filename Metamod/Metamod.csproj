@@ -15,4 +15,8 @@
     <IsAotCompatible>True</IsAotCompatible>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Struct\Engine\" />
+  </ItemGroup>
+
 </Project>
