@@ -1,10 +1,9 @@
 ﻿using Metamod.Enum.Metamod;
 using Metamod.Interface;
-using Metamod.Struct.Engine;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace FuckWorld
+namespace Metamod.FuckWorld
 {
     public class FuckWorld : PluginEntry
     {
