@@ -1,10 +1,11 @@
 ﻿using Metamod.Enum.Metamod;
+using Metamod.Struct.Engine;
 
 namespace Metamod.Interface;
 
 public interface IPlugin
 {
-    void GiveFnptrsToDll(nint pengfuncsFromEngine, nint pGlobals);
+    void GiveFnptrsToDll(EngineFuncs pengfuncsFromEngine, nint pGlobals);
 
     void Meta_Init();
     bool Meta_Query(InterfaceVersion interfaceVersion, nint pMetaUtilFuncs);

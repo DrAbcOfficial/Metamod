@@ -1,22 +1,27 @@
 ﻿using Metamod.Enum.Metamod;
-using Metamod.Interface;
+using Metamod.Native.Engine;
 using Metamod.Native.Metamod;
+using Metamod.Struct.Engine;
 using Metamod.Struct.Metamod;
 using System.Runtime.InteropServices;
 
-namespace Metamod;
+namespace Metamod.Interface;
 
 public abstract class PluginEntry
 {
-    protected static IPlugin Interface;
+    protected static IPlugin? Interface;
     public static IPlugin GetPluginInterface()
     {
+        if(Interface == null)
+            throw new NullReferenceException(nameof(Interface));
         return Interface;
     }
 
-    protected static PluginInfo Info;
+    protected static PluginInfo? Info;
     public static PluginInfo GetPluginInfo()
     {
+        if (Info == null)
+            throw new NullReferenceException(nameof(Info));
         return Info;
     }
 
@@ -24,7 +29,11 @@ public abstract class PluginEntry
     //internal unsafe static void Native_GiveFnptrsToDll(NativeEngineFuncs* pengfuncsFromEngine, NativeGlobalVars* pGlobals)
     protected static void Native_GiveFnptrsToDll(nint pengfuncsFromEngine, nint pGlobals)
     {
-
+        NativeEngineFuncs peng = Marshal.PtrToStructure<NativeEngineFuncs>(pengfuncsFromEngine);
+        EngineFuncs engineFuncs = new();
+        engineFuncs.native = peng;
+        var pinterface = GetPluginInterface();
+        pinterface.GiveFnptrsToDll(engineFuncs, pGlobals);
     }
 
     //[UnmanagedCallersOnly(EntryPoint = "Meta_Init", CallConvs = [typeof(CallConvCdecl)])]
@@ -71,7 +80,7 @@ public abstract class PluginEntry
         bool result = pinterface.Meta_Query(ifver, pMetaUtilFuncs);
         unsafe
         {
-            *((NativePluginInfo**)plinfo) = (NativePluginInfo*)Marshal.AllocHGlobal(sizeof(NativePluginInfo));
+            *(NativePluginInfo**)plinfo = (NativePluginInfo*)Marshal.AllocHGlobal(sizeof(NativePluginInfo));
             (*(NativePluginInfo**)plinfo)->ifvers = Marshal.StringToHGlobalAnsi(pinfo.GetInterfaceVersionString());
             (*(NativePluginInfo**)plinfo)->name = Marshal.StringToHGlobalAnsi(pinfo.Name);
             (*(NativePluginInfo**)plinfo)->version = Marshal.StringToHGlobalAnsi(pinfo.Version);

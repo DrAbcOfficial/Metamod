@@ -3,7 +3,7 @@
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativeEngineFuncs
+internal unsafe struct NativeEngineFuncs
 {
     internal PrecacheModelDelegate pfnPrecacheModel;
     internal PrecacheSoundDelegate pfnPrecacheSound;
@@ -420,7 +420,7 @@ internal struct NativeEngineFuncs
     internal delegate void SetClientMaxspeedDelegate(nint pEdict, float fNewMaxspeed);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint CreateFakeClientDelegate(string netname);
+    internal delegate nint CreateFakeClientDelegate(byte* netname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void RunPlayerMoveDelegate(nint fakeclient, nint viewangles, float forwardmove, float sidemove, float upmove, ushort buttons, byte impulse, byte msec);
@@ -432,52 +432,52 @@ internal struct NativeEngineFuncs
     internal delegate nint GetInfoKeyBufferDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint InfoKeyValueDelegate(nint infobuffer, string key);
+    internal delegate nint InfoKeyValueDelegate(nint infobuffer, byte* key);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetKeyValueDelegate(nint infobuffer, string key, string value);
+    internal delegate void SetKeyValueDelegate(nint infobuffer, byte* key, byte* value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetClientKeyValueDelegate(int clientIndex, nint infobuffer, string key, string value);
+    internal delegate void SetClientKeyValueDelegate(int clientIndex, nint infobuffer, byte* key, byte* value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int IsMapValidDelegate(string filename);
+    internal delegate int IsMapValidDelegate(byte* filename);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void StaticDecalDelegate(nint origin, int decalIndex, int entityIndex, int modelIndex);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int PrecacheGenericDelegate(string s);
+    internal delegate int PrecacheGenericDelegate(byte* s);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int GetPlayerUserIdDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void BuildSoundMsgDelegate(nint entity, int channel, string sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, nint pOrigin, nint ed);
+    internal delegate void BuildSoundMsgDelegate(nint entity, int channel, byte* sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, nint pOrigin, nint ed);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int IsDedicatedServerDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint CVarGetPointerDelegate(string szVarName);
+    internal delegate nint CVarGetPointerDelegate(byte* szVarName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate uint GetPlayerWONIdDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void Info_RemoveKeyDelegate(nint s, string key);
+    internal delegate void Info_RemoveKeyDelegate(nint s, byte* key);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint GetPhysicsKeyValueDelegate(nint pClient, string key);
+    internal delegate nint GetPhysicsKeyValueDelegate(nint pClient, byte* key);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetPhysicsKeyValueDelegate(nint pClient, string key, string value);
+    internal delegate void SetPhysicsKeyValueDelegate(nint pClient, byte* key, byte* value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate nint GetPhysicsInfoStringDelegate(nint pClient);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate ushort PrecacheEventDelegate(int type, string psz);
+    internal delegate ushort PrecacheEventDelegate(int type, byte* psz);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void PlaybackEventDelegate(int flags, nint pInvoker, ushort eventindex, float delay, nint origin, nint angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2);
@@ -492,13 +492,13 @@ internal struct NativeEngineFuncs
     internal delegate int CheckVisibilityDelegate(nint entity, nint pset);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaSetFieldDelegate(nint pFields, string fieldname);
+    internal delegate void DeltaSetFieldDelegate(nint pFields, byte* fieldname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaUnsetFieldDelegate(nint pFields, string fieldname);
+    internal delegate void DeltaUnsetFieldDelegate(nint pFields, byte* fieldname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaAddEncoderDelegate(string name, nint conditionalencode);
+    internal delegate void DeltaAddEncoderDelegate(byte* name, nint conditionalencode);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int GetCurrentPlayerDelegate();
@@ -507,7 +507,7 @@ internal struct NativeEngineFuncs
     internal delegate int CanSkipPlayerDelegate(nint player);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int DeltaFindFieldDelegate(nint pFields, string fieldname);
+    internal delegate int DeltaFindFieldDelegate(nint pFields, byte* fieldname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void DeltaSetFieldByIndexDelegate(nint pFields, int fieldNumber);
@@ -522,16 +522,16 @@ internal struct NativeEngineFuncs
     internal delegate int CreateInstancedBaselineDelegate(int classname, nint baseline);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void Cvar_DirectSetDelegate(nint var, string value);
+    internal delegate void Cvar_DirectSetDelegate(nint var, byte* value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ForceUnmodifiedDelegate(int type, nint mins, nint maxs, string filename);
+    internal delegate void ForceUnmodifiedDelegate(int type, nint mins, nint maxs, byte* filename);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void GetPlayerStatsDelegate(nint pClient, out int ping, out int packet_loss);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void AddServerCommandDelegate(string cmd_name, nint function);
+    internal delegate void AddServerCommandDelegate(byte* cmd_name, nint function);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate bool Voice_GetClientListeningDelegate(int iReceiver, int iSender);
@@ -543,22 +543,22 @@ internal struct NativeEngineFuncs
     internal delegate nint GetPlayerAuthIdDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint SequenceGetDelegate(string fileName, string entryName);
+    internal delegate nint SequenceGetDelegate(byte* fileName, byte* entryName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint SequencePickSentenceDelegate(string groupName, int pickMethod, out int picked);
+    internal delegate nint SequencePickSentenceDelegate(byte* groupName, int pickMethod, out int picked);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetFileSizeDelegate(string filename);
+    internal delegate int GetFileSizeDelegate(byte* filename);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate uint GetApproxWavePlayLenDelegate(string filepath);
+    internal delegate uint GetApproxWavePlayLenDelegate(byte* filepath);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int IsCareerMatchDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetLocalizedStringLengthDelegate(string label);
+    internal delegate int GetLocalizedStringLengthDelegate(byte* label);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void RegisterTutorMessageShownDelegate(int mid);
@@ -576,12 +576,12 @@ internal struct NativeEngineFuncs
     internal delegate void ResetTutorMessageDecayDataDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void QueryClientCvarValueDelegate(nint player, string cvarName);
+    internal delegate void QueryClientCvarValueDelegate(nint player, byte* cvarName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void QueryClientCvarValue2Delegate(nint player, string cvarName, int requestID);
+    internal delegate void QueryClientCvarValue2Delegate(nint player, byte* cvarName, int requestID);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int EngCheckParmDelegate(string pchCmdLineToken, out nint pchNextVal);
+    internal delegate int EngCheckParmDelegate(byte* pchCmdLineToken, out nint pchNextVal);
     #endregion
 }
