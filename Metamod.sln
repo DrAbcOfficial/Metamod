@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metamod", "Metamod\Metamod.csproj", "{8AA7D219-6C0E-431C-9421-5FB2B6765CEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metamod.FuckWorld", "FuckWorld\Metamod.FuckWorld.csproj", "{EED7553F-919B-440D-97C6-EA7EE22B9C9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8AA7D219-6C0E-431C-9421-5FB2B6765CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AA7D219-6C0E-431C-9421-5FB2B6765CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AA7D219-6C0E-431C-9421-5FB2B6765CEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EED7553F-919B-440D-97C6-EA7EE22B9C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EED7553F-919B-440D-97C6-EA7EE22B9C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EED7553F-919B-440D-97C6-EA7EE22B9C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EED7553F-919B-440D-97C6-EA7EE22B9C9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

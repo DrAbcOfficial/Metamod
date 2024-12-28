@@ -11,12 +11,12 @@ public interface IPlugin
     bool Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs);
     bool Meta_Detach(PluginLoadTime now, PluginUnloadReason reason);
 
-    bool GetEntityAPI(nint pFunctionTable, InterfaceVersion interfaceVersion);
-    bool GetEntityAPI2(nint pFunctionTable, InterfaceVersion interfaceVersion);
-    bool GetNewDLLFunctions(nint pNewFunctionTable, InterfaceVersion interfaceVersion);
-    bool GetEntityAPI_Post(nint pFunctionTable, InterfaceVersion interfaceVersion);
-    bool GetEntityAPI2_Post(nint pFunctionTable, InterfaceVersion interfaceVersion);
-    bool GetNewDLLFunctions_Post(nint pNewFunctionTable, InterfaceVersion interfaceVersion);
-    bool GetEngineFunctions(nint pengfuncsFromEngine, InterfaceVersion interfaceVersion);
-    bool GetEngineFunctions_Post(nint pengfuncsFromEngine, InterfaceVersion interfaceVersion);
+    bool GetEntityAPI(nint pFunctionTable, int interfaceVersion);
+    bool GetEntityAPI2(nint pFunctionTable, int interfaceVersion);
+    bool GetNewDLLFunctions(nint pNewFunctionTable, int interfaceVersion);
+    bool GetEntityAPI_Post(nint pFunctionTable, int interfaceVersion);
+    bool GetEntityAPI2_Post(nint pFunctionTable, int interfaceVersion);
+    bool GetNewDLLFunctions_Post(nint pNewFunctionTable, int interfaceVersion);
+    bool GetEngineFunctions(nint pengfuncsFromEngine, int interfaceVersion);
+    bool GetEngineFunctions_Post(nint pengfuncsFromEngine, int interfaceVersion);
 }
