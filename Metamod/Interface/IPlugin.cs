@@ -7,7 +7,7 @@ public interface IPlugin
     void GiveFnptrsToDll(nint pengfuncsFromEngine, nint pGlobals);
 
     void Meta_Init();
-    bool Meta_Query(InterfaceVersion interfaceVersion, nint plinfo, nint pMetaUtilFuncs);
+    bool Meta_Query(InterfaceVersion interfaceVersion, nint pMetaUtilFuncs);
     bool Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs);
     bool Meta_Detach(PluginLoadTime now, PluginUnloadReason reason);
 

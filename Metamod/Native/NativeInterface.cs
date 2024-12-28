@@ -23,6 +23,36 @@ internal class NativeInterface
     [UnmanagedCallersOnly(EntryPoint = "Meta_Query", CallConvs = [typeof(CallConvCdecl)])]
     internal unsafe static int Native_Meta_Query(byte* interfaceVersion, NativePluginInfo** plinfo, NativeMetaUtilFuncs* pMetaUtilFuncs)
     {
+        string? version = Marshal.PtrToStringAnsi((nint)interfaceVersion) ?? throw new Exception("Interface version is null");
+        var ifver = version switch
+        {
+            "1" => InterfaceVersion.V1,
+            "2" => InterfaceVersion.V2,
+            "3" => InterfaceVersion.V3,
+            "4" => InterfaceVersion.V4,
+            "5" => InterfaceVersion.V5,
+            "5:1" => InterfaceVersion.V5_1,
+            "5:2" => InterfaceVersion.V5_2,
+            "5:3" => InterfaceVersion.V5_3,
+            "5:4" => InterfaceVersion.V5_4,
+            "5:5" => InterfaceVersion.V5_5,
+            "5:6" => InterfaceVersion.V5_6,
+            "5:7" => InterfaceVersion.V5_7,
+            "5:8" => InterfaceVersion.V5_8,
+            "5:9" => InterfaceVersion.V5_9,
+            "5:10" => InterfaceVersion.V5_10,
+            "5:11" => InterfaceVersion.V5_11,
+            "5:12" => InterfaceVersion.V5_12,
+            "5:13" => InterfaceVersion.V5_13,
+            "5:14" => InterfaceVersion.V5_14,
+            "5:15" => InterfaceVersion.V5_15,
+            "5:16" => InterfaceVersion.V5_16,
+            _ => throw new Exception("Unknown interface version"),
+        };
+        PluginEntry.Plugin.Meta_Query(ifver, (nint)pMetaUtilFuncs);
+        nint pl = Marshal.AllocHGlobal(Marshal.SizeOf(PluginEntry.PluginInfo.nativePluginInfo));
+        Marshal.StructureToPtr(PluginEntry.PluginInfo.nativePluginInfo, pl, false);
+        *plinfo = (NativePluginInfo*)pl;
         return 0;
     }
     [UnmanagedCallersOnly(EntryPoint = "Meta_Attach", CallConvs = [typeof(CallConvCdecl)])]

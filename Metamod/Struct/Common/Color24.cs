@@ -29,6 +29,11 @@ public class Color24
         nativeColor = new NativeColor24 { r = r, g = g, b = b };
     }
 
+    public Color24()
+    {
+        nativeColor = new NativeColor24 { };
+    }
+
     public override string ToString()
     {
         return $"R: {R}, G: {G}, B: {B}";

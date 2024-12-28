@@ -15,11 +15,11 @@ internal unsafe struct NativeResource
 
     // For handling client to client resource propagation
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-    byte[] rgucMD5_hash;    // To determine if we already have it.
-    byte playernum;           // Which player index this resource is associated with, if it's a custom resource.
+    internal byte[] rgucMD5_hash;    // To determine if we already have it.
+    internal byte playernum;           // Which player index this resource is associated with, if it's a custom resource.
 
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
-    byte[] rguc_reserved; // For future expansion
-    NativeResource* pNext;              // Next in chain.
-    NativeResource* pPrev;
+    internal byte[] rguc_reserved; // For future expansion
+    internal NativeResource* pNext;              // Next in chain.
+    internal NativeResource* pPrev;
 }

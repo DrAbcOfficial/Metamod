@@ -15,9 +15,4 @@
     <IsAotCompatible>True</IsAotCompatible>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Struct\Engine\" />
-    <Folder Include="Struct\Metamod\" />
-  </ItemGroup>
-
 </Project>

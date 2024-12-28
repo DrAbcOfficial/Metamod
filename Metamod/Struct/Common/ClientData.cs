@@ -1,4 +1,5 @@
 using Metamod.Native.Common;
+using Metamod.Native.Engine.PM;
 using System.Text;
 
 namespace Metamod.Struct.Common;
@@ -85,7 +86,7 @@ public class ClientData
         set => nativeClientData.watertype = value;
     }
 
-    private Vector3f _viewOfs;
+    private Vector3f _viewOfs = new();
     public Vector3f ViewOfs
     {
         get
@@ -222,10 +223,12 @@ public class ClientData
         get => Encoding.UTF8.GetString(nativeClientData.physinfo);
         set
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(value);
-            int len = Math.Min(bytes.Length, nativeClientData.physinfo.Length);
-            Array.Copy(bytes, nativeClientData.physinfo, len);
-            nativeClientData.physinfo[Math.Min(len, nativeClientData.physinfo.Length - 1)] = 0;
+            var bytes = Encoding.UTF8.GetBytes(value);
+            Array.Copy(bytes, nativeClientData.physinfo, Math.Min(bytes.Length, nativeClientData.physinfo.Length));
+            if (bytes.Length < nativeClientData.physinfo.Length)
+                nativeClientData.physinfo[bytes.Length] = 0;
+            else
+                nativeClientData.physinfo[nativeClientData.physinfo.Length - 1] = 0;
         }
     }
 
