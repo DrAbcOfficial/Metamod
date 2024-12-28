@@ -1,5 +1,4 @@
 ﻿using Metamod.Enum.Metamod;
-using Metamod.Native.Engine;
 using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Common;
@@ -17,8 +16,8 @@ internal struct NativeEntityState
     internal int messagenum;
 
     // Fields which can be transitted and reconstructed over the network stream
-    internal vec3_t origin;
-    internal vec3_t angles;
+    internal NativeVector3f origin;
+    internal NativeVector3f angles;
 
     internal int modelindex;
     internal int sequence;
@@ -34,7 +33,7 @@ internal struct NativeEntityState
     // Render information
     internal int rendermode;
     internal int renderamt;
-    internal Color24 rendercolor;
+    internal NativeColor24 rendercolor;
     internal int renderfx;
 
     internal int movetype;
@@ -45,11 +44,11 @@ internal struct NativeEntityState
     internal byte[] controller;
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
     internal byte[]blending;
-    internal vec3_t velocity;
+    internal NativeVector3f velocity;
 
     // Send bbox down to client for use during prediction.
-    internal vec3_t mins;
-    internal vec3_t maxs;
+    internal NativeVector3f mins;
+    internal NativeVector3f maxs;
 
     internal int aiment;
     // If owned by a player, the index of that player ( for projectiles ).
@@ -68,7 +67,7 @@ internal struct NativeEntityState
     internal int weaponmodel;
     internal int gaitsequence;
     // If standing on conveyor, e.g.
-    internal vec3_t basevelocity;
+    internal NativeVector3f basevelocity;
     // Use the crouched hull, or the regular player hull.
     internal int usehull;
     // Latched buttons last time state updated.
@@ -83,8 +82,8 @@ internal struct NativeEntityState
     internal int weaponanim;
 
     // Parametric movement overrides
-    internal vec3_t startpos;
-    internal vec3_t endpos;
+    internal NativeVector3f startpos;
+    internal NativeVector3f endpos;
     internal float impacttime;
     internal float starttime;
 
@@ -97,8 +96,8 @@ internal struct NativeEntityState
     internal float fuser2;
     internal float fuser3;
     internal float fuser4;
-    internal vec3_t vuser1;
-    internal vec3_t vuser2;
-    internal vec3_t vuser3;
-    internal vec3_t vuser4;
+    internal NativeVector3f vuser1;
+    internal NativeVector3f vuser2;
+    internal NativeVector3f vuser3;
+    internal NativeVector3f vuser4;
 }

@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Metamod.Native.Common;
+using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Engine;
 
@@ -10,5 +11,5 @@ internal unsafe struct NativeLevelList
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
     byte[] landmarkName;
     NativeEdict* pentLandmark;
-    vec3_t vecLandmarkOrigin;
+    NativeVector3f vecLandmarkOrigin;
 }

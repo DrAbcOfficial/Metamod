@@ -165,7 +165,7 @@ internal unsafe struct NativeDllFuncs
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int AddToFullPackDelegate(NativeEntityState* state, int e, NativeEdict* ent, NativeEdict* host, int hostflags, int player, byte* pSet);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void CreateBaselineDelegate(int player, int eindex, NativeEntityState* baseline, NativeEdict* entity, int playermodelindex, vec3_t player_mins, vec3_t player_maxs);
+    internal delegate void CreateBaselineDelegate(int player, int eindex, NativeEntityState* baseline, NativeEdict* entity, int playermodelindex, NativeVector3f player_mins, NativeVector3f player_maxs);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void RegisterEncodersDelegate();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

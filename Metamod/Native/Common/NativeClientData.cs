@@ -1,20 +1,19 @@
-﻿using Metamod.Native.Engine;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
 internal struct NativeClientData
 {
-    internal vec3_t origin;
-    internal vec3_t velocity;
+    internal NativeVector3f origin;
+    internal NativeVector3f velocity;
 
     internal int viewmodel;
-    internal vec3_t punchangle;
+    internal NativeVector3f punchangle;
     internal int flags;
     internal int waterlevel;
     internal int watertype;
-    internal vec3_t view_ofs;
+    internal NativeVector3f view_ofs;
     internal float health;
 
     internal int bInDuck;
@@ -56,8 +55,8 @@ internal struct NativeClientData
     internal float fuser2;
     internal float fuser3;
     internal float fuser4;
-    internal vec3_t vuser1;
-    internal vec3_t vuser2;
-    internal vec3_t vuser3;
-    internal vec3_t vuser4;
+    internal NativeVector3f vuser1;
+    internal NativeVector3f vuser2;
+    internal NativeVector3f vuser3;
+    internal NativeVector3f vuser4;
 }

@@ -3,7 +3,7 @@
 namespace Metamod.Native.Common
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct Color24
+    internal struct NativeColor24
     {
         internal byte r;
         internal byte g;

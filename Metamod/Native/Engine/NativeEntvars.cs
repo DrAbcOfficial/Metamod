@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Metamod.Native.Common;
+using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Engine;
 
@@ -9,22 +10,22 @@ internal unsafe struct NativeEntvars
     internal string_t classname;
     internal string_t globalname;
 
-    internal vec3_t origin;
-    internal vec3_t oldorigin;
-    internal vec3_t velocity;
-    internal vec3_t basevelocity;
-    internal vec3_t clbasevelocity;  // Base velocity that was passed in to server physics so 
+    internal NativeVector3f origin;
+    internal NativeVector3f oldorigin;
+    internal NativeVector3f velocity;
+    internal NativeVector3f basevelocity;
+    internal NativeVector3f clbasevelocity;  // Base velocity that was passed in to server physics so 
                                    //  client can predict conveyors correctly.  Server zeroes it, so we need to store here, too.
-    internal vec3_t movedir;
+    internal NativeVector3f movedir;
 
-    internal vec3_t angles;          // Model angles
-    internal vec3_t avelocity;       // angle velocity (degrees per second)
-    internal vec3_t punchangle;      // auto-decaying view angle adjustment
-    internal vec3_t v_angle;     // Viewing angle (player only)
+    internal NativeVector3f angles;          // Model angles
+    internal NativeVector3f avelocity;       // angle velocity (degrees per second)
+    internal NativeVector3f punchangle;      // auto-decaying view angle adjustment
+    internal NativeVector3f v_angle;     // Viewing angle (player only)
 
     // For parametric entities
-    internal vec3_t endpos;
-    internal vec3_t startpos;
+    internal NativeVector3f endpos;
+    internal NativeVector3f startpos;
     internal float impacttime;
     internal float starttime;
 
@@ -40,11 +41,11 @@ internal unsafe struct NativeEntvars
     internal int viewmodel;      // player's viewmodel
     internal int weaponmodel;    // what other players see
 
-    internal vec3_t absmin;      // BB max translated to world coord
-    internal vec3_t absmax;      // BB max translated to world coord
-    internal vec3_t mins;        // local BB min
-    internal vec3_t maxs;        // local BB max
-    internal vec3_t size;        // maxs - mins
+    internal NativeVector3f absmin;      // BB max translated to world coord
+    internal NativeVector3f absmax;      // BB max translated to world coord
+    internal NativeVector3f mins;        // local BB min
+    internal NativeVector3f maxs;        // local BB max
+    internal NativeVector3f size;        // maxs - mins
 
     internal float ltime;
     internal float nextthink;
@@ -75,7 +76,7 @@ internal unsafe struct NativeEntvars
 
     internal int rendermode;
     internal float renderamt;
-    internal vec3_t rendercolor;
+    internal NativeVector3f rendercolor;
     internal int renderfx;
 
     internal float health;
@@ -84,7 +85,7 @@ internal unsafe struct NativeEntvars
     internal float takedamage;
 
     internal int deadflag;
-    internal vec3_t view_ofs;    // eye position
+    internal NativeVector3f view_ofs;    // eye position
 
     internal int button;
     internal int impulse;
@@ -162,10 +163,10 @@ internal unsafe struct NativeEntvars
     internal float fuser2;
     internal float fuser3;
     internal float fuser4;
-    internal vec3_t vuser1;
-    internal vec3_t vuser2;
-    internal vec3_t vuser3;
-    internal vec3_t vuser4;
+    internal NativeVector3f vuser1;
+    internal NativeVector3f vuser2;
+    internal NativeVector3f vuser3;
+    internal NativeVector3f vuser4;
     internal NativeEdict* euser1;
     internal NativeEdict* euser2;
     internal NativeEdict* euser3;

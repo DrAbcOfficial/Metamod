@@ -1,9 +1,9 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Metamod.Native.Engine;
+namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct vec3_t
+internal struct NativeVector3f
 {
     internal float x;
     internal float y;

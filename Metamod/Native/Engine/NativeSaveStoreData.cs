@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Metamod.Native.Common;
+using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Engine;
 
@@ -23,7 +24,7 @@ internal unsafe struct NativeSaveStoreData
     internal int fUseLandmark;
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
     internal byte[] szLandmarkName;// landmark we'll spawn near in next level
-    vec3_t vecLandmarkOffset;// for landmark transitions
+    NativeVector3f vecLandmarkOffset;// for landmark transitions
     internal float time;
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
     internal byte[] szCurrentMapName;	// To check global entities

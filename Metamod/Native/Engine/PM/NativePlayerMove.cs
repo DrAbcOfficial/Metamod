@@ -14,17 +14,17 @@ internal struct NativePlayerMove
     internal float time;          // realtime on host, for reckoning duck timing
     internal float frametime;       // Duration of this frame
 
-    internal vec3_t forward, right, up; // Vectors for angles
+    internal NativeVector3f forward, right, up; // Vectors for angles
                                // player state
-    internal vec3_t origin;        // Movement origin.
-    internal vec3_t angles;        // Movement view angles.
-    internal vec3_t oldangles;     // Angles before movement view angles were looked at.
-    internal vec3_t velocity;      // Current movement direction.
-    internal vec3_t movedir;       // For waterjumping, a forced forward velocity so we can fly over lip of ledge.
-    internal vec3_t basevelocity;  // Velocity of the conveyor we are standing, e.g.
+    internal NativeVector3f origin;        // Movement origin.
+    internal NativeVector3f angles;        // Movement view angles.
+    internal NativeVector3f oldangles;     // Angles before movement view angles were looked at.
+    internal NativeVector3f velocity;      // Current movement direction.
+    internal NativeVector3f movedir;       // For waterjumping, a forced forward velocity so we can fly over lip of ledge.
+    internal NativeVector3f basevelocity;  // Velocity of the conveyor we are standing, e.g.
 
     // For ducking/dead
-    internal vec3_t view_ofs;      // Our eye position.
+    internal NativeVector3f view_ofs;      // Our eye position.
     internal float flDuckTime;    // Time we started duck
     internal QBoolean bInDuck;       // In process of ducking or ducked already?
 
@@ -33,7 +33,7 @@ internal struct NativePlayerMove
     internal int iStepLeft;
 
     internal float flFallVelocity;
-    internal vec3_t punchangle;
+    internal NativeVector3f punchangle;
 
     internal float flSwimTime;
 
@@ -73,10 +73,10 @@ internal struct NativePlayerMove
     internal float fuser2;
     internal float fuser3;
     internal float fuser4;
-    internal vec3_t vuser1;
-    internal vec3_t vuser2;
-    internal vec3_t vuser3;
-    internal vec3_t vuser4;
+    internal NativeVector3f vuser1;
+    internal NativeVector3f vuser2;
+    internal NativeVector3f vuser3;
+    internal NativeVector3f vuser4;
     // world state
     // Number of entities to clip against.
     internal int numphysent;
@@ -106,9 +106,9 @@ internal struct NativePlayerMove
 
     nint movevars;
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    vec3_t[] player_mins;
+    NativeVector3f[] player_mins;
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    vec3_t[] player_maxs;
+    NativeVector3f[] player_maxs;
 
     // Common functions
     //TODO: Implement these

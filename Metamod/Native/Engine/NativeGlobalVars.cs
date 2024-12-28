@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Metamod.Native.Common;
+using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Engine;
 
@@ -15,14 +16,14 @@ internal unsafe struct NativeGlobalVars
     internal float teamplay;
     internal float serverflags;
     internal float found_secrets;
-    internal vec3_t v_forward;
-    internal vec3_t v_up;
-    internal vec3_t v_right;
+    internal NativeVector3f v_forward;
+    internal NativeVector3f v_up;
+    internal NativeVector3f v_right;
     internal float trace_allsolid;
     internal float trace_startsolid;
     internal float trace_fraction;
-    internal vec3_t trace_endpos;
-    internal vec3_t trace_plane_normal;
+    internal NativeVector3f trace_endpos;
+    internal NativeVector3f trace_plane_normal;
     internal float trace_plane_dist;
 #pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
     internal NativeEdict* trace_ent;
@@ -38,5 +39,5 @@ internal unsafe struct NativeGlobalVars
     internal nint pStringBase;
 
     internal nint pSaveData;
-    internal vec3_t vecLandmarkOffset;
+    internal NativeVector3f vecLandmarkOffset;
 }

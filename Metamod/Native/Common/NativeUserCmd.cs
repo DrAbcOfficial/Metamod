@@ -1,5 +1,4 @@
-﻿using Metamod.Native.Engine;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Common;
 
@@ -8,7 +7,7 @@ internal struct NativeUserCmd
 {
     internal short lerp_msec;      // Interpolation time on client
     internal byte msec;           // Duration in ms of command
-    internal vec3_t viewangles;     // Command view angles.
+    internal NativeVector3f viewangles;     // Command view angles.
 
     // intended velocities
     internal float forwardmove;    // Forward velocity.
@@ -21,5 +20,5 @@ internal struct NativeUserCmd
 
     // Experimental player impact stuff.
     internal int impact_index;
-    internal vec3_t impact_position;
+    internal NativeVector3f impact_position;
 }
