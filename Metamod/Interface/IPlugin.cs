@@ -10,7 +10,7 @@ public interface IPlugin
 
     void Meta_Init();
     bool Meta_Query(InterfaceVersion interfaceVersion, CMetaUtilFuncs pMetaUtilFuncs);
-    bool Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs);
+    bool Meta_Attach(PluginLoadTime now, nint pFunctionTable, MetaGlobals pMGlobals, nint pGamedllFuncs);
     bool Meta_Detach(PluginLoadTime now, PluginUnloadReason reason);
 
     bool GetEntityAPI(nint pFunctionTable, int interfaceVersion);

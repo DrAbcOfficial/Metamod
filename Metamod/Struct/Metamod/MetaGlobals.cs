@@ -3,7 +3,7 @@ using Metamod.Native.Metamod;
 
 namespace Metamod.Struct.Metamod
 {
-    public class MetaGlobals : BaseManaged<NativeMetaGlobals>
+    public class MetaGlobals(nint ptr) : BaseManaged<NativeMetaGlobals>(ptr)
     {
         public MetaResult Result
         {

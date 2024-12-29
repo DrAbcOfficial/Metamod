@@ -105,8 +105,10 @@ public abstract class PluginEntry
     //internal unsafe static int Native_Meta_Attach(PluginLoadTime now, NativeMetaFuncs* pFunctionTable, NativeMetaGlobals* pMGlobals, NativeGameDllFuncs* pGamedllFuncs)
     protected static int Native_Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
     {
+        MetaGlobals metaGlobals = new(pMGlobals);
+        Global.MetaGlobals = metaGlobals;
         var pinterface = GetPluginInterface();
-        bool result = pinterface.Meta_Attach(now, pFunctionTable, pMGlobals, pGamedllFuncs);
+        bool result = pinterface.Meta_Attach(now, pFunctionTable, metaGlobals, pGamedllFuncs);
         return result ? 1 : 0;
     }
 
