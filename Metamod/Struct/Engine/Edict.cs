@@ -1,9 +1,10 @@
-﻿using Metamod.Native.Engine;
+﻿using Metamod.Native.Common;
 
 namespace Metamod.Struct.Engine;
 
 public class Edict : BaseManaged<NativeEdict>
 {
+    public Edict() : base() { }
     public Edict(NativeEdict edict) : base(edict) { }
     public Edict(nint ptr) : base(ptr) { }
     public int Free

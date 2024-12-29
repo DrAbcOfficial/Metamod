@@ -1,4 +1,4 @@
-﻿using Metamod.Native.Engine;
+﻿using Metamod.Native.Common;
 using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Game;

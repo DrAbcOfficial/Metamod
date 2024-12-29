@@ -1,4 +1,5 @@
-﻿using Metamod.Native.Engine;
+﻿using Metamod.Native.Common;
+using Metamod.Native.Engine;
 using Metamod.Struct.Common;
 using System.Text;
 

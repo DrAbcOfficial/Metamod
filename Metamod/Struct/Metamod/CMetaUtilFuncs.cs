@@ -1,5 +1,6 @@
 ﻿using Metamod.Enum.Metamod;
 using Metamod.Interface;
+using Metamod.Native.Common;
 using Metamod.Native.Engine;
 using Metamod.Native.Metamod;
 using Metamod.Struct.Engine;

@@ -1,4 +1,5 @@
 ﻿using Metamod.Enum.Metamod;
+using Metamod.Native.Common;
 using Metamod.Native.Engine;
 using Metamod.Native.Game;
 using Metamod.Native.Metamod;

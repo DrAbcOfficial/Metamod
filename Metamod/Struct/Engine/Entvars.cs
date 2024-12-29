@@ -1,10 +1,12 @@
-﻿using Metamod.Native.Engine;
+﻿using Metamod.Native.Common;
+using Metamod.Native.Engine;
 using Metamod.Struct.Common;
 
 namespace Metamod.Struct.Engine;
 
 public class Entvars : BaseManaged<NativeEntvars>
 {
+    public Entvars(nint ptr) : base(ptr) { }
     public Entvars() : base() { }
     public Entvars(NativeEntvars obj) : base(obj) { }
     private readonly StringHandle _classname = new();

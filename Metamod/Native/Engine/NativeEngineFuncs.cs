@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Metamod.Native.Common;
+using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Engine;
 
@@ -380,7 +381,7 @@ public unsafe struct NativeEngineFuncs
     internal delegate void CRC32_ProcessByteDelegate(nint pulCRC, byte ch);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate uint CRC32_FinalDelegate(uint pulCRC);
+    internal delegate NativeCRC32 CRC32_FinalDelegate(NativeCRC32 pulCRC);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int RandomLongDelegate(int lLow, int lHigh);
@@ -420,7 +421,7 @@ public unsafe struct NativeEngineFuncs
     internal delegate void SetClientMaxspeedDelegate(nint pEdict, float fNewMaxspeed);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint CreateFakeClientDelegate(byte* netname);
+    internal delegate nint CreateFakeClientDelegate(nint netname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void RunPlayerMoveDelegate(nint fakeclient, nint viewangles, float forwardmove, float sidemove, float upmove, ushort buttons, byte impulse, byte msec);
@@ -432,52 +433,52 @@ public unsafe struct NativeEngineFuncs
     internal delegate nint GetInfoKeyBufferDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint InfoKeyValueDelegate(nint infobuffer, byte* key);
+    internal delegate nint InfoKeyValueDelegate(nint infobuffer, nint key);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetKeyValueDelegate(nint infobuffer, byte* key, byte* value);
+    internal delegate void SetKeyValueDelegate(nint infobuffer, nint key, nint value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetClientKeyValueDelegate(int clientIndex, nint infobuffer, byte* key, byte* value);
+    internal delegate void SetClientKeyValueDelegate(int clientIndex, nint infobuffer, nint key, nint value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int IsMapValidDelegate(byte* filename);
+    internal delegate int IsMapValidDelegate(nint filename);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void StaticDecalDelegate(nint origin, int decalIndex, int entityIndex, int modelIndex);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int PrecacheGenericDelegate(byte* s);
+    internal delegate int PrecacheGenericDelegate(nint s);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int GetPlayerUserIdDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void BuildSoundMsgDelegate(nint entity, int channel, byte* sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, nint pOrigin, nint ed);
+    internal delegate void BuildSoundMsgDelegate(nint entity, int channel, nint sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, nint pOrigin, nint ed);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int IsDedicatedServerDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint CVarGetPointerDelegate(byte* szVarName);
+    internal delegate nint CVarGetPointerDelegate(nint szVarName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate uint GetPlayerWONIdDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void Info_RemoveKeyDelegate(nint s, byte* key);
+    internal delegate void Info_RemoveKeyDelegate(nint s, nint key);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint GetPhysicsKeyValueDelegate(nint pClient, byte* key);
+    internal delegate nint GetPhysicsKeyValueDelegate(nint pClient, nint key);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetPhysicsKeyValueDelegate(nint pClient, byte* key, byte* value);
+    internal delegate void SetPhysicsKeyValueDelegate(nint pClient, nint key, nint value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate nint GetPhysicsInfoStringDelegate(nint pClient);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate ushort PrecacheEventDelegate(int type, byte* psz);
+    internal delegate ushort PrecacheEventDelegate(int type, nint psz);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void PlaybackEventDelegate(int flags, nint pInvoker, ushort eventindex, float delay, nint origin, nint angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2);
@@ -492,13 +493,13 @@ public unsafe struct NativeEngineFuncs
     internal delegate int CheckVisibilityDelegate(nint entity, nint pset);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaSetFieldDelegate(nint pFields, byte* fieldname);
+    internal delegate void DeltaSetFieldDelegate(nint pFields, nint fieldname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaUnsetFieldDelegate(nint pFields, byte* fieldname);
+    internal delegate void DeltaUnsetFieldDelegate(nint pFields, nint fieldname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaAddEncoderDelegate(byte* name, nint conditionalencode);
+    internal delegate void DeltaAddEncoderDelegate(nint name, nint conditionalencode);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int GetCurrentPlayerDelegate();
@@ -507,7 +508,7 @@ public unsafe struct NativeEngineFuncs
     internal delegate int CanSkipPlayerDelegate(nint player);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int DeltaFindFieldDelegate(nint pFields, byte* fieldname);
+    internal delegate int DeltaFindFieldDelegate(nint pFields, nint fieldname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void DeltaSetFieldByIndexDelegate(nint pFields, int fieldNumber);
@@ -522,43 +523,43 @@ public unsafe struct NativeEngineFuncs
     internal delegate int CreateInstancedBaselineDelegate(int classname, nint baseline);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void Cvar_DirectSetDelegate(nint var, byte* value);
+    internal delegate void Cvar_DirectSetDelegate(nint var, nint value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ForceUnmodifiedDelegate(int type, nint mins, nint maxs, byte* filename);
+    internal delegate void ForceUnmodifiedDelegate(int type, nint mins, nint maxs, nint filename);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void GetPlayerStatsDelegate(nint pClient, out int ping, out int packet_loss);
+    internal delegate void GetPlayerStatsDelegate(nint pClient, nint ping, nint packet_loss);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void AddServerCommandDelegate(byte* cmd_name, nint function);
+    internal delegate void AddServerCommandDelegate(nint cmd_name, nint function);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate bool Voice_GetClientListeningDelegate(int iReceiver, int iSender);
+    internal delegate int Voice_GetClientListeningDelegate(int iReceiver, int iSender);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate bool Voice_SetClientListeningDelegate(int iReceiver, int iSender, bool bListen);
+    internal delegate int Voice_SetClientListeningDelegate(int iReceiver, int iSender, int bListen);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate nint GetPlayerAuthIdDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint SequenceGetDelegate(byte* fileName, byte* entryName);
+    internal delegate nint SequenceGetDelegate(nint fileName, nint entryName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint SequencePickSentenceDelegate(byte* groupName, int pickMethod, out int picked);
+    internal delegate nint SequencePickSentenceDelegate(nint groupName, int pickMethod, nint picked);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetFileSizeDelegate(byte* filename);
+    internal delegate int GetFileSizeDelegate(nint filename);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate uint GetApproxWavePlayLenDelegate(byte* filepath);
+    internal delegate uint GetApproxWavePlayLenDelegate(nint filepath);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int IsCareerMatchDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetLocalizedStringLengthDelegate(byte* label);
+    internal delegate int GetLocalizedStringLengthDelegate(nint label);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void RegisterTutorMessageShownDelegate(int mid);
@@ -576,12 +577,12 @@ public unsafe struct NativeEngineFuncs
     internal delegate void ResetTutorMessageDecayDataDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void QueryClientCvarValueDelegate(nint player, byte* cvarName);
+    internal delegate void QueryClientCvarValueDelegate(nint player, nint cvarName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void QueryClientCvarValue2Delegate(nint player, byte* cvarName, int requestID);
+    internal delegate void QueryClientCvarValue2Delegate(nint player, nint cvarName, int requestID);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int EngCheckParmDelegate(byte* pchCmdLineToken, out nint pchNextVal);
+    internal delegate int EngCheckParmDelegate(nint pchCmdLineToken, out nint pchNextVal);
     #endregion
 }

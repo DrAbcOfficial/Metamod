@@ -28,11 +28,16 @@ public abstract class BaseManaged<[DynamicallyAccessedMembers(DynamicallyAccesse
         _fromNative = false;
     }
 
-    public BaseManaged(nint ptr)
+    public void SetupFromPtr(nint ptr)
     {
         _ptr = ptr;
         _native = Marshal.PtrToStructure<T>(ptr);
         _fromNative = true;
+    }
+
+    public BaseManaged(nint ptr)
+    {
+        SetupFromPtr(ptr);
     }
 
     ~BaseManaged()

@@ -1,6 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using Metamod.Native.Engine;
+using System.Runtime.InteropServices;
 
-namespace Metamod.Native.Engine;
+namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeEdict
