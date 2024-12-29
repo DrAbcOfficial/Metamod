@@ -1,7 +1,7 @@
 ﻿namespace Metamod.Enum.Metamod;
 
 // For GetGameInfo:
-enum GetGameInfoType
+public enum GetGameInfoType
 {
     GINFO_NAME = 0,
     GINFO_DESC,

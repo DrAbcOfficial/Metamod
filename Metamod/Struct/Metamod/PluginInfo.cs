@@ -14,6 +14,8 @@ public class PluginInfo
     public required PluginLoadTime Loadable;     // when loadable
     public required PluginLoadTime Unloadable;   // when unloadable
 
+    internal nint NavitePtr;
+
     public string GetInterfaceVersionString()
     {
         string str = InterfaceVersion.ToString();

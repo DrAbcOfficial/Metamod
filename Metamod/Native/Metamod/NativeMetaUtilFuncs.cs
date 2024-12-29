@@ -5,7 +5,7 @@ using Metamod.Native.Metamod;
 using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativeMetaUtilFuncs
+public struct NativeMetaUtilFuncs
 {
     internal LogDelegate pfnLogConsole;
     internal LogDelegate pfnLogMessage;
@@ -102,7 +102,7 @@ internal struct NativeMetaUtilFuncs
     internal unsafe delegate int MakeRequestIDDelegate(NativePluginInfo* plid);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal unsafe delegate void GetHookTablesDelegate(NativePluginInfo* plid, out NativeEngineFuncs* peng, out IntPtr pdll, out IntPtr pnewdll);
+    internal unsafe delegate void GetHookTablesDelegate(NativePluginInfo* plid, out NativeEngineFuncs* peng, out NativeDllFuncs* pdll, out NativeNewDllFuncs* pnewdll);
 
     // 2022-07 Added by hzqst
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

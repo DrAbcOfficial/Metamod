@@ -1,5 +1,6 @@
 ﻿using Metamod.Helper;
 using Metamod.Struct.Engine;
+using Metamod.Struct.Metamod;
 
 namespace Metamod.Interface
 {
@@ -9,6 +10,7 @@ namespace Metamod.Interface
         public static CEngineFuncs EngineFuncs;
         public static CGlobalVars GlobalVars;
         public static CUtility Utility;
+        public static PluginInfo PluginInfo;
 #pragma warning restore CS8618
     }
 }

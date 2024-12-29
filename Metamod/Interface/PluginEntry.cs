@@ -80,11 +80,12 @@ public abstract class PluginEntry
 
         var pinterface = GetPluginInterface();
         var pinfo = GetPluginInfo();
-
+        Global.PluginInfo = pinfo;
         bool result = pinterface.Meta_Query(ifver, pMetaUtilFuncs);
         unsafe
         {
-            *(NativePluginInfo**)plinfo = (NativePluginInfo*)Marshal.AllocHGlobal(sizeof(NativePluginInfo));
+            nint ptr = Marshal.AllocHGlobal(sizeof(NativePluginInfo));
+            * (NativePluginInfo**)plinfo = (NativePluginInfo*)ptr;
             (*(NativePluginInfo**)plinfo)->ifvers = Marshal.StringToHGlobalAnsi(pinfo.GetInterfaceVersionString());
             (*(NativePluginInfo**)plinfo)->name = Marshal.StringToHGlobalAnsi(pinfo.Name);
             (*(NativePluginInfo**)plinfo)->version = Marshal.StringToHGlobalAnsi(pinfo.Version);
@@ -94,6 +95,7 @@ public abstract class PluginEntry
             (*(NativePluginInfo**)plinfo)->logtag = Marshal.StringToHGlobalAnsi(pinfo.LogTag);
             (*(NativePluginInfo**)plinfo)->loadable = (int)pinfo.Loadable;
             (*(NativePluginInfo**)plinfo)->unloadable = (int)pinfo.Unloadable;
+            pinfo.NavitePtr = ptr;
         }
         return result ? 1 : 0;
     }
