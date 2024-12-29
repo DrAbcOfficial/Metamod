@@ -2,103 +2,99 @@
 
 namespace Metamod.Struct.Common;
 
-public class UserCmd
+public class UserCmd : BaseManaged<NativeUserCmd>
 {
-    internal NativeUserCmd nativeUserCmd;
-
     public short LerpMsec
     {
-        get => nativeUserCmd.lerp_msec;
-        set => nativeUserCmd.lerp_msec = value;
+        get => _native.lerp_msec;
+        set => _native.lerp_msec = value;
     }
 
     public byte Msec
     {
-        get => nativeUserCmd.msec;
-        set => nativeUserCmd.msec = value;
+        get => _native.msec;
+        set => _native.msec = value;
     }
 
-    private Vector3f _viewAngles = new();
+    private Vector3f? _viewangles;
     public Vector3f ViewAngles
     {
         get
         {
-            _viewAngles.X = nativeUserCmd.viewangles.x;
-            _viewAngles.Y = nativeUserCmd.viewangles.y;
-            _viewAngles.Z = nativeUserCmd.viewangles.z;
-            return _viewAngles;
+            _viewangles ??= new Vector3f(_native.viewangles);
+            return _viewangles;
         }
         set
         {
-            nativeUserCmd.viewangles.x = value.X;
-            nativeUserCmd.viewangles.y = value.Y;
-            nativeUserCmd.viewangles.z = value.Z;
+            _viewangles ??= new Vector3f(_native.viewangles);
+            _viewangles.X = value.X;
+            _viewangles.Y = value.Y;
+            _viewangles.Z = value.Z;
         }
     }
 
     public float ForwardMove
     {
-        get => nativeUserCmd.forwardmove;
-        set => nativeUserCmd.forwardmove = value;
+        get => _native.forwardmove;
+        set => _native.forwardmove = value;
     }
 
     public float SideMove
     {
-        get => nativeUserCmd.sidemove;
-        set => nativeUserCmd.sidemove = value;
+        get => _native.sidemove;
+        set => _native.sidemove = value;
     }
 
     public float UpMove
     {
-        get => nativeUserCmd.upmove;
-        set => nativeUserCmd.upmove = value;
+        get => _native.upmove;
+        set => _native.upmove = value;
     }
 
     public byte LightLevel
     {
-        get => nativeUserCmd.lightlevel;
-        set => nativeUserCmd.lightlevel = value;
+        get => _native.lightlevel;
+        set => _native.lightlevel = value;
     }
 
     public ushort Buttons
     {
-        get => nativeUserCmd.buttons;
-        set => nativeUserCmd.buttons = value;
+        get => _native.buttons;
+        set => _native.buttons = value;
     }
 
     public byte Impulse
     {
-        get => nativeUserCmd.impulse;
-        set => nativeUserCmd.impulse = value;
+        get => _native.impulse;
+        set => _native.impulse = value;
     }
 
     public byte WeaponSelect
     {
-        get => nativeUserCmd.weaponselect;
-        set => nativeUserCmd.weaponselect = value;
+        get => _native.weaponselect;
+        set => _native.weaponselect = value;
     }
 
     public int ImpactIndex
     {
-        get => nativeUserCmd.impact_index;
-        set => nativeUserCmd.impact_index = value;
+        get => _native.impact_index;
+        set => _native.impact_index = value;
     }
 
-    private Vector3f _impactPosition = new();
+    private Vector3f? _impact_position;
     public Vector3f ImpactPosition
     {
         get
         {
-            _impactPosition.X = nativeUserCmd.impact_position.x;
-            _impactPosition.Y = nativeUserCmd.impact_position.y;
-            _impactPosition.Z = nativeUserCmd.impact_position.z;
-            return _impactPosition;
+            _impact_position ??= new Vector3f(_native.impact_position);
+            return _impact_position;
         }
         set
         {
-            nativeUserCmd.impact_position.x = value.X;
-            nativeUserCmd.impact_position.y = value.Y;
-            nativeUserCmd.impact_position.z = value.Z;
+            _impact_position ??= new Vector3f(_native.impact_position);
+            _impact_position.X = value.X;
+            _impact_position.Y = value.Y;
+            _impact_position.Z = value.Z;
         }
     }
 

@@ -4,26 +4,25 @@ using System.Net;
 
 namespace Metamod.Struct.Common;
 
-public class NetAdr
+public class NetAdr : BaseManaged<NativeNetAdr>
 {
-    internal NativeNetAdr native;
     public NetAdrType Type
     {
-        get => native.type;
-        set => native.type = value;
+        get => _native.type;
+        set => _native.type = value;
     }
     public IPAddress IPAddress
     {
         get
         {
-            return new IPAddress(native.ip);
+            return new IPAddress(_native.ip);
         }
         set
         {
             byte[] ip = value.GetAddressBytes();
             for (int i = 0; i < 4; i++)
             {
-                native.ip[i] = ip[i];
+                _native.ip[i] = ip[i];
             }
         }
     }
@@ -34,25 +33,25 @@ public class NetAdr
         {
             for (int i = 0; i < _ipx.Length; i++)
             {
-                _ipx[i] = native.ipx[i];
+                _ipx[i] = _native.ipx[i];
             }
             return _ipx;
         }
         set
         {
-            for (int i = 0; i < native.ipx.Length; i++)
+            for (int i = 0; i < _native.ipx.Length; i++)
             {
-                native.ipx[i] = value[i];
+                _native.ipx[i] = value[i];
             }
         }
     }
     public ushort Port
     {
-        get => native.port;
-        set => native.port = value;
+        get => _native.port;
+        set => _native.port = value;
     }
     public NetAdr()
     {
-        native = new NativeNetAdr();
+        _native = new NativeNetAdr();
     }
 }

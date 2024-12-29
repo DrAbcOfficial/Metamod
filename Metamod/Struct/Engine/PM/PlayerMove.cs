@@ -4,511 +4,492 @@ using Metamod.Struct.Common;
 
 namespace Metamod.Struct.Engine.PM;
 
-public class PlayerMove
+public class PlayerMove : BaseManaged<NativePlayerMove>
 {
-    internal NativePlayerMove nativePlayerMove;
-
     public int PlayerIndex
     {
-        get => nativePlayerMove.player_index;
-        set => nativePlayerMove.player_index = value;
+        get => _native.player_index;
+        set => _native.player_index = value;
     }
 
     public bool Server
     {
-        get => nativePlayerMove.server == QBoolean.TRUE;
-        set => nativePlayerMove.server = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.server == QBoolean.TRUE;
+        set => _native.server = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public bool Multiplayer
     {
-        get => nativePlayerMove.multiplayer == QBoolean.TRUE;
-        set => nativePlayerMove.multiplayer = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.multiplayer == QBoolean.TRUE;
+        set => _native.multiplayer = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public float Time
     {
-        get => nativePlayerMove.time;
-        set => nativePlayerMove.time = value;
+        get => _native.time;
+        set => _native.time = value;
     }
 
     public float FrameTime
     {
-        get => nativePlayerMove.frametime;
-        set => nativePlayerMove.frametime = value;
+        get => _native.frametime;
+        set => _native.frametime = value;
     }
 
-    private Vector3f _forward = new();
+    private Vector3f? _forward;
     public Vector3f Forward
     {
         get
         {
-            _forward.X = nativePlayerMove.forward.x;
-            _forward.Y = nativePlayerMove.forward.y;
-            _forward.Z = nativePlayerMove.forward.z;
+            _forward ??= new Vector3f(_native.forward);
             return _forward;
         }
         set
         {
-            nativePlayerMove.forward.x = value.X;
-            nativePlayerMove.forward.y = value.Y;
-            nativePlayerMove.forward.z = value.Z;
+            _forward ??= new Vector3f(_native.forward);
+            _forward.X = value.X;
+            _forward.Y = value.Y;
+            _forward.Z = value.Z;
         }
     }
 
-    private Vector3f _right = new();
+    private Vector3f? _right;
     public Vector3f Right
     {
         get
         {
-            _right.X = nativePlayerMove.right.x;
-            _right.Y = nativePlayerMove.right.y;
-            _right.Z = nativePlayerMove.right.z;
+            _right ??= new Vector3f(_native.right);
             return _right;
         }
         set
         {
-            nativePlayerMove.right.x = value.X;
-            nativePlayerMove.right.y = value.Y;
-            nativePlayerMove.right.z = value.Z;
+            _right ??= new Vector3f(_native.right);
+            _right.X = value.X;
+            _right.Y = value.Y;
+            _right.Z = value.Z;
         }
     }
 
-    private Vector3f _up = new();
+    private Vector3f? _up;
     public Vector3f Up
     {
         get
         {
-            _up.X = nativePlayerMove.up.x;
-            _up.Y = nativePlayerMove.up.y;
-            _up.Z = nativePlayerMove.up.z;
+            _up ??= new Vector3f(_native.up);
             return _up;
         }
         set
         {
-            nativePlayerMove.up.x = value.X;
-            nativePlayerMove.up.y = value.Y;
-            nativePlayerMove.up.z = value.Z;
+            _up ??= new Vector3f(_native.up);
+            _up.X = value.X;
+            _up.Y = value.Y;
+            _up.Z = value.Z;
         }
     }
 
-    private Vector3f _origin = new();
+    private Vector3f? _origin;
     public Vector3f Origin
     {
         get
         {
-            _origin.X = nativePlayerMove.origin.x;
-            _origin.Y = nativePlayerMove.origin.y;
-            _origin.Z = nativePlayerMove.origin.z;
+            _origin ??= new Vector3f(_native.origin);
             return _origin;
         }
         set
         {
-            nativePlayerMove.origin.x = value.X;
-            nativePlayerMove.origin.y = value.Y;
-            nativePlayerMove.origin.z = value.Z;
+            _origin ??= new Vector3f(_native.origin);
+            _origin.X = value.X;
+            _origin.Y = value.Y;
+            _origin.Z = value.Z;
         }
     }
 
-    private Vector3f _angles = new();
+    private Vector3f? _angles;
     public Vector3f Angles
     {
         get
         {
-            _angles.X = nativePlayerMove.angles.x;
-            _angles.Y = nativePlayerMove.angles.y;
-            _angles.Z = nativePlayerMove.angles.z;
+            _angles ??= new Vector3f(_native.angles);
             return _angles;
         }
         set
         {
-            nativePlayerMove.angles.x = value.X;
-            nativePlayerMove.angles.y = value.Y;
-            nativePlayerMove.angles.z = value.Z;
+            _angles ??= new Vector3f(_native.angles);
+            _angles.X = value.X;
+            _angles.Y = value.Y;
+            _angles.Z = value.Z;
         }
     }
 
-    private Vector3f _oldAngles = new();
+    private Vector3f? _oldangles;
     public Vector3f OldAngles
     {
         get
         {
-            _oldAngles.X = nativePlayerMove.oldangles.x;
-            _oldAngles.Y = nativePlayerMove.oldangles.y;
-            _oldAngles.Z = nativePlayerMove.oldangles.z;
-            return _oldAngles;
+            _oldangles ??= new Vector3f(_native.oldangles);
+            return _oldangles;
         }
         set
         {
-            nativePlayerMove.oldangles.x = value.X;
-            nativePlayerMove.oldangles.y = value.Y;
-            nativePlayerMove.oldangles.z = value.Z;
+            _oldangles ??= new Vector3f(_native.oldangles);
+            _oldangles.X = value.X;
+            _oldangles.Y = value.Y;
+            _oldangles.Z = value.Z;
         }
     }
 
-    private Vector3f _velocity = new();
+    private Vector3f? _velocity;
     public Vector3f Velocity
     {
         get
         {
-            _velocity.X = nativePlayerMove.velocity.x;
-            _velocity.Y = nativePlayerMove.velocity.y;
-            _velocity.Z = nativePlayerMove.velocity.z;
+            _velocity ??= new Vector3f(_native.velocity);
             return _velocity;
         }
         set
         {
-            nativePlayerMove.velocity.x = value.X;
-            nativePlayerMove.velocity.y = value.Y;
-            nativePlayerMove.velocity.z = value.Z;
+            _velocity ??= new Vector3f(_native.velocity);
+            _velocity.X = value.X;
+            _velocity.Y = value.Y;
+            _velocity.Z = value.Z;
         }
     }
 
-    private Vector3f _moveDir = new();
+    private Vector3f? _movedir;
     public Vector3f MoveDir
     {
         get
         {
-            _moveDir.X = nativePlayerMove.movedir.x;
-            _moveDir.Y = nativePlayerMove.movedir.y;
-            _moveDir.Z = nativePlayerMove.movedir.z;
-            return _moveDir;
+            _movedir ??= new Vector3f(_native.movedir);
+            return _movedir;
         }
         set
         {
-            nativePlayerMove.movedir.x = value.X;
-            nativePlayerMove.movedir.y = value.Y;
-            nativePlayerMove.movedir.z = value.Z;
+            _movedir ??= new Vector3f(_native.movedir);
+            _movedir.X = value.X;
+            _movedir.Y = value.Y;
+            _movedir.Z = value.Z;
         }
     }
 
-    private Vector3f _baseVelocity = new();
+    private Vector3f? _basevelocity;
     public Vector3f BaseVelocity
     {
         get
         {
-            _baseVelocity.X = nativePlayerMove.basevelocity.x;
-            _baseVelocity.Y = nativePlayerMove.basevelocity.y;
-            _baseVelocity.Z = nativePlayerMove.basevelocity.z;
-            return _baseVelocity;
+            _basevelocity ??= new Vector3f(_native.basevelocity);
+            return _basevelocity;
         }
         set
         {
-            nativePlayerMove.basevelocity.x = value.X;
-            nativePlayerMove.basevelocity.y = value.Y;
-            nativePlayerMove.basevelocity.z = value.Z;
+            _basevelocity ??= new Vector3f(_native.basevelocity);
+            _basevelocity.X = value.X;
+            _basevelocity.Y = value.Y;
+            _basevelocity.Z = value.Z;
         }
     }
 
-    private Vector3f _viewOfs = new();
+    private Vector3f? _view_ofs;
     public Vector3f ViewOfs
     {
         get
         {
-            _viewOfs.X = nativePlayerMove.view_ofs.x;
-            _viewOfs.Y = nativePlayerMove.view_ofs.y;
-            _viewOfs.Z = nativePlayerMove.view_ofs.z;
-            return _viewOfs;
+            _view_ofs ??= new Vector3f(_native.view_ofs);
+            return _view_ofs;
         }
         set
         {
-            nativePlayerMove.view_ofs.x = value.X;
-            nativePlayerMove.view_ofs.y = value.Y;
-            nativePlayerMove.view_ofs.z = value.Z;
+            _view_ofs ??= new Vector3f(_native.view_ofs);
+            _view_ofs.X = value.X;
+            _view_ofs.Y = value.Y;
+            _view_ofs.Z = value.Z;
         }
     }
 
     public float DuckTime
     {
-        get => nativePlayerMove.flDuckTime;
-        set => nativePlayerMove.flDuckTime = value;
+        get => _native.flDuckTime;
+        set => _native.flDuckTime = value;
     }
 
     public bool InDuck
     {
-        get => nativePlayerMove.bInDuck == QBoolean.TRUE;
-        set => nativePlayerMove.bInDuck = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.bInDuck == QBoolean.TRUE;
+        set => _native.bInDuck = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public int TimeStepSound
     {
-        get => nativePlayerMove.flTimeStepSound;
-        set => nativePlayerMove.flTimeStepSound = value;
+        get => _native.flTimeStepSound;
+        set => _native.flTimeStepSound = value;
     }
 
     public int StepLeft
     {
-        get => nativePlayerMove.iStepLeft;
-        set => nativePlayerMove.iStepLeft = value;
+        get => _native.iStepLeft;
+        set => _native.iStepLeft = value;
     }
 
     public float FallVelocity
     {
-        get => nativePlayerMove.flFallVelocity;
-        set => nativePlayerMove.flFallVelocity = value;
+        get => _native.flFallVelocity;
+        set => _native.flFallVelocity = value;
     }
 
-    private Vector3f _punchAngle = new();
+    private Vector3f? _punchangle;
     public Vector3f PunchAngle
     {
         get
         {
-            _punchAngle.X = nativePlayerMove.punchangle.x;
-            _punchAngle.Y = nativePlayerMove.punchangle.y;
-            _punchAngle.Z = nativePlayerMove.punchangle.z;
-            return _punchAngle;
+            _punchangle ??= new Vector3f(_native.punchangle);
+            return _punchangle;
         }
         set
         {
-            nativePlayerMove.punchangle.x = value.X;
-            nativePlayerMove.punchangle.y = value.Y;
-            nativePlayerMove.punchangle.z = value.Z;
+            _punchangle ??= new Vector3f(_native.punchangle);
+            _punchangle.X = value.X;
+            _punchangle.Y = value.Y;
+            _punchangle.Z = value.Z;
         }
     }
 
     public float SwimTime
     {
-        get => nativePlayerMove.flSwimTime;
-        set => nativePlayerMove.flSwimTime = value;
+        get => _native.flSwimTime;
+        set => _native.flSwimTime = value;
     }
 
     public float NextPrimaryAttack
     {
-        get => nativePlayerMove.flNextPrimaryAttack;
-        set => nativePlayerMove.flNextPrimaryAttack = value;
+        get => _native.flNextPrimaryAttack;
+        set => _native.flNextPrimaryAttack = value;
     }
 
     public int Effects
     {
-        get => nativePlayerMove.effects;
-        set => nativePlayerMove.effects = value;
+        get => _native.effects;
+        set => _native.effects = value;
     }
 
     public int Flags
     {
-        get => nativePlayerMove.flags;
-        set => nativePlayerMove.flags = value;
+        get => _native.flags;
+        set => _native.flags = value;
     }
 
     public int UseHull
     {
-        get => nativePlayerMove.usehull;
-        set => nativePlayerMove.usehull = value;
+        get => _native.usehull;
+        set => _native.usehull = value;
     }
 
     public float Gravity
     {
-        get => nativePlayerMove.gravity;
-        set => nativePlayerMove.gravity = value;
+        get => _native.gravity;
+        set => _native.gravity = value;
     }
 
     public float Friction
     {
-        get => nativePlayerMove.friction;
-        set => nativePlayerMove.friction = value;
+        get => _native.friction;
+        set => _native.friction = value;
     }
 
     public int OldButtons
     {
-        get => nativePlayerMove.oldbuttons;
-        set => nativePlayerMove.oldbuttons = value;
+        get => _native.oldbuttons;
+        set => _native.oldbuttons = value;
     }
 
     public float WaterJumpTime
     {
-        get => nativePlayerMove.waterjumptime;
-        set => nativePlayerMove.waterjumptime = value;
+        get => _native.waterjumptime;
+        set => _native.waterjumptime = value;
     }
 
     public bool Dead
     {
-        get => nativePlayerMove.dead == QBoolean.TRUE;
-        set => nativePlayerMove.dead = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.dead == QBoolean.TRUE;
+        set => _native.dead = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public int DeadFlag
     {
-        get => nativePlayerMove.deadflag;
-        set => nativePlayerMove.deadflag = value;
+        get => _native.deadflag;
+        set => _native.deadflag = value;
     }
 
     public int Spectator
     {
-        get => nativePlayerMove.spectator;
-        set => nativePlayerMove.spectator = value;
+        get => _native.spectator;
+        set => _native.spectator = value;
     }
 
     public int MoveType
     {
-        get => nativePlayerMove.movetype;
-        set => nativePlayerMove.movetype = value;
+        get => _native.movetype;
+        set => _native.movetype = value;
     }
 
     public int OnGround
     {
-        get => nativePlayerMove.onground;
-        set => nativePlayerMove.onground = value;
+        get => _native.onground;
+        set => _native.onground = value;
     }
 
     public int WaterLevel
     {
-        get => nativePlayerMove.waterlevel;
-        set => nativePlayerMove.waterlevel = value;
+        get => _native.waterlevel;
+        set => _native.waterlevel = value;
     }
 
     public int WaterType
     {
-        get => nativePlayerMove.watertype;
-        set => nativePlayerMove.watertype = value;
+        get => _native.watertype;
+        set => _native.watertype = value;
     }
 
     public int OldWaterLevel
     {
-        get => nativePlayerMove.oldwaterlevel;
-        set => nativePlayerMove.oldwaterlevel = value;
+        get => _native.oldwaterlevel;
+        set => _native.oldwaterlevel = value;
     }
 
     public string TextureName
     {
-        get => System.Text.Encoding.UTF8.GetString(nativePlayerMove.sztexturename).TrimEnd('\0');
-        set => nativePlayerMove.sztexturename = System.Text.Encoding.UTF8.GetBytes(value.PadRight(256, '\0'));
+        get => System.Text.Encoding.UTF8.GetString(_native.sztexturename).TrimEnd('\0');
+        set => _native.sztexturename = System.Text.Encoding.UTF8.GetBytes(value.PadRight(256, '\0'));
     }
 
     public char TextureType
     {
-        get => (char)nativePlayerMove.chtexturetype;
-        set => nativePlayerMove.chtexturetype = (byte)value;
+        get => (char)_native.chtexturetype;
+        set => _native.chtexturetype = (byte)value;
     }
 
     public float MaxSpeed
     {
-        get => nativePlayerMove.maxspeed;
-        set => nativePlayerMove.maxspeed = value;
+        get => _native.maxspeed;
+        set => _native.maxspeed = value;
     }
 
     public float ClientMaxSpeed
     {
-        get => nativePlayerMove.clientmaxspeed;
-        set => nativePlayerMove.clientmaxspeed = value;
+        get => _native.clientmaxspeed;
+        set => _native.clientmaxspeed = value;
     }
 
     public int IUser1
     {
-        get => nativePlayerMove.iuser1;
-        set => nativePlayerMove.iuser1 = value;
+        get => _native.iuser1;
+        set => _native.iuser1 = value;
     }
 
     public int IUser2
     {
-        get => nativePlayerMove.iuser2;
-        set => nativePlayerMove.iuser2 = value;
+        get => _native.iuser2;
+        set => _native.iuser2 = value;
     }
 
     public int IUser3
     {
-        get => nativePlayerMove.iuser3;
-        set => nativePlayerMove.iuser3 = value;
+        get => _native.iuser3;
+        set => _native.iuser3 = value;
     }
 
     public int IUser4
     {
-        get => nativePlayerMove.iuser4;
-        set => nativePlayerMove.iuser4 = value;
+        get => _native.iuser4;
+        set => _native.iuser4 = value;
     }
 
     public float FUser1
     {
-        get => nativePlayerMove.fuser1;
-        set => nativePlayerMove.fuser1 = value;
+        get => _native.fuser1;
+        set => _native.fuser1 = value;
     }
 
     public float FUser2
     {
-        get => nativePlayerMove.fuser2;
-        set => nativePlayerMove.fuser2 = value;
+        get => _native.fuser2;
+        set => _native.fuser2 = value;
     }
 
     public float FUser3
     {
-        get => nativePlayerMove.fuser3;
-        set => nativePlayerMove.fuser3 = value;
+        get => _native.fuser3;
+        set => _native.fuser3 = value;
     }
 
     public float FUser4
     {
-        get => nativePlayerMove.fuser4;
-        set => nativePlayerMove.fuser4 = value;
+        get => _native.fuser4;
+        set => _native.fuser4 = value;
     }
 
-    private Vector3f _vuser1 = new();
+    private Vector3f? _vuser1;
     public Vector3f VUser1
     {
         get
         {
-            _vuser1.X = nativePlayerMove.vuser1.x;
-            _vuser1.Y = nativePlayerMove.vuser1.y;
-            _vuser1.Z = nativePlayerMove.vuser1.z;
+            _vuser1 ??= new Vector3f(_native.vuser1);
             return _vuser1;
         }
         set
         {
-            nativePlayerMove.vuser1.x = value.X;
-            nativePlayerMove.vuser1.y = value.Y;
-            nativePlayerMove.vuser1.z = value.Z;
+            _vuser1 ??= new Vector3f(_native.vuser1);
+            _vuser1.X = value.X;
+            _vuser1.Y = value.Y;
+            _vuser1.Z = value.Z;
         }
     }
-
-    private Vector3f _vuser2 = new();
+    private Vector3f? _vuser2;
     public Vector3f VUser2
     {
         get
         {
-            _vuser2.X = nativePlayerMove.vuser2.x;
-            _vuser2.Y = nativePlayerMove.vuser2.y;
-            _vuser2.Z = nativePlayerMove.vuser2.z;
+            _vuser2 ??= new Vector3f(_native.vuser2);
             return _vuser2;
         }
         set
         {
-            nativePlayerMove.vuser2.x = value.X;
-            nativePlayerMove.vuser2.y = value.Y;
-            nativePlayerMove.vuser2.z = value.Z;
+            _vuser2 ??= new Vector3f(_native.vuser2);
+            _vuser2.X = value.X;
+            _vuser2.Y = value.Y;
+            _vuser2.Z = value.Z;
         }
     }
-
-    private Vector3f _vuser3 = new();
+    private Vector3f? _vuser3;
     public Vector3f VUser3
     {
         get
         {
-            _vuser3.X = nativePlayerMove.vuser3.x;
-            _vuser3.Y = nativePlayerMove.vuser3.y;
-            _vuser3.Z = nativePlayerMove.vuser3.z;
+            _vuser3 ??= new Vector3f(_native.vuser3);
             return _vuser3;
         }
         set
         {
-            nativePlayerMove.vuser3.x = value.X;
-            nativePlayerMove.vuser3.y = value.Y;
-            nativePlayerMove.vuser3.z = value.Z;
+            _vuser3 ??= new Vector3f(_native.vuser3);
+            _vuser3.X = value.X;
+            _vuser3.Y = value.Y;
+            _vuser3.Z = value.Z;
         }
-    }
 
-    private Vector3f _vuser4 = new();
+    }
+    private Vector3f? _vuser4;
     public Vector3f VUser4
     {
         get
         {
-            _vuser4.X = nativePlayerMove.vuser4.x;
-            _vuser4.Y = nativePlayerMove.vuser4.y;
-            _vuser4.Z = nativePlayerMove.vuser4.z;
+            _vuser4 ??= new Vector3f(_native.vuser4);
             return _vuser4;
         }
         set
         {
-            nativePlayerMove.vuser4.x = value.X;
-            nativePlayerMove.vuser4.y = value.Y;
-            nativePlayerMove.vuser4.z = value.Z;
+            _vuser4 ??= new Vector3f(_native.vuser4);
+            _vuser4.X = value.X;
+            _vuser4.Y = value.Y;
+            _vuser4.Z = value.Z;
         }
     }
 

@@ -4,56 +4,54 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Struct.Engine;
 
-public class Resource
+public class Resource : BaseManaged<NativeResource>
 {
-    internal NativeResource nativeResource;
-
     public string FileName
     {
-        get => System.Text.Encoding.UTF8.GetString(nativeResource.szFileName).TrimEnd('\0');
-        set => nativeResource.szFileName = System.Text.Encoding.UTF8.GetBytes(value.PadRight(64, '\0'));
+        get => System.Text.Encoding.UTF8.GetString(_native.szFileName).TrimEnd('\0');
+        set => _native.szFileName = System.Text.Encoding.UTF8.GetBytes(value.PadRight(64, '\0'));
     }
 
     public ResourceType Type
     {
-        get => nativeResource.type;
-        set => nativeResource.type = value;
+        get => _native.type;
+        set => _native.type = value;
     }
 
     public int Index
     {
-        get => nativeResource.nIndex;
-        set => nativeResource.nIndex = value;
+        get => _native.nIndex;
+        set => _native.nIndex = value;
     }
 
     public int DownloadSize
     {
-        get => nativeResource.nDownloadSize;
-        set => nativeResource.nDownloadSize = value;
+        get => _native.nDownloadSize;
+        set => _native.nDownloadSize = value;
     }
 
     public byte Flags
     {
-        get => nativeResource.ucFlags;
-        set => nativeResource.ucFlags = value;
+        get => _native.ucFlags;
+        set => _native.ucFlags = value;
     }
 
     public byte[] MD5Hash
     {
-        get => nativeResource.rgucMD5_hash;
-        set => nativeResource.rgucMD5_hash = value;
+        get => _native.rgucMD5_hash;
+        set => _native.rgucMD5_hash = value;
     }
 
     public byte PlayerNum
     {
-        get => nativeResource.playernum;
-        set => nativeResource.playernum = value;
+        get => _native.playernum;
+        set => _native.playernum = value;
     }
 
     public byte[] Reserved
     {
-        get => nativeResource.rguc_reserved;
-        set => nativeResource.rguc_reserved = value;
+        get => _native.rguc_reserved;
+        set => _native.rguc_reserved = value;
     }
 
     private Resource _next = new();
@@ -64,9 +62,9 @@ public class Resource
             NativeResource resource;
             unsafe
             {
-                resource = Marshal.PtrToStructure<NativeResource>((nint)nativeResource.pNext);
+                resource = Marshal.PtrToStructure<NativeResource>((nint)_native.pNext);
             }
-            _next.nativeResource = resource;
+            _next._native = resource;
             return _next;
         }
         set => _next = value;
@@ -80,9 +78,9 @@ public class Resource
             NativeResource resource;
             unsafe
             {
-                resource = Marshal.PtrToStructure<NativeResource>((nint)nativeResource.pPrev);
+                resource = Marshal.PtrToStructure<NativeResource>((nint)_native.pPrev);
             }
-            _prev.nativeResource = resource;
+            _prev._native = resource;
             return _prev;
         }
         set => _prev = value;

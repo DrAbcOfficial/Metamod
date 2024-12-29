@@ -3,7 +3,7 @@
 namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativeWeaponData
+public struct NativeWeaponData
 {
     internal int m_iId;
     internal int m_iClip;

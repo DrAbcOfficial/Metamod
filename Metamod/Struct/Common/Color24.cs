@@ -2,38 +2,32 @@
 
 namespace Metamod.Struct.Common;
 
-public class Color24
+public class Color24 : BaseManaged<NativeColor24>
 {
-    internal NativeColor24 nativeColor;
-
     public byte R
     {
-        get => nativeColor.r;
-        set => nativeColor.r = value;
+        get => _native.r;
+        set => _native.r = value;
     }
 
     public byte G
     {
-        get => nativeColor.g;
-        set => nativeColor.g = value;
+        get => _native.g;
+        set => _native.g = value;
     }
 
     public byte B
     {
-        get => nativeColor.b;
-        set => nativeColor.b = value;
+        get => _native.b;
+        set => _native.b = value;
     }
 
     public Color24(byte r, byte g, byte b)
     {
-        nativeColor = new NativeColor24 { r = r, g = g, b = b };
+        _native = new NativeColor24 { r = r, g = g, b = b };
     }
 
-    public Color24()
-    {
-        nativeColor = new NativeColor24 { };
-    }
-
+    public Color24() : base(){ }
     public override string ToString()
     {
         return $"R: {R}, G: {G}, B: {B}";

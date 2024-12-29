@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativeEntityState
+public struct NativeEntityState
 {
     // Fields which are filled in by routines outside of delta compression
     internal int entityType;

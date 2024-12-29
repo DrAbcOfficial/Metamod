@@ -5,7 +5,7 @@ namespace Metamod.Native.Engine;
 
 #pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct NativeEntvars
+public unsafe struct NativeEntvars
 {
     internal string_t classname;
     internal string_t globalname;
@@ -50,8 +50,8 @@ internal unsafe struct NativeEntvars
     internal float ltime;
     internal float nextthink;
 
-    int movetype;
-    int solid;
+    internal int movetype;
+    internal int solid;
 
     internal int skin;
     internal int body;           // sub-model selection for studiomodels

@@ -4,55 +4,52 @@ using Metamod.Struct.Common;
 
 namespace Metamod.Struct.Engine.PM;
 
-public class PMTrace
+public class PMTrace : BaseManaged<NativePMTrace>
 {
-    internal NativePMTrace nativePMTrace;
-
     public bool AllSolid
     {
-        get => nativePMTrace.allsolid == QBoolean.TRUE;
-        set => nativePMTrace.allsolid = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.allsolid == QBoolean.TRUE;
+        set => _native.allsolid = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public bool StartSolid
     {
-        get => nativePMTrace.startsolid == QBoolean.TRUE;
-        set => nativePMTrace.startsolid = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.startsolid == QBoolean.TRUE;
+        set => _native.startsolid = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public bool InOpen
     {
-        get => nativePMTrace.inopen == QBoolean.TRUE;
-        set => nativePMTrace.inopen = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.inopen == QBoolean.TRUE;
+        set => _native.inopen = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public bool InWater
     {
-        get => nativePMTrace.inwater == QBoolean.TRUE;
-        set => nativePMTrace.inwater = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.inwater == QBoolean.TRUE;
+        set => _native.inwater = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public float Fraction
     {
-        get => nativePMTrace.fraction;
-        set => nativePMTrace.fraction = value;
+        get => _native.fraction;
+        set => _native.fraction = value;
     }
 
-    private Vector3f _endPos = new();
+    private Vector3f? _endpos;
     public Vector3f EndPos
     {
         get
         {
-            _endPos.X = nativePMTrace.endpos.x;
-            _endPos.Y = nativePMTrace.endpos.y;
-            _endPos.Z = nativePMTrace.endpos.z;
-            return _endPos;
+            _endpos ??= new Vector3f(_native.endpos);
+            return _endpos;
         }
         set
         {
-            nativePMTrace.endpos.x = value.X;
-            nativePMTrace.endpos.y = value.Y;
-            nativePMTrace.endpos.z = value.Z;
+            _endpos ??= new Vector3f(_native.endpos);
+            _endpos.X = value.X;
+            _endpos.Y = value.Y;
+            _endpos.Z = value.Z;
         }
     }
 
@@ -61,43 +58,43 @@ public class PMTrace
     {
         get
         {
-            _plane.nativePMPlane = nativePMTrace.plane;
+            _plane._native = _native.plane;
             return _plane;
         }
         set
         {
-            nativePMTrace.plane = value.nativePMPlane;
+            _plane = value;
+            _native.plane = value._native;
         }
     }
 
     public int Ent
     {
-        get => nativePMTrace.ent;
-        set => nativePMTrace.ent = value;
+        get => _native.ent;
+        set => _native.ent = value;
     }
 
-    private Vector3f _deltaVelocity = new();
+    private Vector3f? _deltavelocity;
     public Vector3f DeltaVelocity
     {
         get
         {
-            _deltaVelocity.X = nativePMTrace.deltavelocity.x;
-            _deltaVelocity.Y = nativePMTrace.deltavelocity.y;
-            _deltaVelocity.Z = nativePMTrace.deltavelocity.z;
-            return _deltaVelocity;
+            _deltavelocity ??= new Vector3f(_native.deltavelocity);
+            return _deltavelocity;
         }
         set
         {
-            nativePMTrace.deltavelocity.x = value.X;
-            nativePMTrace.deltavelocity.y = value.Y;
-            nativePMTrace.deltavelocity.z = value.Z;
+            _deltavelocity ??= new Vector3f(_native.deltavelocity);
+            _deltavelocity.X = value.X;
+            _deltavelocity.Y = value.Y;
+            _deltavelocity.Z = value.Z;
         }
     }
 
     public int HitGroup
     {
-        get => nativePMTrace.hitgroup;
-        set => nativePMTrace.hitgroup = value;
+        get => _native.hitgroup;
+        set => _native.hitgroup = value;
     }
 
     public override string ToString()

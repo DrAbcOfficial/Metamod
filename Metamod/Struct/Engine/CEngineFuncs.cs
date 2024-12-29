@@ -3,9 +3,21 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Struct.Engine;
 
-public class EngineFuncs
+public class CEngineFuncs(nint ptr) : BaseManaged<NativeEngineFuncs>(ptr)
 {
-    internal NativeEngineFuncs native;
+    public void PrecacheModel(string s)
+    {
+        nint ns = Marshal.StringToHGlobalAnsi(s);
+        _native.pfnPrecacheModel(ns);
+        Marshal.FreeHGlobal(ns);
+    }
+
+    public void PrecacheSound(string s)
+    {
+        nint ns = Marshal.StringToHGlobalAnsi(s);
+        _native.pfnPrecacheSound(ns);
+        Marshal.FreeHGlobal(ns);
+    }
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ServerCommandDelegate();
@@ -15,7 +27,7 @@ public class EngineFuncs
         nint cmd = Marshal.StringToHGlobalAnsi(cmd_name);
         unsafe
         {
-            native.pfnAddServerCommand((byte*)cmd, func);
+            _native.pfnAddServerCommand((byte*)cmd, func);
         }
         Marshal.FreeHGlobal(cmd);
     }
@@ -23,10 +35,7 @@ public class EngineFuncs
     public void ServerPrint(string msg)
     {
         nint nmsg = Marshal.StringToHGlobalAnsi(msg);
-        unsafe
-        {
-            native.pfnServerPrint(nmsg);
-        }
+        _native.pfnServerPrint(nmsg);
         Marshal.FreeHGlobal(nmsg);
     }
 }

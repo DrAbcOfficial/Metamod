@@ -2,18 +2,16 @@
 
 namespace Metamod.Struct.Engine;
 
-public class Link
+public class Link : BaseManaged<NativeLink>
 {
-    private NativeLink nativeLink;
-
     public nint Prev
     {
-        get => nativeLink.prev;
-        set => nativeLink.prev = value;
+        get => _native.prev;
+        set => _native.prev = value;
     }
     public nint Next
     {
-        get => nativeLink.next;
-        set => nativeLink.next = value;
+        get => _native.next;
+        set => _native.next = value;
     }
 }

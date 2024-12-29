@@ -3,7 +3,7 @@ using Metamod.Native.Engine;
 using Metamod.Native.Metamod;
 using Metamod.Struct.Engine;
 using Metamod.Struct.Metamod;
-using System.Runtime.CompilerServices;
+using Metamod.Helper;
 using System.Runtime.InteropServices;
 
 namespace Metamod.Interface;
@@ -13,7 +13,7 @@ public abstract class PluginEntry
     protected static IPlugin? Interface;
     public static IPlugin GetPluginInterface()
     {
-        if(Interface == null)
+        if (Interface == null)
             throw new NullReferenceException(nameof(Interface));
         return Interface;
     }
@@ -30,11 +30,14 @@ public abstract class PluginEntry
     //internal unsafe static void Native_GiveFnptrsToDll(NativeEngineFuncs* pengfuncsFromEngine, NativeGlobalVars* pGlobals)
     protected static void Native_GiveFnptrsToDll(nint pengfuncsFromEngine, nint pGlobals)
     {
-        NativeEngineFuncs peng = Marshal.PtrToStructure<NativeEngineFuncs>(pengfuncsFromEngine);
-        EngineFuncs engineFuncs = new();
-        engineFuncs.native = peng;
+        CEngineFuncs engineFuncs = new(pengfuncsFromEngine);
+        CGlobalVars globalVars = new(pGlobals);
+        Global.EngineFuncs = engineFuncs;
+        Global.GlobalVars = globalVars;
+        Global.Utility = new();
+
         var pinterface = GetPluginInterface();
-        pinterface.GiveFnptrsToDll(engineFuncs, pGlobals);
+        pinterface.GiveFnptrsToDll(engineFuncs, globalVars);
     }
 
     //[UnmanagedCallersOnly(EntryPoint = "Meta_Init", CallConvs = [typeof(CallConvCdecl)])]

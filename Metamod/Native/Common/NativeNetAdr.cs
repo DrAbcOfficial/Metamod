@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativeNetAdr
+public struct NativeNetAdr
 {
     internal NetAdrType type;
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]

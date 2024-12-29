@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Engine.PM;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativePMTrace
+public struct NativePMTrace
 {
     internal QBoolean allsolid;        // if true, plane is not valid
     internal QBoolean startsolid;          // if true, the initial point was in a solid area

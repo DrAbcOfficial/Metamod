@@ -1,137 +1,132 @@
 ﻿using Metamod.Enum.Metamod;
 using Metamod.Native.Common;
-using System.Text;
 
 namespace Metamod.Struct.Common;
 
-public class EntityState
+public class EntityState : BaseManaged<NativeEntityState>
 {
-    internal NativeEntityState nativeEntityState;
-
     public int EntityType
     {
-        get => nativeEntityState.entityType;
-        set => nativeEntityState.entityType = value;
+        get => _native.entityType;
+        set => _native.entityType = value;
     }
 
     public int Number
     {
-        get => nativeEntityState.number;
-        set => nativeEntityState.number = value;
+        get => _native.number;
+        set => _native.number = value;
     }
 
     public float MsgTime
     {
-        get => nativeEntityState.msg_time;
-        set => nativeEntityState.msg_time = value;
+        get => _native.msg_time;
+        set => _native.msg_time = value;
     }
 
     public int MessageNum
     {
-        get => nativeEntityState.messagenum;
-        set => nativeEntityState.messagenum = value;
+        get => _native.messagenum;
+        set => _native.messagenum = value;
     }
 
-    private Vector3f _origin = new();
+    private Vector3f? _origin;
     public Vector3f Origin
     {
         get
         {
-            _origin.X = nativeEntityState.origin.x;
-            _origin.Y = nativeEntityState.origin.y;
-            _origin.Z = nativeEntityState.origin.z;
+            _origin ??= new Vector3f(_native.origin);
             return _origin;
         }
         set
         {
-            nativeEntityState.origin.x = value.X;
-            nativeEntityState.origin.y = value.Y;
-            nativeEntityState.origin.z = value.Z;
+            _origin ??= new Vector3f(_native.origin);
+            _origin.X = value.X;
+            _origin.Y = value.Y;
+            _origin.Z = value.Z;
         }
     }
 
-    private Vector3f _angles = new();
+    private Vector3f? _angles;
     public Vector3f Angles
     {
         get
         {
-            _angles.X = nativeEntityState.angles.x;
-            _angles.Y = nativeEntityState.angles.y;
-            _angles.Z = nativeEntityState.angles.z;
+            _angles ??= new Vector3f(_native.angles);
             return _angles;
         }
         set
         {
-            nativeEntityState.angles.x = value.X;
-            nativeEntityState.angles.y = value.Y;
-            nativeEntityState.angles.z = value.Z;
+            _angles ??= new Vector3f(_native.angles);
+            _angles.X = value.X;
+            _angles.Y = value.Y;
+            _angles.Z = value.Z;
         }
     }
 
     public int ModelIndex
     {
-        get => nativeEntityState.modelindex;
-        set => nativeEntityState.modelindex = value;
+        get => _native.modelindex;
+        set => _native.modelindex = value;
     }
 
     public int Sequence
     {
-        get => nativeEntityState.sequence;
-        set => nativeEntityState.sequence = value;
+        get => _native.sequence;
+        set => _native.sequence = value;
     }
 
     public float Frame
     {
-        get => nativeEntityState.frame;
-        set => nativeEntityState.frame = value;
+        get => _native.frame;
+        set => _native.frame = value;
     }
 
     public int ColorMap
     {
-        get => nativeEntityState.colormap;
-        set => nativeEntityState.colormap = value;
+        get => _native.colormap;
+        set => _native.colormap = value;
     }
 
     public short Skin
     {
-        get => nativeEntityState.skin;
-        set => nativeEntityState.skin = value;
+        get => _native.skin;
+        set => _native.skin = value;
     }
 
     public short Solid
     {
-        get => nativeEntityState.solid;
-        set => nativeEntityState.solid = value;
+        get => _native.solid;
+        set => _native.solid = value;
     }
 
     public int Effects
     {
-        get => nativeEntityState.effects;
-        set => nativeEntityState.effects = value;
+        get => _native.effects;
+        set => _native.effects = value;
     }
 
     public float Scale
     {
-        get => nativeEntityState.scale;
-        set => nativeEntityState.scale = value;
+        get => _native.scale;
+        set => _native.scale = value;
     }
 
     public byte EFlags
     {
-        get => nativeEntityState.eflags;
-        set => nativeEntityState.eflags = value;
+        get => _native.eflags;
+        set => _native.eflags = value;
     }
 
     public int RenderMode
     {
-        get => nativeEntityState.rendermode;
-        set => nativeEntityState.rendermode = value;
+        get => _native.rendermode;
+        set => _native.rendermode = value;
     }
 
     public int RenderAmt
     {
-        get => nativeEntityState.renderamt;
-        set => nativeEntityState.renderamt = value;
+        get => _native.renderamt;
+        set => _native.renderamt = value;
     }
 
     private Color24 _renderColor = new();
@@ -139,47 +134,47 @@ public class EntityState
     {
         get
         {
-            _renderColor.R = nativeEntityState.rendercolor.r;
-            _renderColor.G = nativeEntityState.rendercolor.g;
-            _renderColor.B = nativeEntityState.rendercolor.b;
+            _renderColor.R = _native.rendercolor.r;
+            _renderColor.G = _native.rendercolor.g;
+            _renderColor.B = _native.rendercolor.b;
             return _renderColor;
         }
         set
         {
-            nativeEntityState.rendercolor.r = value.R;
-            nativeEntityState.rendercolor.g = value.G;
-            nativeEntityState.rendercolor.b = value.B;
+            _native.rendercolor.r = value.R;
+            _native.rendercolor.g = value.G;
+            _native.rendercolor.b = value.B;
         }
     }
 
     public int RenderFx
     {
-        get => nativeEntityState.renderfx;
-        set => nativeEntityState.renderfx = value;
+        get => _native.renderfx;
+        set => _native.renderfx = value;
     }
 
     public int MoveType
     {
-        get => nativeEntityState.movetype;
-        set => nativeEntityState.movetype = value;
+        get => _native.movetype;
+        set => _native.movetype = value;
     }
 
     public float AnimTime
     {
-        get => nativeEntityState.animtime;
-        set => nativeEntityState.animtime = value;
+        get => _native.animtime;
+        set => _native.animtime = value;
     }
 
     public float FrameRate
     {
-        get => nativeEntityState.framerate;
-        set => nativeEntityState.framerate = value;
+        get => _native.framerate;
+        set => _native.framerate = value;
     }
 
     public int Body
     {
-        get => nativeEntityState.body;
-        set => nativeEntityState.body = value;
+        get => _native.body;
+        set => _native.body = value;
     }
 
     private readonly byte[] _controller = new byte[4];
@@ -187,18 +182,18 @@ public class EntityState
     {
         get
         {
-            _controller[0] = nativeEntityState.controller[0];
-            _controller[1] = nativeEntityState.controller[1];
-            _controller[2] = nativeEntityState.controller[2];
-            _controller[3] = nativeEntityState.controller[3];
+            _controller[0] = _native.controller[0];
+            _controller[1] = _native.controller[1];
+            _controller[2] = _native.controller[2];
+            _controller[3] = _native.controller[3];
             return _controller;
         }
         set
         {
-            nativeEntityState.controller[0] = value[0];
-            nativeEntityState.controller[1] = value[1];
-            nativeEntityState.controller[2] = value[2];
-            nativeEntityState.controller[3] = value[3];
+            _native.controller[0] = value[0];
+            _native.controller[1] = value[1];
+            _native.controller[2] = value[2];
+            _native.controller[3] = value[3];
         }
     }
 
@@ -207,360 +202,348 @@ public class EntityState
     {
         get
         {
-            _blending[0] = nativeEntityState.blending[0];
-            _blending[1] = nativeEntityState.blending[1];
-            _blending[2] = nativeEntityState.blending[2];
-            _blending[3] = nativeEntityState.blending[3];
+            _blending[0] = _native.blending[0];
+            _blending[1] = _native.blending[1];
+            _blending[2] = _native.blending[2];
+            _blending[3] = _native.blending[3];
             return _blending;
         }
         set
         {
-            nativeEntityState.blending[0] = value[0];
-            nativeEntityState.blending[1] = value[1];
-            nativeEntityState.blending[2] = value[2];
-            nativeEntityState.blending[3] = value[3];
+            _native.blending[0] = value[0];
+            _native.blending[1] = value[1];
+            _native.blending[2] = value[2];
+            _native.blending[3] = value[3];
         }
     }
 
-    private Vector3f _velocity = new();
+    private Vector3f? _velocity;
     public Vector3f Velocity
     {
         get
         {
-            _velocity.X = nativeEntityState.velocity.x;
-            _velocity.Y = nativeEntityState.velocity.y;
-            _velocity.Z = nativeEntityState.velocity.z;
+            _velocity ??= new Vector3f(_native.velocity);
             return _velocity;
         }
         set
         {
-            nativeEntityState.velocity.x = value.X;
-            nativeEntityState.velocity.y = value.Y;
-            nativeEntityState.velocity.z = value.Z;
+            _velocity ??= new Vector3f(_native.velocity);
+            _velocity.X = value.X;
+            _velocity.Y = value.Y;
+            _velocity.Z = value.Z;
         }
     }
 
-    private Vector3f _mins = new();
+    private Vector3f? _mins;
     public Vector3f Mins
     {
-        get 
+        get
         {
-            _mins.X = nativeEntityState.mins.x;
-            _mins.Y = nativeEntityState.mins.y;
-            _mins.Z = nativeEntityState.mins.z;
+            _mins ??= new Vector3f(_native.mins);
             return _mins;
         }
         set
         {
-            nativeEntityState.mins.x = value.X;
-            nativeEntityState.mins.y = value.Y;
-            nativeEntityState.mins.z = value.Z;
+            _mins ??= new Vector3f(_native.mins);
+            _mins.X = value.X;
+            _mins.Y = value.Y;
+            _mins.Z = value.Z;
         }
     }
 
-    private Vector3f _maxs = new();
+    private Vector3f? _maxs;
     public Vector3f Maxs
     {
         get
         {
-            _maxs.X = nativeEntityState.maxs.x;
-            _maxs.Y = nativeEntityState.maxs.y;
-            _maxs.Z = nativeEntityState.maxs.z;
+            _maxs ??= new Vector3f(_native.maxs);
             return _maxs;
         }
         set
         {
-            nativeEntityState.maxs.x = value.X;
-            nativeEntityState.maxs.y = value.Y;
-            nativeEntityState.maxs.z = value.Z;
+            _maxs ??= new Vector3f(_native.maxs);
+            _maxs.X = value.X;
+            _maxs.Y = value.Y;
+            _maxs.Z = value.Z;
         }
     }
 
     public int Aiment
     {
-        get => nativeEntityState.aiment;
-        set => nativeEntityState.aiment = value;
+        get => _native.aiment;
+        set => _native.aiment = value;
     }
 
     public int Owner
     {
-        get => nativeEntityState.owner;
-        set => nativeEntityState.owner = value;
+        get => _native.owner;
+        set => _native.owner = value;
     }
 
     public float Friction
     {
-        get => nativeEntityState.friction;
-        set => nativeEntityState.friction = value;
+        get => _native.friction;
+        set => _native.friction = value;
     }
 
     public float Gravity
     {
-        get => nativeEntityState.gravity;
-        set => nativeEntityState.gravity = value;
+        get => _native.gravity;
+        set => _native.gravity = value;
     }
 
     public int Team
     {
-        get => nativeEntityState.team;
-        set => nativeEntityState.team = value;
+        get => _native.team;
+        set => _native.team = value;
     }
 
     public int PlayerClass
     {
-        get => nativeEntityState.playerclass;
-        set => nativeEntityState.playerclass = value;
+        get => _native.playerclass;
+        set => _native.playerclass = value;
     }
 
     public int Health
     {
-        get => nativeEntityState.health;
-        set => nativeEntityState.health = value;
+        get => _native.health;
+        set => _native.health = value;
     }
 
     public bool Spectator
     {
-        get => nativeEntityState.spectator == QBoolean.TRUE;
-        set => nativeEntityState.spectator = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.spectator == QBoolean.TRUE;
+        set => _native.spectator = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public int WeaponModel
     {
-        get => nativeEntityState.weaponmodel;
-        set => nativeEntityState.weaponmodel = value;
+        get => _native.weaponmodel;
+        set => _native.weaponmodel = value;
     }
 
     public int GaitSequence
     {
-        get => nativeEntityState.gaitsequence;
-        set => nativeEntityState.gaitsequence = value;
+        get => _native.gaitsequence;
+        set => _native.gaitsequence = value;
     }
 
-    private Vector3f _baseVelocity = new();
+    private Vector3f? _basevelocity ;
     public Vector3f BaseVelocity
     {
         get
         {
-            _baseVelocity.X = nativeEntityState.basevelocity.x;
-            _baseVelocity.Y = nativeEntityState.basevelocity.y;
-            _baseVelocity.Z = nativeEntityState.basevelocity.z;
-            return _baseVelocity;
+            _basevelocity ??= new Vector3f(_native.basevelocity);
+            return _basevelocity;
         }
         set
         {
-            nativeEntityState.basevelocity.x = value.X;
-            nativeEntityState.basevelocity.y = value.Y;
-            nativeEntityState.basevelocity.z = value.Z;
+            _basevelocity ??= new Vector3f(_native.basevelocity);
+            _basevelocity.X = value.X;
+            _basevelocity.Y = value.Y;
+            _basevelocity.Z = value.Z;
         }
     }
 
     public int UseHull
     {
-        get => nativeEntityState.usehull;
-        set => nativeEntityState.usehull = value;
+        get => _native.usehull;
+        set => _native.usehull = value;
     }
 
     public int OldButtons
     {
-        get => nativeEntityState.oldbuttons;
-        set => nativeEntityState.oldbuttons = value;
+        get => _native.oldbuttons;
+        set => _native.oldbuttons = value;
     }
 
     public int OnGround
     {
-        get => nativeEntityState.onground;
-        set => nativeEntityState.onground = value;
+        get => _native.onground;
+        set => _native.onground = value;
     }
 
     public int IStepLeft
     {
-        get => nativeEntityState.iStepLeft;
-        set => nativeEntityState.iStepLeft = value;
+        get => _native.iStepLeft;
+        set => _native.iStepLeft = value;
     }
 
     public float FlFallVelocity
     {
-        get => nativeEntityState.flFallVelocity;
-        set => nativeEntityState.flFallVelocity = value;
+        get => _native.flFallVelocity;
+        set => _native.flFallVelocity = value;
     }
 
     public float Fov
     {
-        get => nativeEntityState.fov;
-        set => nativeEntityState.fov = value;
+        get => _native.fov;
+        set => _native.fov = value;
     }
 
     public int WeaponAnim
     {
-        get => nativeEntityState.weaponanim;
-        set => nativeEntityState.weaponanim = value;
+        get => _native.weaponanim;
+        set => _native.weaponanim = value;
     }
 
-    private Vector3f _startPos = new();
+    private Vector3f? _startpos;
     public Vector3f StartPos
     {
         get
         {
-            _startPos.X = nativeEntityState.startpos.x;
-            _startPos.Y = nativeEntityState.startpos.y;
-            _startPos.Z = nativeEntityState.startpos.z;
-            return _startPos;
+            _startpos ??= new Vector3f(_native.startpos);
+            return _startpos;
         }
         set
         {
-            nativeEntityState.startpos.x = value.X;
-            nativeEntityState.startpos.y = value.Y;
-            nativeEntityState.startpos.z = value.Z;
+            _startpos ??= new Vector3f(_native.startpos);
+            _startpos.X = value.X;
+            _startpos.Y = value.Y;
+            _startpos.Z = value.Z;
         }
     }
 
-    private Vector3f _endPos = new();
+    private Vector3f? _endpos;
     public Vector3f EndPos
     {
         get
         {
-            _endPos.X = nativeEntityState.endpos.x;
-            _endPos.Y = nativeEntityState.endpos.y;
-            _endPos.Z = nativeEntityState.endpos.z;
-            return _endPos;
+            _endpos ??= new Vector3f(_native.endpos);
+            return _endpos;
         }
         set
         {
-            nativeEntityState.endpos.x = value.X;
-            nativeEntityState.endpos.y = value.Y;
-            nativeEntityState.endpos.z = value.Z;
+            _endpos ??= new Vector3f(_native.endpos);
+            _endpos.X = value.X;
+            _endpos.Y = value.Y;
+            _endpos.Z = value.Z;
         }
     }
 
     public float ImpactTime
     {
-        get => nativeEntityState.impacttime;
-        set => nativeEntityState.impacttime = value;
+        get => _native.impacttime;
+        set => _native.impacttime = value;
     }
 
     public float StartTime
     {
-        get => nativeEntityState.starttime;
-        set => nativeEntityState.starttime = value;
+        get => _native.starttime;
+        set => _native.starttime = value;
     }
 
     public int IUser1
     {
-        get => nativeEntityState.iuser1;
-        set => nativeEntityState.iuser1 = value;
+        get => _native.iuser1;
+        set => _native.iuser1 = value;
     }
 
     public int IUser2
     {
-        get => nativeEntityState.iuser2;
-        set => nativeEntityState.iuser2 = value;
+        get => _native.iuser2;
+        set => _native.iuser2 = value;
     }
 
     public int IUser3
     {
-        get => nativeEntityState.iuser3;
-        set => nativeEntityState.iuser3 = value;
+        get => _native.iuser3;
+        set => _native.iuser3 = value;
     }
 
     public int IUser4
     {
-        get => nativeEntityState.iuser4;
-        set => nativeEntityState.iuser4 = value;
+        get => _native.iuser4;
+        set => _native.iuser4 = value;
     }
 
     public float FUser1
     {
-        get => nativeEntityState.fuser1;
-        set => nativeEntityState.fuser1 = value;
+        get => _native.fuser1;
+        set => _native.fuser1 = value;
     }
 
     public float FUser2
     {
-        get => nativeEntityState.fuser2;
-        set => nativeEntityState.fuser2 = value;
+        get => _native.fuser2;
+        set => _native.fuser2 = value;
     }
 
     public float FUser3
     {
-        get => nativeEntityState.fuser3;
-        set => nativeEntityState.fuser3 = value;
+        get => _native.fuser3;
+        set => _native.fuser3 = value;
     }
 
     public float FUser4
     {
-        get => nativeEntityState.fuser4;
-        set => nativeEntityState.fuser4 = value;
+        get => _native.fuser4;
+        set => _native.fuser4 = value;
     }
 
-    private Vector3f _vuser1 = new();
+    private Vector3f? _vuser1;
     public Vector3f VUser1
     {
         get
         {
-            _vuser1.X = nativeEntityState.vuser1.x;
-            _vuser1.Y = nativeEntityState.vuser1.y;
-            _vuser1.Z = nativeEntityState.vuser1.z;
+            _vuser1 ??= new Vector3f(_native.vuser1);
             return _vuser1;
         }
         set
         {
-            nativeEntityState.vuser1.x = value.X;
-            nativeEntityState.vuser1.y = value.Y;
-            nativeEntityState.vuser1.z = value.Z;
+            _vuser1 ??= new Vector3f(_native.vuser1);
+            _vuser1.X = value.X;
+            _vuser1.Y = value.Y;
+            _vuser1.Z = value.Z;
         }
     }
-
-    private Vector3f _vuser2 = new();
+    private Vector3f? _vuser2;
     public Vector3f VUser2
     {
         get
         {
-            _vuser2.X = nativeEntityState.vuser2.x;
-            _vuser2.Y = nativeEntityState.vuser2.y;
-            _vuser2.Z = nativeEntityState.vuser2.z;
+            _vuser2 ??= new Vector3f(_native.vuser2);
             return _vuser2;
         }
         set
         {
-            nativeEntityState.vuser2.x = value.X;
-            nativeEntityState.vuser2.y = value.Y;
-            nativeEntityState.vuser2.z = value.Z;
+            _vuser2 ??= new Vector3f(_native.vuser2);
+            _vuser2.X = value.X;
+            _vuser2.Y = value.Y;
+            _vuser2.Z = value.Z;
         }
     }
-
-    private Vector3f _vuser3 = new();
+    private Vector3f? _vuser3;
     public Vector3f VUser3
     {
         get
         {
-            _vuser3.X = nativeEntityState.vuser3.x;
-            _vuser3.Y = nativeEntityState.vuser3.y;
-            _vuser3.Z = nativeEntityState.vuser3.z;
+            _vuser3 ??= new Vector3f(_native.vuser3);
             return _vuser3;
         }
         set
         {
-            nativeEntityState.vuser3.x = value.X;
-            nativeEntityState.vuser3.y = value.Y;
-            nativeEntityState.vuser3.z = value.Z;
+            _vuser3 ??= new Vector3f(_native.vuser3);
+            _vuser3.X = value.X;
+            _vuser3.Y = value.Y;
+            _vuser3.Z = value.Z;
         }
-    }
 
-    private Vector3f _vuser4 = new();
+    }
+    private Vector3f? _vuser4;
     public Vector3f VUser4
     {
         get
         {
-            _vuser4.X = nativeEntityState.vuser4.x;
-            _vuser4.Y = nativeEntityState.vuser4.y;
-            _vuser4.Z = nativeEntityState.vuser4.z;
+            _vuser4 ??= new Vector3f(_native.vuser4);
             return _vuser4;
         }
         set
         {
-            nativeEntityState.vuser4.x = value.X;
-            nativeEntityState.vuser4.y = value.Y;
-            nativeEntityState.vuser4.z = value.Z;
+            _vuser4 ??= new Vector3f(_native.vuser4);
+            _vuser4.X = value.X;
+            _vuser4.Y = value.Y;
+            _vuser4.Z = value.Z;
         }
     }
 

@@ -1,336 +1,326 @@
 using Metamod.Native.Common;
-using Metamod.Native.Engine.PM;
 using System.Text;
 
 namespace Metamod.Struct.Common;
 
-public class ClientData
+public class ClientData : BaseManaged<NativeClientData>
 {
-    internal NativeClientData nativeClientData;
-
-    private Vector3f _origin = new();
+    private Vector3f? _origin;
     public Vector3f Origin
     {
         get
         {
-            _origin.X = nativeClientData.origin.x;
-            _origin.Y = nativeClientData.origin.y;
-            _origin.Z = nativeClientData.origin.z;
+            _origin ??= new Vector3f(_native.origin);
             return _origin;
         }
         set
         {
-            nativeClientData.origin.x = value.X;
-            nativeClientData.origin.y = value.Y;
-            nativeClientData.origin.z = value.Z;
+            _origin ??= new Vector3f(_native.origin);
+            _origin.X = value.X;
+            _origin.Y = value.Y;
+            _origin.Z = value.Z;
         }
     }
 
-    private Vector3f _velocity = new();
+    private Vector3f? _velocity;
     public Vector3f Velocity
     {
         get
         {
-            _velocity.X = nativeClientData.velocity.x;
-            _velocity.Y = nativeClientData.velocity.y;
-            _velocity.Z = nativeClientData.velocity.z;
+            _velocity ??= new Vector3f(_native.velocity);
             return _velocity;
         }
         set
         {
-            nativeClientData.velocity.x = value.X;
-            nativeClientData.velocity.y = value.Y;
-            nativeClientData.velocity.z = value.Z;
+            _velocity ??= new Vector3f(_native.velocity);
+            _velocity.X = value.X;
+            _velocity.Y = value.Y;
+            _velocity.Z = value.Z;
         }
     }
 
     public int ViewModel
     {
-        get => nativeClientData.viewmodel;
-        set => nativeClientData.viewmodel = value;
+        get => _native.viewmodel;
+        set => _native.viewmodel = value;
     }
 
-    private Vector3f _punchangle = new();
+    private Vector3f? _punchangle;
     public Vector3f PunchAngle
     {
         get
         {
-            _punchangle.X = nativeClientData.punchangle.x;
-            _punchangle.Y = nativeClientData.punchangle.y;
-            _punchangle.Z = nativeClientData.punchangle.z;
+            _punchangle ??= new Vector3f(_native.punchangle);
             return _punchangle;
         }
         set
         {
-            nativeClientData.punchangle.x = value.X;
-            nativeClientData.punchangle.y = value.Y;
-            nativeClientData.punchangle.z = value.Z;
+            _punchangle ??= new Vector3f(_native.punchangle);
+            _punchangle.X = value.X;
+            _punchangle.Y = value.Y;
+            _punchangle.Z = value.Z;
         }
     }
 
     public int Flags
     {
-        get => nativeClientData.flags;
-        set => nativeClientData.flags = value;
+        get => _native.flags;
+        set => _native.flags = value;
     }
 
     public int WaterLevel
     {
-        get => nativeClientData.waterlevel;
-        set => nativeClientData.waterlevel = value;
+        get => _native.waterlevel;
+        set => _native.waterlevel = value;
     }
 
     public int WaterType
     {
-        get => nativeClientData.watertype;
-        set => nativeClientData.watertype = value;
+        get => _native.watertype;
+        set => _native.watertype = value;
     }
 
-    private Vector3f _viewOfs = new();
+    private Vector3f? _view_ofs;
     public Vector3f ViewOfs
     {
         get
         {
-            _viewOfs.X = nativeClientData.view_ofs.x;
-            _viewOfs.Y = nativeClientData.view_ofs.y;
-            _viewOfs.Z = nativeClientData.view_ofs.z;
-            return _viewOfs;
+            _view_ofs ??= new Vector3f(_native.view_ofs);
+            return _view_ofs;
         }
         set
         {
-            nativeClientData.view_ofs.x = value.X;
-            nativeClientData.view_ofs.y = value.Y;
-            nativeClientData.view_ofs.z = value.Z;
+            _view_ofs ??= new Vector3f(_native.view_ofs);
+            _view_ofs.X = value.X;
+            _view_ofs.Y = value.Y;
+            _view_ofs.Z = value.Z;
         }
     }
 
     public float Health
     {
-        get => nativeClientData.health;
-        set => nativeClientData.health = value;
+        get => _native.health;
+        set => _native.health = value;
     }
 
     public int BInDuck
     {
-        get => nativeClientData.bInDuck;
-        set => nativeClientData.bInDuck = value;
+        get => _native.bInDuck;
+        set => _native.bInDuck = value;
     }
 
     public int Weapons
     {
-        get => nativeClientData.weapons;
-        set => nativeClientData.weapons = value;
+        get => _native.weapons;
+        set => _native.weapons = value;
     }
 
     public int FlTimeStepSound
     {
-        get => nativeClientData.flTimeStepSound;
-        set => nativeClientData.flTimeStepSound = value;
+        get => _native.flTimeStepSound;
+        set => _native.flTimeStepSound = value;
     }
 
     public int FlDuckTime
     {
-        get => nativeClientData.flDuckTime;
-        set => nativeClientData.flDuckTime = value;
+        get => _native.flDuckTime;
+        set => _native.flDuckTime = value;
     }
 
     public int FlSwimTime
     {
-        get => nativeClientData.flSwimTime;
-        set => nativeClientData.flSwimTime = value;
+        get => _native.flSwimTime;
+        set => _native.flSwimTime = value;
     }
 
     public int WaterJumpTime
     {
-        get => nativeClientData.waterjumptime;
-        set => nativeClientData.waterjumptime = value;
+        get => _native.waterjumptime;
+        set => _native.waterjumptime = value;
     }
 
     public float MaxSpeed
     {
-        get => nativeClientData.maxspeed;
-        set => nativeClientData.maxspeed = value;
+        get => _native.maxspeed;
+        set => _native.maxspeed = value;
     }
 
     public float Fov
     {
-        get => nativeClientData.fov;
-        set => nativeClientData.fov = value;
+        get => _native.fov;
+        set => _native.fov = value;
     }
 
     public int WeaponAnim
     {
-        get => nativeClientData.weaponanim;
-        set => nativeClientData.weaponanim = value;
+        get => _native.weaponanim;
+        set => _native.weaponanim = value;
     }
 
     public int MId
     {
-        get => nativeClientData.m_iId;
-        set => nativeClientData.m_iId = value;
+        get => _native.m_iId;
+        set => _native.m_iId = value;
     }
 
     public int AmmoShells
     {
-        get => nativeClientData.ammo_shells;
-        set => nativeClientData.ammo_shells = value;
+        get => _native.ammo_shells;
+        set => _native.ammo_shells = value;
     }
 
     public int AmmoNails
     {
-        get => nativeClientData.ammo_nails;
-        set => nativeClientData.ammo_nails = value;
+        get => _native.ammo_nails;
+        set => _native.ammo_nails = value;
     }
 
     public int AmmoCells
     {
-        get => nativeClientData.ammo_cells;
-        set => nativeClientData.ammo_cells = value;
+        get => _native.ammo_cells;
+        set => _native.ammo_cells = value;
     }
 
     public int AmmoRockets
     {
-        get => nativeClientData.ammo_rockets;
-        set => nativeClientData.ammo_rockets = value;
+        get => _native.ammo_rockets;
+        set => _native.ammo_rockets = value;
     }
 
     public float MFlNextAttack
     {
-        get => nativeClientData.m_flNextAttack;
-        set => nativeClientData.m_flNextAttack = value;
+        get => _native.m_flNextAttack;
+        set => _native.m_flNextAttack = value;
     }
 
     public int TfState
     {
-        get => nativeClientData.tfstate;
-        set => nativeClientData.tfstate = value;
+        get => _native.tfstate;
+        set => _native.tfstate = value;
     }
 
     public int PushMsec
     {
-        get => nativeClientData.pushmsec;
-        set => nativeClientData.pushmsec = value;
+        get => _native.pushmsec;
+        set => _native.pushmsec = value;
     }
 
     public int DeadFlag
     {
-        get => nativeClientData.deadflag;
-        set => nativeClientData.deadflag = value;
+        get => _native.deadflag;
+        set => _native.deadflag = value;
     }
 
     public string PhysInfo
     {
-        get => Encoding.UTF8.GetString(nativeClientData.physinfo);
+        get => Encoding.UTF8.GetString(_native.physinfo);
         set
         {
             var bytes = Encoding.UTF8.GetBytes(value);
-            Array.Copy(bytes, nativeClientData.physinfo, Math.Min(bytes.Length, nativeClientData.physinfo.Length));
-            if (bytes.Length < nativeClientData.physinfo.Length)
-                nativeClientData.physinfo[bytes.Length] = 0;
+            Array.Copy(bytes, _native.physinfo, Math.Min(bytes.Length, _native.physinfo.Length));
+            if (bytes.Length < _native.physinfo.Length)
+                _native.physinfo[bytes.Length] = 0;
             else
-                nativeClientData.physinfo[nativeClientData.physinfo.Length - 1] = 0;
+                _native.physinfo[_native.physinfo.Length - 1] = 0;
         }
     }
 
     public int IUser1
     {
-        get => nativeClientData.iuser1;
-        set => nativeClientData.iuser1 = value;
+        get => _native.iuser1;
+        set => _native.iuser1 = value;
     }
 
     public int IUser2
     {
-        get => nativeClientData.iuser2;
-        set => nativeClientData.iuser2 = value;
+        get => _native.iuser2;
+        set => _native.iuser2 = value;
     }
 
     public int IUser3
     {
-        get => nativeClientData.iuser3;
-        set => nativeClientData.iuser3 = value;
+        get => _native.iuser3;
+        set => _native.iuser3 = value;
     }
 
     public int IUser4
     {
-        get => nativeClientData.iuser4;
-        set => nativeClientData.iuser4 = value;
+        get => _native.iuser4;
+        set => _native.iuser4 = value;
     }
 
     public float FUser1
     {
-        get => nativeClientData.fuser1;
-        set => nativeClientData.fuser1 = value;
+        get => _native.fuser1;
+        set => _native.fuser1 = value;
     }
 
     public float FUser2
     {
-        get => nativeClientData.fuser2;
-        set => nativeClientData.fuser2 = value;
+        get => _native.fuser2;
+        set => _native.fuser2 = value;
     }
 
     public float FUser3
     {
-        get => nativeClientData.fuser3;
-        set => nativeClientData.fuser3 = value;
+        get => _native.fuser3;
+        set => _native.fuser3 = value;
     }
 
     public float FUser4
     {
-        get => nativeClientData.fuser4;
-        set => nativeClientData.fuser4 = value;
+        get => _native.fuser4;
+        set => _native.fuser4 = value;
     }
 
-    private Vector3f _vuser1 = new();
+    private Vector3f? _vuser1;
     public Vector3f VUser1
     {
         get
         {
-            _vuser1.X = nativeClientData.vuser1.x;
-            _vuser1.Y = nativeClientData.vuser1.y;
-            _vuser1.Z = nativeClientData.vuser1.z;
+            _vuser1 ??= new Vector3f(_native.vuser1);
             return _vuser1;
         }
         set
         {
-            nativeClientData.vuser1.x = value.X;
-            nativeClientData.vuser1.y = value.Y;
-            nativeClientData.vuser1.z = value.Z;
+            _vuser1 ??= new Vector3f(_native.vuser1);
+            _vuser1.X = value.X;
+            _vuser1.Y = value.Y;
+            _vuser1.Z = value.Z;
         }
     }
 
-    private Vector3f _vuser2 = new();
+    private Vector3f? _vuser2;
     public Vector3f VUser2
     {
         get
         {
-            _vuser2.X = nativeClientData.vuser2.x;
-            _vuser2.Y = nativeClientData.vuser2.y;
-            _vuser2.Z = nativeClientData.vuser2.z;
+            _vuser2 ??= new Vector3f(_native.vuser2);
             return _vuser2;
         }
         set
         {
-            nativeClientData.vuser2.x = value.X;
-            nativeClientData.vuser2.y = value.Y;
-            nativeClientData.vuser2.z = value.Z;
+            _vuser2 ??= new Vector3f(_native.vuser2);
+            _vuser2.X = value.X;
+            _vuser2.Y = value.Y;
+            _vuser2.Z = value.Z;
         }
     }
 
-    private Vector3f _vuser3 = new();
+    private Vector3f? _vuser3;
     public Vector3f VUser3
     {
         get
         {
-            _vuser3.X = nativeClientData.vuser3.x;
-            _vuser3.Y = nativeClientData.vuser3.y;
-            _vuser3.Z = nativeClientData.vuser3.z;
+            _vuser3 ??= new Vector3f(_native.vuser3);
             return _vuser3;
         }
         set
         {
-            nativeClientData.vuser3.x = value.X;
-            nativeClientData.vuser3.y = value.Y;
-            nativeClientData.vuser3.z = value.Z;
+            _vuser3 ??= new Vector3f(_native.vuser3);
+            _vuser3.X = value.X;
+            _vuser3.Y = value.Y;
+            _vuser3.Z = value.Z;
         }
     }
 
@@ -339,16 +329,15 @@ public class ClientData
     {
         get
         {
-            _vuser4.X = nativeClientData.vuser4.x;
-            _vuser4.Y = nativeClientData.vuser4.y;
-            _vuser4.Z = nativeClientData.vuser4.z;
+            _vuser4 ??= new Vector3f(_native.vuser4);
             return _vuser4;
         }
         set
         {
-            nativeClientData.vuser4.x = value.X;
-            nativeClientData.vuser4.y = value.Y;
-            nativeClientData.vuser4.z = value.Z;
+            _vuser4 ??= new Vector3f(_native.vuser4);
+            _vuser4.X = value.X;
+            _vuser4.Y = value.Y;
+            _vuser4.Z = value.Z;
         }
     }
 

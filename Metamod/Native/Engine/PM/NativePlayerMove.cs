@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Engine.PM;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativePlayerMove
+public struct NativePlayerMove
 {
     internal int player_index;  // So we don't try to run the PM_CheckStuck nudging too quickly.
     internal QBoolean server;        // For debugging, are we running physics code on server side?

@@ -4,14 +4,12 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Struct.Engine;
 
-public class Customization
+public class Customization : BaseManaged<NativeCustomization>
 {
-    internal NativeCustomization nativeCustomization;
-
     public bool InUse
     {
-        get => nativeCustomization.bInUse == QBoolean.TRUE;
-        set => nativeCustomization.bInUse = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.bInUse == QBoolean.TRUE;
+        set => _native.bInUse = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     private Resource _resource = new();
@@ -19,7 +17,7 @@ public class Customization
     {
         get
         {
-            _resource.nativeResource = nativeCustomization.resource;
+            _resource._native = _native.resource;
             return _resource;
         }
         set => _resource = value;
@@ -27,32 +25,32 @@ public class Customization
 
     public bool Translated
     {
-        get => nativeCustomization.bTranslated == QBoolean.TRUE;
-        set => nativeCustomization.bTranslated = value ? QBoolean.TRUE : QBoolean.FALSE;
+        get => _native.bTranslated == QBoolean.TRUE;
+        set => _native.bTranslated = value ? QBoolean.TRUE : QBoolean.FALSE;
     }
 
     public int UserData1
     {
-        get => nativeCustomization.nUserData1;
-        set => nativeCustomization.nUserData1 = value;
+        get => _native.nUserData1;
+        set => _native.nUserData1 = value;
     }
 
     public int UserData2
     {
-        get => nativeCustomization.nUserData2;
-        set => nativeCustomization.nUserData2 = value;
+        get => _native.nUserData2;
+        set => _native.nUserData2 = value;
     }
 
     public nint Info
     {
-        get => nativeCustomization.pInfo;
-        set => nativeCustomization.pInfo = value;
+        get => _native.pInfo;
+        set => _native.pInfo = value;
     }
 
     public nint Buffer
     {
-        get => nativeCustomization.pBuffer;
-        set => nativeCustomization.pBuffer = value;
+        get => _native.pBuffer;
+        set => _native.pBuffer = value;
     }
 
     private Customization _next = new();
@@ -63,9 +61,9 @@ public class Customization
             NativeCustomization next;
             unsafe
             {
-                next = Marshal.PtrToStructure<NativeCustomization>((nint)nativeCustomization.pNext);
+                next = Marshal.PtrToStructure<NativeCustomization>((nint)_native.pNext);
             }
-            _next.nativeCustomization = next;
+            _next._native = next;
             return _next;
         }
         set => _next = value;

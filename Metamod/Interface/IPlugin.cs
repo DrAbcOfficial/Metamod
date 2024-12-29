@@ -5,7 +5,7 @@ namespace Metamod.Interface;
 
 public interface IPlugin
 {
-    void GiveFnptrsToDll(EngineFuncs pengfuncsFromEngine, nint pGlobals);
+    void GiveFnptrsToDll(CEngineFuncs pengfuncsFromEngine, CGlobalVars pGlobals);
 
     void Meta_Init();
     bool Meta_Query(InterfaceVersion interfaceVersion, nint pMetaUtilFuncs);

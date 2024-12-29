@@ -3,7 +3,7 @@
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativeEdict
+public struct NativeEdict
 {
     internal int free;
     internal int serialnumber;

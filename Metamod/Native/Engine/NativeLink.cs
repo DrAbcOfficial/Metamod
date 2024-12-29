@@ -3,7 +3,7 @@
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativeLink
+public struct NativeLink
 {
     internal nint prev; // Pointer to the previous node in the linked list
     internal nint next; // Pointer to the next node in the linked list

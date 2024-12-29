@@ -4,309 +4,297 @@ using System.Text;
 
 namespace Metamod.Struct.Engine.PM;
 
-public class PhySent
+public class PhySent : BaseManaged<NativePhySent>
 {
-    internal NativePhySent nativePhySent;
-
     public string Name
     {
-        get => Encoding.UTF8.GetString(nativePhySent.name);
+        get => Encoding.UTF8.GetString(_native.name);
         set
         {
             var bytes = Encoding.UTF8.GetBytes(value);
-            Array.Copy(bytes, nativePhySent.name, Math.Min(bytes.Length, nativePhySent.name.Length));
-            if (bytes.Length < nativePhySent.name.Length)
-                nativePhySent.name[bytes.Length] = 0;
+            Array.Copy(bytes, _native.name, Math.Min(bytes.Length, _native.name.Length));
+            if (bytes.Length < _native.name.Length)
+                _native.name[bytes.Length] = 0;
             else
-                nativePhySent.name[nativePhySent.name.Length - 1] = 0;
+                _native.name[_native.name.Length - 1] = 0;
         }
     }
 
     public int Player
     {
-        get => nativePhySent.player;
-        set => nativePhySent.player = value;
+        get => _native.player;
+        set => _native.player = value;
     }
 
-    private Vector3f _origin = new();
+    private Vector3f? _origin;
     public Vector3f Origin
     {
         get
         {
-            _origin.X = nativePhySent.origin.x;
-            _origin.Y = nativePhySent.origin.y;
-            _origin.Z = nativePhySent.origin.z;
+            _origin ??= new Vector3f(_native.origin);
             return _origin;
         }
         set
         {
-            nativePhySent.origin.x = value.X;
-            nativePhySent.origin.y = value.Y;
-            nativePhySent.origin.z = value.Z;
+            _origin ??= new Vector3f(_native.origin);
+            _origin.X = value.X;
+            _origin.Y = value.Y;
+            _origin.Z = value.Z;
         }
     }
 
     public nint Model
     {
-        get => nativePhySent.model;
-        set => nativePhySent.model = value;
+        get => _native.model;
+        set => _native.model = value;
     }
 
     public nint StudioModel
     {
-        get => nativePhySent.studiomodel;
-        set => nativePhySent.studiomodel = value;
+        get => _native.studiomodel;
+        set => _native.studiomodel = value;
     }
 
-    private Vector3f _mins = new();
+    private Vector3f? _mins;
     public Vector3f Mins
     {
         get
         {
-            _mins.X = nativePhySent.mins.x;
-            _mins.Y = nativePhySent.mins.y;
-            _mins.Z = nativePhySent.mins.z;
+            _mins ??= new Vector3f(_native.mins);
             return _mins;
         }
         set
         {
-            nativePhySent.mins.x = value.X;
-            nativePhySent.mins.y = value.Y;
-            nativePhySent.mins.z = value.Z;
+            _mins ??= new Vector3f(_native.mins);
+            _mins.X = value.X;
+            _mins.Y = value.Y;
+            _mins.Z = value.Z;
         }
     }
 
-    private Vector3f _maxs = new();
+    private Vector3f? _maxs;
     public Vector3f Maxs
     {
         get
         {
-            _maxs.X = nativePhySent.maxs.x;
-            _maxs.Y = nativePhySent.maxs.y;
-            _maxs.Z = nativePhySent.maxs.z;
+            _maxs ??= new Vector3f(_native.maxs);
             return _maxs;
         }
         set
         {
-            nativePhySent.maxs.x = value.X;
-            nativePhySent.maxs.y = value.Y;
-            nativePhySent.maxs.z = value.Z;
+            _maxs ??= new Vector3f(_native.maxs);
+            _maxs.X = value.X;
+            _maxs.Y = value.Y;
+            _maxs.Z = value.Z;
         }
     }
 
     public int Info
     {
-        get => nativePhySent.info;
-        set => nativePhySent.info = value;
+        get => _native.info;
+        set => _native.info = value;
     }
 
-    private Vector3f _angles = new();
+    private Vector3f? _angles;
     public Vector3f Angles
     {
         get
         {
-            _angles.X = nativePhySent.angles.x;
-            _angles.Y = nativePhySent.angles.y;
-            _angles.Z = nativePhySent.angles.z;
+            _angles ??= new Vector3f(_native.angles);
             return _angles;
         }
         set
         {
-            nativePhySent.angles.x = value.X;
-            nativePhySent.angles.y = value.Y;
-            nativePhySent.angles.z = value.Z;
+            _angles ??= new Vector3f(_native.angles);
+            _angles.X = value.X;
+            _angles.Y = value.Y;
+            _angles.Z = value.Z;
         }
     }
 
     public int Solid
     {
-        get => nativePhySent.solid;
-        set => nativePhySent.solid = value;
+        get => _native.solid;
+        set => _native.solid = value;
     }
 
     public int Skin
     {
-        get => nativePhySent.skin;
-        set => nativePhySent.skin = value;
+        get => _native.skin;
+        set => _native.skin = value;
     }
 
     public int RenderMode
     {
-        get => nativePhySent.rendermode;
-        set => nativePhySent.rendermode = value;
+        get => _native.rendermode;
+        set => _native.rendermode = value;
     }
 
     public float Frame
     {
-        get => nativePhySent.frame;
-        set => nativePhySent.frame = value;
+        get => _native.frame;
+        set => _native.frame = value;
     }
 
     public int Sequence
     {
-        get => nativePhySent.sequence;
-        set => nativePhySent.sequence = value;
+        get => _native.sequence;
+        set => _native.sequence = value;
     }
 
     public byte[] Controller
     {
-        get => nativePhySent.controller;
-        set => nativePhySent.controller = value;
+        get => _native.controller;
+        set => _native.controller = value;
     }
 
     public byte[] Blending
     {
-        get => nativePhySent.blending;
-        set => nativePhySent.blending = value;
+        get => _native.blending;
+        set => _native.blending = value;
     }
 
     public int MoveType
     {
-        get => nativePhySent.movetype;
-        set => nativePhySent.movetype = value;
+        get => _native.movetype;
+        set => _native.movetype = value;
     }
 
     public int TakeDamage
     {
-        get => nativePhySent.takedamage;
-        set => nativePhySent.takedamage = value;
+        get => _native.takedamage;
+        set => _native.takedamage = value;
     }
 
     public int BloodDecal
     {
-        get => nativePhySent.blooddecal;
-        set => nativePhySent.blooddecal = value;
+        get => _native.blooddecal;
+        set => _native.blooddecal = value;
     }
 
     public int Team
     {
-        get => nativePhySent.team;
-        set => nativePhySent.team = value;
+        get => _native.team;
+        set => _native.team = value;
     }
 
     public int ClassNumber
     {
-        get => nativePhySent.classnumber;
-        set => nativePhySent.classnumber = value;
+        get => _native.classnumber;
+        set => _native.classnumber = value;
     }
 
     public int IUser1
     {
-        get => nativePhySent.iuser1;
-        set => nativePhySent.iuser1 = value;
+        get => _native.iuser1;
+        set => _native.iuser1 = value;
     }
 
     public int IUser2
     {
-        get => nativePhySent.iuser2;
-        set => nativePhySent.iuser2 = value;
+        get => _native.iuser2;
+        set => _native.iuser2 = value;
     }
 
     public int IUser3
     {
-        get => nativePhySent.iuser3;
-        set => nativePhySent.iuser3 = value;
+        get => _native.iuser3;
+        set => _native.iuser3 = value;
     }
 
     public int IUser4
     {
-        get => nativePhySent.iuser4;
-        set => nativePhySent.iuser4 = value;
+        get => _native.iuser4;
+        set => _native.iuser4 = value;
     }
 
     public float FUser1
     {
-        get => nativePhySent.fuser1;
-        set => nativePhySent.fuser1 = value;
+        get => _native.fuser1;
+        set => _native.fuser1 = value;
     }
 
     public float FUser2
     {
-        get => nativePhySent.fuser2;
-        set => nativePhySent.fuser2 = value;
+        get => _native.fuser2;
+        set => _native.fuser2 = value;
     }
 
     public float FUser3
     {
-        get => nativePhySent.fuser3;
-        set => nativePhySent.fuser3 = value;
+        get => _native.fuser3;
+        set => _native.fuser3 = value;
     }
 
     public float FUser4
     {
-        get => nativePhySent.fuser4;
-        set => nativePhySent.fuser4 = value;
+        get => _native.fuser4;
+        set => _native.fuser4 = value;
     }
 
-    private Vector3f _vuser1 = new();
+    private Vector3f? _vuser1;
     public Vector3f VUser1
     {
         get
         {
-            _vuser1.X = nativePhySent.vuser1.x;
-            _vuser1.Y = nativePhySent.vuser1.y;
-            _vuser1.Z = nativePhySent.vuser1.z;
+            _vuser1 ??= new Vector3f(_native.vuser1);
             return _vuser1;
         }
         set
         {
-            nativePhySent.vuser1.x = value.X;
-            nativePhySent.vuser1.y = value.Y;
-            nativePhySent.vuser1.z = value.Z;
+            _vuser1 ??= new Vector3f(_native.vuser1);
+            _vuser1.X = value.X;
+            _vuser1.Y = value.Y;
+            _vuser1.Z = value.Z;
         }
     }
-
-    private Vector3f _vuser2 = new();
+    private Vector3f? _vuser2;
     public Vector3f VUser2
     {
         get
         {
-            _vuser2.X = nativePhySent.vuser2.x;
-            _vuser2.Y = nativePhySent.vuser2.y;
-            _vuser2.Z = nativePhySent.vuser2.z;
+            _vuser2 ??= new Vector3f(_native.vuser2);
             return _vuser2;
         }
         set
         {
-            nativePhySent.vuser2.x = value.X;
-            nativePhySent.vuser2.y = value.Y;
-            nativePhySent.vuser2.z = value.Z;
+            _vuser2 ??= new Vector3f(_native.vuser2);
+            _vuser2.X = value.X;
+            _vuser2.Y = value.Y;
+            _vuser2.Z = value.Z;
         }
     }
-
-    private Vector3f _vuser3 = new();
+    private Vector3f? _vuser3;
     public Vector3f VUser3
     {
         get
         {
-            _vuser3.X = nativePhySent.vuser3.x;
-            _vuser3.Y = nativePhySent.vuser3.y;
-            _vuser3.Z = nativePhySent.vuser3.z;
+            _vuser3 ??= new Vector3f(_native.vuser3);
             return _vuser3;
         }
         set
         {
-            nativePhySent.vuser3.x = value.X;
-            nativePhySent.vuser3.y = value.Y;
-            nativePhySent.vuser3.z = value.Z;
+            _vuser3 ??= new Vector3f(_native.vuser3);
+            _vuser3.X = value.X;
+            _vuser3.Y = value.Y;
+            _vuser3.Z = value.Z;
         }
-    }
 
-    private Vector3f _vuser4 = new();
+    }
+    private Vector3f? _vuser4;
     public Vector3f VUser4
     {
         get
         {
-            _vuser4.X = nativePhySent.vuser4.x;
-            _vuser4.Y = nativePhySent.vuser4.y;
-            _vuser4.Z = nativePhySent.vuser4.z;
+            _vuser4 ??= new Vector3f(_native.vuser4);
             return _vuser4;
         }
         set
         {
-            nativePhySent.vuser4.x = value.X;
-            nativePhySent.vuser4.y = value.Y;
-            nativePhySent.vuser4.z = value.Z;
+            _vuser4 ??= new Vector3f(_native.vuser4);
+            _vuser4.X = value.X;
+            _vuser4.Y = value.Y;
+            _vuser4.Z = value.Z;
         }
     }
 

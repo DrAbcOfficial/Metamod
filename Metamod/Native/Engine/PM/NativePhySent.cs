@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Engine.PM;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativePhySent
+public struct NativePhySent
 {
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
     internal byte[] name;             // Name of model, or "player" or "world".

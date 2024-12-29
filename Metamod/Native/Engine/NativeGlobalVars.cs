@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct NativeGlobalVars
+public struct NativeGlobalVars
 {
     internal float time;
     internal float frametime;
@@ -25,9 +25,7 @@ internal unsafe struct NativeGlobalVars
     internal NativeVector3f trace_endpos;
     internal NativeVector3f trace_plane_normal;
     internal float trace_plane_dist;
-#pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
-    internal NativeEdict* trace_ent;
-#pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
+    internal nint trace_ent;
     internal float trace_inopen;
     internal float trace_inwater;
     internal int trace_hitgroup;

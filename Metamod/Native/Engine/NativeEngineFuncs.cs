@@ -3,7 +3,7 @@
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct NativeEngineFuncs
+public unsafe struct NativeEngineFuncs
 {
     internal PrecacheModelDelegate pfnPrecacheModel;
     internal PrecacheSoundDelegate pfnPrecacheSound;
