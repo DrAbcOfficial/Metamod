@@ -160,16 +160,16 @@ public struct NativeMetaUtilFuncs
     internal unsafe delegate nint ReverseSearchPatternDelegate(nint pStartSearch, uint dwSearchLen, byte* pPattern, uint dwPatternLen);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int DisasmSingleInstructionDelegate(nint address, DisasmSingleCallbackDelegate fnDisasmSingleCallback, nint context);
+    internal delegate int DisasmSingleInstructionDelegate(nint address, nint fnDisasmSingleCallback, nint context);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate QBoolean DisasmRangesDelegate(nint disasmBase, uint disasmSize, DisasmCallbackDelegate fnDisasmCallback, int depth, nint context);
+    internal delegate QBoolean DisasmRangesDelegate(nint disasmBase, uint disasmSize, nint fnDisasmCallback, int depth, nint context);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate nint ReverseSearchFunctionBeginDelegate(nint searchBegin, uint searchSize);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint ReverseSearchFunctionBeginExDelegate(nint searchBegin, uint searchSize, FindAddressCallbackDelegate fnFindAddressCallback);
+    internal delegate nint ReverseSearchFunctionBeginExDelegate(nint searchBegin, uint searchSize, nint fnFindAddressCallback);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void CloseModuleHandleDelegate(nint hModule);
@@ -206,11 +206,11 @@ public struct NativeMetaUtilFuncs
 
 #region Delegate For Delegate
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-internal delegate void DisasmSingleCallbackDelegate(nint inst, nint address, uint instLen, nint context);
+public delegate void DisasmSingleCallbackDelegate(nint inst, nint address, uint instLen, nint context);
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-internal delegate QBoolean DisasmCallbackDelegate(nint inst, nint address, uint instLen, int instCount, int depth, nint context);
+public delegate QBoolean DisasmCallbackDelegate(nint inst, nint address, uint instLen, int instCount, int depth, nint context);
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-internal delegate QBoolean FindAddressCallbackDelegate(nint address);
+public delegate QBoolean FindAddressCallbackDelegate(nint address);
 #endregion

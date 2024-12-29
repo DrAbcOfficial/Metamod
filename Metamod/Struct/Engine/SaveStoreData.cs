@@ -1,6 +1,5 @@
 ﻿using Metamod.Native.Engine;
 using Metamod.Struct.Common;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Metamod.Struct.Engine;
@@ -149,7 +148,7 @@ public class SaveStoreData : BaseManaged<NativeSaveStoreData>
             _levelList = value;
         }
     }
-    
+
     public int UseLandmarl
     {
         get => _native.fUseLandmark;
@@ -171,7 +170,7 @@ public class SaveStoreData : BaseManaged<NativeSaveStoreData>
     }
 
     private Vector3f? _landmarkOffset;
-    public Vector3f? LandmarkOffset
+    public Vector3f LandmarkOffset
     {
         get
         {

@@ -1,17 +1,17 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Metamod.Struct;
 
-public abstract class BaseManaged<T> where T : struct
+public abstract class BaseManaged<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T> where T : struct
 {
     internal T _native;
     private nint _ptr;
     internal bool _fromNative;
 
-
     public nint GetUnmanagedPtr()
     {
-        if(_ptr == IntPtr.Zero)
+        if (_ptr == IntPtr.Zero)
             Marshal.StructureToPtr<T>(_native, _ptr, !_fromNative);
         return _ptr;
     }
@@ -37,7 +37,7 @@ public abstract class BaseManaged<T> where T : struct
 
     ~BaseManaged()
     {
-        if(!_fromNative)
+        if (!_fromNative)
             Marshal.FreeHGlobal(_ptr);
     }
 }

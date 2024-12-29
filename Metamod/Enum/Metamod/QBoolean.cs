@@ -1,6 +1,6 @@
 ﻿namespace Metamod.Enum.Metamod;
 
-internal enum QBoolean
+public enum QBoolean
 {
     FALSE = 0,
     TRUE = 1
