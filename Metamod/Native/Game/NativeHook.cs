@@ -3,7 +3,7 @@
 namespace Metamod.Native.Game;
 
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct NativeHook
+public struct NativeHook
 {
     internal int iType;
     internal int bCommitted;
@@ -14,8 +14,8 @@ internal unsafe struct NativeHook
     internal int iTableIndex;
     internal int iFuncIndex;
     internal nint hModule;
-    internal byte* pszModuleName;
-    internal byte* pszFuncName;
-    internal NativeHook* pNext;
+    internal nint pszModuleName;
+    internal nint pszFuncName;
+    internal nint pNext;
     internal nint pInfo;
 };

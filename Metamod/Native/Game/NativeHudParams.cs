@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativeHudParams
+public struct NativeHudParams
 {
     internal float x;           // x-coordinate for the HUD text
     internal float y;           // y-coordinate for the HUD text

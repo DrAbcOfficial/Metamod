@@ -22,6 +22,22 @@ public class StringHandle : BaseManaged<string_t>
         SetString(str);
     }
 
+    public nint GetPtr()
+    {
+        return _ptr;
+    }
+
+    public void SetPtr(nint ptr)
+    {
+        if (_need_release)
+        {
+            Marshal.FreeHGlobal(_ptr);
+        }
+        _ptr = ptr;
+        _need_release = false;
+        _native.value = (int)(_ptr - Global.GlobalVars.StringBase);
+
+    }
     public void SetString(string str)
     {
         if (_need_release)

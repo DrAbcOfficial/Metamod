@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-internal unsafe struct NativeTypeDescription
+public unsafe struct NativeTypeDescription
 {
     internal FieldType fieldType;
     internal byte* fieldName;
