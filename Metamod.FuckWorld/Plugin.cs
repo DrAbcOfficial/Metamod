@@ -6,9 +6,9 @@ namespace Metamod.FuckWorld
 {
     public class Plugin : IPlugin
     {
-        public void GiveFnptrsToDll(CEngineFuncs pengfuncsFromEngine, nint pGlobals)
+        public void GiveFnptrsToDll(CEngineFuncs pengfuncsFromEngine, CGlobalVars pGlobals)
         {
-            FuckWorld.EngineFuncs = pengfuncsFromEngine;
+
         }
 
         public void Meta_Init()
@@ -21,9 +21,9 @@ namespace Metamod.FuckWorld
         }
         public bool Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
         {
-            FuckWorld.EngineFuncs.AddServerCommand("cs_fuck", () =>
+            Global.EngineFuncs.AddServerCommand("cs_fuck", () =>
             {
-                FuckWorld.EngineFuncs.ServerPrint("Fuck World!");
+                Global.EngineFuncs.ServerPrint("Fuck World!");
             });
             return true;
         }
