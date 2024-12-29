@@ -1,5 +1,6 @@
 ﻿using Metamod.Enum.Metamod;
 using Metamod.Struct.Engine;
+using Metamod.Struct.Metamod;
 
 namespace Metamod.Interface;
 
@@ -8,7 +9,7 @@ public interface IPlugin
     void GiveFnptrsToDll(CEngineFuncs pengfuncsFromEngine, CGlobalVars pGlobals);
 
     void Meta_Init();
-    bool Meta_Query(InterfaceVersion interfaceVersion, nint pMetaUtilFuncs);
+    bool Meta_Query(InterfaceVersion interfaceVersion, CMetaUtilFuncs pMetaUtilFuncs);
     bool Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs);
     bool Meta_Detach(PluginLoadTime now, PluginUnloadReason reason);
 

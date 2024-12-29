@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Struct.Metamod;
 
-public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
+public class CMetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
 {
     public void LogConsole(string fmt, params string[] parm)
     {

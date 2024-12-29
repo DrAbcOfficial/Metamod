@@ -1,6 +1,7 @@
 ﻿using Metamod.Enum.Metamod;
 using Metamod.Interface;
 using Metamod.Struct.Engine;
+using Metamod.Struct.Metamod;
 
 namespace Metamod.FuckWorld
 {
@@ -15,7 +16,7 @@ namespace Metamod.FuckWorld
         {
 
         }
-        public bool Meta_Query(InterfaceVersion interfaceVersion, nint pMetaUtilFuncs)
+        public bool Meta_Query(InterfaceVersion interfaceVersion, CMetaUtilFuncs pMetaUtilFuncs)
         {
             return true;
         }

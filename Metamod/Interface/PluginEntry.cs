@@ -81,7 +81,8 @@ public abstract class PluginEntry
         var pinterface = GetPluginInterface();
         var pinfo = GetPluginInfo();
         Global.PluginInfo = pinfo;
-        bool result = pinterface.Meta_Query(ifver, pMetaUtilFuncs);
+        Global.MetaUtilFuncs = new CMetaUtilFuncs(pMetaUtilFuncs);
+        bool result = pinterface.Meta_Query(ifver, Global.MetaUtilFuncs);
         unsafe
         {
             nint ptr = Marshal.AllocHGlobal(sizeof(NativePluginInfo));
