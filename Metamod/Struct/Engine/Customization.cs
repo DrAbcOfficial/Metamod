@@ -4,8 +4,10 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Struct.Engine;
 
-public class Customization(nint ptr) : BaseManaged<NativeCustomization>(ptr)
+public class Customization : BaseManaged<NativeCustomization>
 {
+    public Customization() : base() { }
+    internal Customization(nint ptr) : base(ptr) { }
     public bool InUse
     {
         get => _native.bInUse == QBoolean.TRUE;

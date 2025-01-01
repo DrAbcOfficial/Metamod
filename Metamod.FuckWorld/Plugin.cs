@@ -22,9 +22,23 @@ namespace Metamod.FuckWorld
         }
         public bool Meta_Attach(PluginLoadTime now, MetaGlobals pMGlobals, GameDllFuncs pGamedllFuncs)
         {
+            //There's no function table as args, but you still need set it up here
+            //No need set it from MetaFuncsions, its static
+            DllFunctions_Post.pfnServerActivate = (Edict pEdictList, int edictCount, int clientMax) =>
+            {
+                Global.EngineFuncs.ServerPrint("World Fucker!\n");
+            };
+            DllFunctions_Post.pfnClientConnect = (Edict pEntity, string szName, string pszAddress, ref string szRejectReason) =>
+            {
+                Global.EngineFuncs.ServerPrint($"{szName} Just connected\n");
+                return true;
+            };
+            
+
+
             Global.EngineFuncs.AddServerCommand("cs_fuck", () =>
             {
-                Global.EngineFuncs.ServerPrint("Fuck World!");
+                Global.EngineFuncs.ServerPrint("Fuck World!\n");
             });
             return true;
         }

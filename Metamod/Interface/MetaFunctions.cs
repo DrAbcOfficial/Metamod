@@ -3,14 +3,14 @@ using Metamod.Native.Metamod;
 
 namespace Metamod.Interface;
 
-public delegate int GetEntityAPIDelegate(DllFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetEntityAPIPostDelegate(DllFunctions_Post pFunctionTable, int interfaceVersion);
-public delegate int GetEntityAPI2Delegate(DllFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetEntityAPI2PostDelegate(DllFunctions_Post pFunctionTable, int interfaceVersion);
-public delegate int GetNewDllFunctions(NewDllFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetNewDllPostFunctions(NewDllFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetEngineFunctions(IEngineFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetStudioBlendingInterfaceDelegate(IBlendingInterface pStudioBlendingInterface, int interfaceVersion);
+public delegate int GetEntityAPIDelegate(ref DllFunctions pFunctionTable, int interfaceVersion);
+public delegate int GetEntityAPIPostDelegate(ref DllFunctions_Post pFunctionTable, int interfaceVersion);
+public delegate int GetEntityAPI2Delegate(ref DllFunctions pFunctionTable, int interfaceVersion);
+public delegate int GetEntityAPI2PostDelegate(ref DllFunctions_Post pFunctionTable, int interfaceVersion);
+public delegate int GetNewDllFunctions(ref NewDllFunctions pFunctionTable, int interfaceVersion);
+public delegate int GetNewDllPostFunctions(ref NewDllFunctions pFunctionTable, int interfaceVersion);
+public delegate int GetEngineFunctions(ref IEngineFunctions pFunctionTable, int interfaceVersion);
+public delegate int GetStudioBlendingInterfaceDelegate(ref IBlendingInterface pStudioBlendingInterface, int interfaceVersion);
 
 #pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 public class MetaFunctions
@@ -18,7 +18,7 @@ public class MetaFunctions
     public static GetEntityAPIDelegate? pfnGetEntityAPI;
     public static GetEntityAPIPostDelegate? pfnGetEntityAPI_Post;
     public static GetEntityAPI2Delegate? pfnGetEntityAPI2;
-    public static GetEntityAPI2Delegate? pfnGetENtityAPI2_Post;
+    public static GetEntityAPI2Delegate? pfnGetEntityAPI2_Post;
     public static GetNewDllFunctions? pfnGetNewDllFunctions;
     public static GetNewDllPostFunctions? pfnGetNewDllFunctions_Post;
     public static GetEngineFunctions? pfnGetEngineFunctions;
@@ -31,6 +31,9 @@ public class MetaFunctions
         int res = 0;
         unsafe
         {
+            DllFunctions ff = new();
+            pfnGetEntityAPI(ref ff, interfaceVersion);
+
             NativeDllFuncs nfuncs = DllFunctions.GetNative();
             NativeDllFuncs* funcs = (NativeDllFuncs*)pFunctionTable;
 
@@ -322,7 +325,7 @@ public class MetaFunctions
             pfnGetEntityAPI = pfnGetEntityAPI == null ? null : GetEntityApiWrapper,
             pfnGetEntityAPI_Post = GetEntityApiPostWrapper == null ? null : GetEntityApiPostWrapper,
             pfnGetEntityAPI2 = pfnGetEntityAPI2 == null ? null : GetEntityApi2Wrapper,
-            pfnGetEntityAPI2_Post = pfnGetENtityAPI2_Post == null ? null : GetEntityApi2PostWrapper,
+            pfnGetEntityAPI2_Post = pfnGetEntityAPI2_Post == null ? null : GetEntityApi2PostWrapper,
             pfnGetNewDLLFunctions = pfnGetNewDllFunctions == null ? null : GetNewDllFunctionsWrapper,
             pfnGetNewDLLFunctions_Post = pfnGetNewDllFunctions_Post == null ? null : GetNewDllFunctions_PostWrapper,
             pfnGetEngineFunctions = null,
