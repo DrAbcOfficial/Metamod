@@ -1,12 +1,10 @@
-﻿using Metamod.Attribute;
-using Metamod.Enum.Metamod;
+﻿using Metamod.Enum.Metamod;
 using Metamod.Interface;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Metamod.FuckWorld
 {
-    [PluginEntry]
     public class FuckWorld : PluginEntry
     {
         static FuckWorld()
