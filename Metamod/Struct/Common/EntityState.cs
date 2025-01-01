@@ -3,7 +3,7 @@ using Metamod.Native.Common;
 
 namespace Metamod.Struct.Common;
 
-public class EntityState : BaseManaged<NativeEntityState>
+public class EntityState(nint ptr) : BaseManaged<NativeEntityState>(ptr)
 {
     public int EntityType
     {

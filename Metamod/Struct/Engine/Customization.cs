@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Struct.Engine;
 
-public class Customization : BaseManaged<NativeCustomization>
+public class Customization(nint ptr) : BaseManaged<NativeCustomization>(ptr)
 {
     public bool InUse
     {

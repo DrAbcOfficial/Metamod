@@ -2,7 +2,7 @@
 
 namespace Metamod.Struct.Common;
 
-public class WeaponData : BaseManaged<NativeWeaponData>
+public class WeaponData(nint ptr) : BaseManaged<NativeWeaponData>(ptr)
 {
     public int Id
     {

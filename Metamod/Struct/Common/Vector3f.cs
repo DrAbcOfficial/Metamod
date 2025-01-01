@@ -78,6 +78,10 @@ namespace Metamod.Struct.Common
         {
             _needFree = false;
         }
+        public Vector3f(nint ptr) : base(ptr)
+        {
+            _needFree = false;
+        }
         public Vector3f(float x, float y, float z) : this()
         {
             _needFree = false;

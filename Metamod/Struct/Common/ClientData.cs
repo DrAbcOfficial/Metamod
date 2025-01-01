@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Metamod.Struct.Common;
 
-public class ClientData : BaseManaged<NativeClientData>
+public class ClientData(nint ptr) : BaseManaged<NativeClientData>(ptr)
 {
     private Vector3f? _origin;
     public Vector3f Origin

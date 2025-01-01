@@ -6,6 +6,7 @@ namespace Metamod.Struct.Game;
 
 public class NewDllFuncs : BaseManaged<NativeNewDllFuncs>
 {
+    internal NewDllFuncs(nint ptr) : base(ptr) { }
     // Called right before the object's memory is freed. 
     // Calls its destructor.
     public void OnFreeEntPrivateData(Edict pEnt) => _native.pfnOnFreeEntPrivateData(pEnt.GetUnmanagedPtr());

@@ -9,6 +9,7 @@ namespace Metamod.Struct.Game;
 
 public class DllFuncs : BaseManaged<NativeDllFuncs>
 {
+    internal DllFuncs(nint ptr) : base(ptr) { }
     // Initialize/shutdown the game (one-time call after loading of game .dll )
     public void GameInit() => _native.pfnGameInit();
     public int Spawn(Edict pent) => _native.pfnSpawn(pent.GetUnmanagedPtr());

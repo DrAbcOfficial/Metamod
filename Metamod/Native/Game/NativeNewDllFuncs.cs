@@ -13,13 +13,13 @@ public struct NativeNewDllFuncs
 {
     // Called right before the object's memory is freed. 
     // Calls its destructor.
-    internal NativeOnFreeEntPrivateDataDelegate pfnOnFreeEntPrivateData;
-    internal NativeGameShutdownDelegate pfnGameShutdown;
-    internal NativeShouldCollideDelegate pfnShouldCollide;
+    internal NativeOnFreeEntPrivateDataDelegate? pfnOnFreeEntPrivateData;
+    internal NativeGameShutdownDelegate? pfnGameShutdown;
+    internal NativeShouldCollideDelegate? pfnShouldCollide;
     // Added 2005/08/11 (no SDK update):
-    internal NativeCvarValueDelegate pfnCvarValue;
+    internal NativeCvarValueDelegate? pfnCvarValue;
     // Added 2005/11/21 (no SDK update):
     //    value is "Bad CVAR request" on failure (i.e that user is not connected or the cvar does not exist).
     //    value is "Bad Player" if invalid player edict.
-    internal NativeCvarValue2Delegate pfnCvarValue2;
+    internal NativeCvarValue2Delegate? pfnCvarValue2;
 }

@@ -9,7 +9,7 @@ namespace Metamod.Native.Metamod;
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 internal delegate int NativeGetEntityApiDelegate(nint pFunctionTable, int interfaceVersion);
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-internal unsafe delegate int NativeGetEntityApi2Delegate(NativeDllFuncs* pFunctionTable, int* interfaceVersion);
+internal unsafe delegate int NativeGetEntityApi2Delegate(nint pFunctionTable, nint interfaceVersion);
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 internal delegate int NativeGetNewDllFunctionsDelegate(nint pFunctionTable, nint interfaceVersion);
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -18,7 +18,7 @@ internal unsafe delegate int NativeGetEngineFunctionsDelegate(NativeEngineFuncs*
 internal unsafe delegate int NativeGetStudioBlendingInterfaceDelegate(NativeServerBlendInterface* pStudioBlendingInterface, int* interfaceVersion);
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativeMetaFuncs
+public struct NativeMetaFuncs
 {
     internal NativeGetEntityApiDelegate pfnGetEntityAPI;
     internal NativeGetEntityApiDelegate pfnGetEntityAPI_Post;

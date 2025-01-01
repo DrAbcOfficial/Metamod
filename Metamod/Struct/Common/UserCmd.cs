@@ -2,7 +2,7 @@
 
 namespace Metamod.Struct.Common;
 
-public class UserCmd : BaseManaged<NativeUserCmd>
+public class UserCmd(nint ptr) : BaseManaged<NativeUserCmd>(ptr)
 {
     public short LerpMsec
     {

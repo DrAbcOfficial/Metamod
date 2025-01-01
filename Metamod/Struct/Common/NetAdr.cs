@@ -54,4 +54,5 @@ public class NetAdr : BaseManaged<NativeNetAdr>
     {
         _native = new NativeNetAdr();
     }
+    internal NetAdr(nint ptr) : base(ptr) { }
 }

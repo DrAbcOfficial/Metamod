@@ -2,7 +2,7 @@
 
 namespace Metamod.Struct.Engine;
 
-public class KeyValueData : BaseManaged<NativeKeyValueData>
+public class KeyValueData(nint ptr) : BaseManaged<NativeKeyValueData>(ptr)
 {
     private StringHandle _classname = new();
     public string ClassName

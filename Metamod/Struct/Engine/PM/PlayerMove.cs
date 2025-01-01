@@ -4,7 +4,7 @@ using Metamod.Struct.Common;
 
 namespace Metamod.Struct.Engine.PM;
 
-public class PlayerMove : BaseManaged<NativePlayerMove>
+public class PlayerMove(nint ptr) : BaseManaged<NativePlayerMove>(ptr)
 {
     public int PlayerIndex
     {

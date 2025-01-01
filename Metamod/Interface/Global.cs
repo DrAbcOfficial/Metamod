@@ -13,6 +13,7 @@ namespace Metamod.Interface
         public static CMetaUtilFuncs MetaUtilFuncs;
         public static PluginInfo PluginInfo;
         public static MetaGlobals MetaGlobals;
+        public static GameDllFuncs GameDllFuncs;
 #pragma warning restore CS8618
     }
 }

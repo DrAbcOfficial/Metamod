@@ -1,9 +1,7 @@
 ﻿using Metamod.Enum.Metamod;
-using Metamod.Native.Engine;
 using Metamod.Native.Metamod;
 using Metamod.Struct.Engine;
 using Metamod.Struct.Metamod;
-using Metamod.Helper;
 using System.Runtime.InteropServices;
 
 namespace Metamod.Interface;
@@ -86,7 +84,7 @@ public abstract class PluginEntry
         unsafe
         {
             nint ptr = Marshal.AllocHGlobal(sizeof(NativePluginInfo));
-            * (NativePluginInfo**)plinfo = (NativePluginInfo*)ptr;
+            *(NativePluginInfo**)plinfo = (NativePluginInfo*)ptr;
             (*(NativePluginInfo**)plinfo)->ifvers = Marshal.StringToHGlobalAnsi(pinfo.GetInterfaceVersionString());
             (*(NativePluginInfo**)plinfo)->name = Marshal.StringToHGlobalAnsi(pinfo.Name);
             (*(NativePluginInfo**)plinfo)->version = Marshal.StringToHGlobalAnsi(pinfo.Version);
@@ -106,9 +104,14 @@ public abstract class PluginEntry
     protected static int Native_Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
     {
         MetaGlobals metaGlobals = new(pMGlobals);
+        GameDllFuncs gameDllFuncs = new(pGamedllFuncs);
         Global.MetaGlobals = metaGlobals;
+        Global.GameDllFuncs = gameDllFuncs;
         var pinterface = GetPluginInterface();
-        bool result = pinterface.Meta_Attach(now, pFunctionTable, metaGlobals, pGamedllFuncs);
+        bool result = pinterface.Meta_Attach(now, metaGlobals, gameDllFuncs);
+
+        NativeMetaFuncs funcs = MetaFunctions.GetNative();
+        Marshal.StructureToPtr(funcs, pFunctionTable, false);
         return result ? 1 : 0;
     }
 

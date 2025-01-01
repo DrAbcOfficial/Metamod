@@ -20,7 +20,7 @@ namespace Metamod.FuckWorld
         {
             return true;
         }
-        public bool Meta_Attach(PluginLoadTime now, nint pFunctionTable, MetaGlobals pMGlobals, nint pGamedllFuncs)
+        public bool Meta_Attach(PluginLoadTime now, MetaGlobals pMGlobals, GameDllFuncs pGamedllFuncs)
         {
             Global.EngineFuncs.AddServerCommand("cs_fuck", () =>
             {
