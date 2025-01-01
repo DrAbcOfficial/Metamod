@@ -6,583 +6,583 @@ namespace Metamod.Native.Engine;
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct NativeEngineFuncs
 {
-    internal PrecacheModelDelegate pfnPrecacheModel;
-    internal PrecacheSoundDelegate pfnPrecacheSound;
-    internal SetModelDelegate pfnSetModel;
-    internal ModelIndexDelegate pfnModelIndex;
-    internal ModelFramesDelegate pfnModelFrames;
-    internal SetSizeDelegate pfnSetSize;
-    internal ChangeLevelDelegate pfnChangeLevel;
-    internal GetSpawnParmsDelegate pfnGetSpawnParms;
-    internal SaveSpawnParmsDelegate pfnSaveSpawnParms;
-    internal VecToYawDelegate pfnVecToYaw;
-    internal VecToAnglesDelegate pfnVecToAngles;
-    internal MoveToOriginDelegate pfnMoveToOrigin;
-    internal ChangeYawDelegate pfnChangeYaw;
-    internal ChangePitchDelegate pfnChangePitch;
-    internal FindEntityByStringDelegate pfnFindEntityByString;
-    internal GetEntityIllumDelegate pfnGetEntityIllum;
-    internal FindEntityInSphereDelegate pfnFindEntityInSphere;
-    internal FindClientInPVSDelegate pfnFindClientInPVS;
-    internal EntitiesInPVSDelegate pfnEntitiesInPVS;
-    internal MakeVectorsDelegate pfnMakeVectors;
-    internal AngleVectorsDelegate pfnAngleVectors;
-    internal CreateEntityDelegate pfnCreateEntity;
-    internal RemoveEntityDelegate pfnRemoveEntity;
-    internal CreateNamedEntityDelegate pfnCreateNamedEntity;
-    internal MakeStaticDelegate pfnMakeStatic;
-    internal EntIsOnFloorDelegate pfnEntIsOnFloor;
-    internal DropToFloorDelegate pfnDropToFloor;
-    internal WalkMoveDelegate pfnWalkMove;
-    internal SetOriginDelegate pfnSetOrigin;
-    internal EmitSoundDelegate pfnEmitSound;
-    internal EmitAmbientSoundDelegate pfnEmitAmbientSound;
-    internal TraceLineDelegate pfnTraceLine;
-    internal TraceTossDelegate pfnTraceToss;
-    internal TraceMonsterHullDelegate pfnTraceMonsterHull;
-    internal TraceHullDelegate pfnTraceHull;
-    internal TraceModelDelegate pfnTraceModel;
-    internal TraceTextureDelegate pfnTraceTexture;
-    internal TraceSphereDelegate pfnTraceSphere;
-    internal GetAimVectorDelegate pfnGetAimVector;
-    internal ServerCommandDelegate pfnServerCommand;
-    internal ServerExecuteDelegate pfnServerExecute;
-    internal ClientCommandDelegate pfnClientCommand;
-    internal ParticleEffectDelegate pfnParticleEffect;
-    internal LightStyleDelegate pfnLightStyle;
-    internal DecalIndexDelegate pfnDecalIndex;
-    internal PointContentsDelegate pfnPointContents;
-    internal MessageBeginDelegate pfnMessageBegin;
-    internal MessageEndDelegate pfnMessageEnd;
-    internal WriteByteDelegate pfnWriteByte;
-    internal WriteCharDelegate pfnWriteChar;
-    internal WriteShortDelegate pfnWriteShort;
-    internal WriteLongDelegate pfnWriteLong;
-    internal WriteAngleDelegate pfnWriteAngle;
-    internal WriteCoordDelegate pfnWriteCoord;
-    internal WriteStringDelegate pfnWriteString;
-    internal WriteEntityDelegate pfnWriteEntity;
-    internal CVarRegisterDelegate pfnCVarRegister;
-    internal CVarGetFloatDelegate pfnCVarGetFloat;
-    internal CVarGetStringDelegate pfnCVarGetString;
-    internal CVarSetFloatDelegate pfnCVarSetFloat;
-    internal CVarSetStringDelegate pfnCVarSetString;
-    internal AlertMessageDelegate pfnAlertMessage;
-    internal EngineFprintfDelegate pfnEngineFprintf;
-    internal PvAllocEntPrivateDataDelegate pfnPvAllocEntPrivateData;
-    internal PvEntPrivateDataDelegate pfnPvEntPrivateData;
-    internal FreeEntPrivateDataDelegate pfnFreeEntPrivateData;
-    internal SzFromIndexDelegate pfnSzFromIndex;
-    internal AllocStringDelegate pfnAllocString;
-    internal GetVarsOfEntDelegate pfnGetVarsOfEnt;
-    internal PEntityOfEntOffsetDelegate pfnPEntityOfEntOffset;
-    internal EntOffsetOfPEntityDelegate pfnEntOffsetOfPEntity;
-    internal IndexOfEdictDelegate pfnIndexOfEdict;
-    internal PEntityOfEntIndexDelegate pfnPEntityOfEntIndex;
-    internal FindEntityByVarsDelegate pfnFindEntityByVars;
-    internal GetModelPtrDelegate pfnGetModelPtr;
-    internal RegUserMsgDelegate pfnRegUserMsg;
-    internal AnimationAutomoveDelegate pfnAnimationAutomove;
-    internal GetBonePositionDelegate pfnGetBonePosition;
-    internal FunctionFromNameDelegate pfnFunctionFromName;
-    internal NameForFunctionDelegate pfnNameForFunction;
-    internal ClientPrintfDelegate pfnClientPrintf;
-    internal ServerPrintDelegate pfnServerPrint;
-    internal Cmd_ArgsDelegate pfnCmd_Args;
-    internal Cmd_ArgvDelegate pfnCmd_Argv;
-    internal Cmd_ArgcDelegate pfnCmd_Argc;
-    internal GetAttachmentDelegate pfnGetAttachment;
-    internal CRC32_InitDelegate pfnCRC32_Init;
-    internal CRC32_ProcessBufferDelegate pfnCRC32_ProcessBuffer;
-    internal CRC32_ProcessByteDelegate pfnCRC32_ProcessByte;
-    internal CRC32_FinalDelegate pfnCRC32_Final;
-    internal RandomLongDelegate pfnRandomLong;
-    internal RandomFloatDelegate pfnRandomFloat;
-    internal SetViewDelegate pfnSetView;
-    internal TimeDelegate pfnTime;
-    internal CrosshairAngleDelegate pfnCrosshairAngle;
-    internal LoadFileForMeDelegate pfnLoadFileForMe;
-    internal FreeFileDelegate pfnFreeFile;
-    internal EndSectionDelegate pfnEndSection;
-    internal CompareFileTimeDelegate pfnCompareFileTime;
-    internal GetGameDirDelegate pfnGetGameDir;
-    internal Cvar_RegisterVariableDelegate pfnCvar_RegisterVariable;
-    internal FadeClientVolumeDelegate pfnFadeClientVolume;
-    internal SetClientMaxspeedDelegate pfnSetClientMaxspeed;
-    internal CreateFakeClientDelegate pfnCreateFakeClient;
-    internal RunPlayerMoveDelegate pfnRunPlayerMove;
-    internal NumberOfEntitiesDelegate pfnNumberOfEntities;
-    internal GetInfoKeyBufferDelegate pfnGetInfoKeyBuffer;
-    internal InfoKeyValueDelegate pfnInfoKeyValue;
-    internal SetKeyValueDelegate pfnSetKeyValue;
-    internal SetClientKeyValueDelegate pfnSetClientKeyValue;
-    internal IsMapValidDelegate pfnIsMapValid;
-    internal StaticDecalDelegate pfnStaticDecal;
-    internal PrecacheGenericDelegate pfnPrecacheGeneric;
-    internal GetPlayerUserIdDelegate pfnGetPlayerUserId;
-    internal BuildSoundMsgDelegate pfnBuildSoundMsg;
-    internal IsDedicatedServerDelegate pfnIsDedicatedServer;
-    internal CVarGetPointerDelegate pfnCVarGetPointer;
-    internal GetPlayerWONIdDelegate pfnGetPlayerWONId;
-    internal Info_RemoveKeyDelegate pfnInfo_RemoveKey;
-    internal GetPhysicsKeyValueDelegate pfnGetPhysicsKeyValue;
-    internal SetPhysicsKeyValueDelegate pfnSetPhysicsKeyValue;
-    internal GetPhysicsInfoStringDelegate pfnGetPhysicsInfoString;
-    internal PrecacheEventDelegate pfnPrecacheEvent;
-    internal PlaybackEventDelegate pfnPlaybackEvent;
-    internal SetFatPVSDelegate pfnSetFatPVS;
-    internal SetFatPASDelegate pfnSetFatPAS;
-    internal CheckVisibilityDelegate pfnCheckVisibility;
-    internal DeltaSetFieldDelegate pfnDeltaSetField;
-    internal DeltaUnsetFieldDelegate pfnDeltaUnsetField;
-    internal DeltaAddEncoderDelegate pfnDeltaAddEncoder;
-    internal GetCurrentPlayerDelegate pfnGetCurrentPlayer;
-    internal CanSkipPlayerDelegate pfnCanSkipPlayer;
-    internal DeltaFindFieldDelegate pfnDeltaFindField;
-    internal DeltaSetFieldByIndexDelegate pfnDeltaSetFieldByIndex;
-    internal DeltaUnsetFieldByIndexDelegate pfnDeltaUnsetFieldByIndex;
-    internal SetGroupMaskDelegate pfnSetGroupMask;
-    internal CreateInstancedBaselineDelegate pfnCreateInstancedBaseline;
-    internal Cvar_DirectSetDelegate pfnCvar_DirectSet;
-    internal ForceUnmodifiedDelegate pfnForceUnmodified;
-    internal GetPlayerStatsDelegate pfnGetPlayerStats;
-    internal AddServerCommandDelegate pfnAddServerCommand;
-    internal Voice_GetClientListeningDelegate pfnVoice_GetClientListening;
-    internal Voice_SetClientListeningDelegate pfnVoice_SetClientListening;
-    internal GetPlayerAuthIdDelegate pfnGetPlayerAuthId;
-    internal SequenceGetDelegate pfnSequenceGet;
-    internal SequencePickSentenceDelegate pfnSequencePickSentence;
-    internal GetFileSizeDelegate pfnGetFileSize;
-    internal GetApproxWavePlayLenDelegate pfnGetApproxWavePlayLen;
-    internal IsCareerMatchDelegate pfnIsCareerMatch;
-    internal GetLocalizedStringLengthDelegate pfnGetLocalizedStringLength;
-    internal RegisterTutorMessageShownDelegate pfnRegisterTutorMessageShown;
-    internal GetTimesTutorMessageShownDelegate pfnGetTimesTutorMessageShown;
-    internal ProcessTutorMessageDecayBufferDelegate pfnProcessTutorMessageDecayBuffer;
-    internal ConstructTutorMessageDecayBufferDelegate pfnConstructTutorMessageDecayBuffer;
-    internal ResetTutorMessageDecayDataDelegate pfnResetTutorMessageDecayData;
-    internal QueryClientCvarValueDelegate pfnQueryClientCvarValue;
-    internal QueryClientCvarValue2Delegate pfnQueryClientCvarValue2;
-    internal EngCheckParmDelegate pfnEngCheckParm;
+    internal NativePrecacheModelDelegate pfnPrecacheModel;
+    internal NativePrecacheSoundDelegate pfnPrecacheSound;
+    internal NativeSetModelDelegate pfnSetModel;
+    internal NativeModelIndexDelegate pfnModelIndex;
+    internal NativeModelFramesDelegate pfnModelFrames;
+    internal NativeSetSizeDelegate pfnSetSize;
+    internal NativeChangeLevelDelegate pfnChangeLevel;
+    internal NativeGetSpawnParmsDelegate pfnGetSpawnParms;
+    internal NativeSaveSpawnParmsDelegate pfnSaveSpawnParms;
+    internal NativeVecToYawDelegate pfnVecToYaw;
+    internal NativeVecToAnglesDelegate pfnVecToAngles;
+    internal NativeMoveToOriginDelegate pfnMoveToOrigin;
+    internal NativeChangeYawDelegate pfnChangeYaw;
+    internal NativeChangePitchDelegate pfnChangePitch;
+    internal NativeFindEntityByStringDelegate pfnFindEntityByString;
+    internal NativeGetEntityIllumDelegate pfnGetEntityIllum;
+    internal NativeFindEntityInSphereDelegate pfnFindEntityInSphere;
+    internal NativeFindClientInPVSDelegate pfnFindClientInPVS;
+    internal NativeEntitiesInPVSDelegate pfnEntitiesInPVS;
+    internal NativeMakeVectorsDelegate pfnMakeVectors;
+    internal NativeAngleVectorsDelegate pfnAngleVectors;
+    internal NativeCreateEntityDelegate pfnCreateEntity;
+    internal NativeRemoveEntityDelegate pfnRemoveEntity;
+    internal NativeCreateNamedEntityDelegate pfnCreateNamedEntity;
+    internal NativeMakeStaticDelegate pfnMakeStatic;
+    internal NativeEntIsOnFloorDelegate pfnEntIsOnFloor;
+    internal NativeDropToFloorDelegate pfnDropToFloor;
+    internal NativeWalkMoveDelegate pfnWalkMove;
+    internal NativeSetOriginDelegate pfnSetOrigin;
+    internal NativeEmitSoundDelegate pfnEmitSound;
+    internal NativeEmitAmbientSoundDelegate pfnEmitAmbientSound;
+    internal NativeTraceLineDelegate pfnTraceLine;
+    internal NativeTraceTossDelegate pfnTraceToss;
+    internal NativeTraceMonsterHullDelegate pfnTraceMonsterHull;
+    internal NativeTraceHullDelegate pfnTraceHull;
+    internal NativeTraceModelDelegate pfnTraceModel;
+    internal NativeTraceTextureDelegate pfnTraceTexture;
+    internal NativeTraceSphereDelegate pfnTraceSphere;
+    internal NativeGetAimVectorDelegate pfnGetAimVector;
+    internal NativeServerCommandDelegate pfnServerCommand;
+    internal NativeServerExecuteDelegate pfnServerExecute;
+    internal NativeClientCommandDelegate pfnClientCommand;
+    internal NativeParticleEffectDelegate pfnParticleEffect;
+    internal NativeLightStyleDelegate pfnLightStyle;
+    internal NativeDecalIndexDelegate pfnDecalIndex;
+    internal NativePointContentsDelegate pfnPointContents;
+    internal NativeMessageBeginDelegate pfnMessageBegin;
+    internal NativeMessageEndDelegate pfnMessageEnd;
+    internal NativeWriteByteDelegate pfnWriteByte;
+    internal NativeWriteCharDelegate pfnWriteChar;
+    internal NativeWriteShortDelegate pfnWriteShort;
+    internal NativeWriteLongDelegate pfnWriteLong;
+    internal NativeWriteAngleDelegate pfnWriteAngle;
+    internal NativeWriteCoordDelegate pfnWriteCoord;
+    internal NativeWriteStringDelegate pfnWriteString;
+    internal NativeWriteEntityDelegate pfnWriteEntity;
+    internal NativeCVarRegisterDelegate pfnCVarRegister;
+    internal NativeCVarGetFloatDelegate pfnCVarGetFloat;
+    internal NativeCVarGetStringDelegate pfnCVarGetString;
+    internal NativeCVarSetFloatDelegate pfnCVarSetFloat;
+    internal NativeCVarSetStringDelegate pfnCVarSetString;
+    internal NativeAlertMessageDelegate pfnAlertMessage;
+    internal NativeEngineFprintfDelegate pfnEngineFprintf;
+    internal NativePvAllocEntPrivateDataDelegate pfnPvAllocEntPrivateData;
+    internal NativePvEntPrivateDataDelegate pfnPvEntPrivateData;
+    internal NativeFreeEntPrivateDataDelegate pfnFreeEntPrivateData;
+    internal NativeSzFromIndexDelegate pfnSzFromIndex;
+    internal NativeAllocStringDelegate pfnAllocString;
+    internal NativeGetVarsOfEntDelegate pfnGetVarsOfEnt;
+    internal NativePEntityOfEntOffsetDelegate pfnPEntityOfEntOffset;
+    internal NativeEntOffsetOfPEntityDelegate pfnEntOffsetOfPEntity;
+    internal NativeIndexOfEdictDelegate pfnIndexOfEdict;
+    internal NativePEntityOfEntIndexDelegate pfnPEntityOfEntIndex;
+    internal NativeFindEntityByVarsDelegate pfnFindEntityByVars;
+    internal NativeGetModelPtrDelegate pfnGetModelPtr;
+    internal NativeRegUserMsgDelegate pfnRegUserMsg;
+    internal NativeAnimationAutomoveDelegate pfnAnimationAutomove;
+    internal NativeGetBonePositionDelegate pfnGetBonePosition;
+    internal NativeFunctionFromNameDelegate pfnFunctionFromName;
+    internal NativeNameForFunctionDelegate pfnNameForFunction;
+    internal NativeClientPrintfDelegate pfnClientPrintf;
+    internal NativeServerPrintDelegate pfnServerPrint;
+    internal NativeCmd_ArgsDelegate pfnCmd_Args;
+    internal NativeCmd_ArgvDelegate pfnCmd_Argv;
+    internal NativeCmd_ArgcDelegate pfnCmd_Argc;
+    internal NativeGetAttachmentDelegate pfnGetAttachment;
+    internal NativeCRC32_InitDelegate pfnCRC32_Init;
+    internal NativeCRC32_ProcessBufferDelegate pfnCRC32_ProcessBuffer;
+    internal NativeCRC32_ProcessByteDelegate pfnCRC32_ProcessByte;
+    internal NativeCRC32_FinalDelegate pfnCRC32_Final;
+    internal NativeRandomLongDelegate pfnRandomLong;
+    internal NativeRandomFloatDelegate pfnRandomFloat;
+    internal NativeSetViewDelegate pfnSetView;
+    internal NativeTimeDelegate pfnTime;
+    internal NativeCrosshairAngleDelegate pfnCrosshairAngle;
+    internal NativeLoadFileForMeDelegate pfnLoadFileForMe;
+    internal NativeFreeFileDelegate pfnFreeFile;
+    internal NativeEndSectionDelegate pfnEndSection;
+    internal NativeCompareFileTimeDelegate pfnCompareFileTime;
+    internal NativeGetGameDirDelegate pfnGetGameDir;
+    internal NativeCvar_RegisterVariableDelegate pfnCvar_RegisterVariable;
+    internal NativeFadeClientVolumeDelegate pfnFadeClientVolume;
+    internal NativeSetClientMaxspeedDelegate pfnSetClientMaxspeed;
+    internal NativeCreateFakeClientDelegate pfnCreateFakeClient;
+    internal NativeRunPlayerMoveDelegate pfnRunPlayerMove;
+    internal NativeNumberOfEntitiesDelegate pfnNumberOfEntities;
+    internal NativeGetInfoKeyBufferDelegate pfnGetInfoKeyBuffer;
+    internal NativeInfoKeyValueDelegate pfnInfoKeyValue;
+    internal NativeSetKeyValueDelegate pfnSetKeyValue;
+    internal NativeSetClientKeyValueDelegate pfnSetClientKeyValue;
+    internal NativeIsMapValidDelegate pfnIsMapValid;
+    internal NativeStaticDecalDelegate pfnStaticDecal;
+    internal NativePrecacheGenericDelegate pfnPrecacheGeneric;
+    internal NativeGetPlayerUserIdDelegate pfnGetPlayerUserId;
+    internal NativeBuildSoundMsgDelegate pfnBuildSoundMsg;
+    internal NativeIsDedicatedServerDelegate pfnIsDedicatedServer;
+    internal NativeCVarGetPointerDelegate pfnCVarGetPointer;
+    internal NativeGetPlayerWONIdDelegate pfnGetPlayerWONId;
+    internal NativeInfo_RemoveKeyDelegate pfnInfo_RemoveKey;
+    internal NativeGetPhysicsKeyValueDelegate pfnGetPhysicsKeyValue;
+    internal NativeSetPhysicsKeyValueDelegate pfnSetPhysicsKeyValue;
+    internal NativeGetPhysicsInfoStringDelegate pfnGetPhysicsInfoString;
+    internal NativePrecacheEventDelegate pfnPrecacheEvent;
+    internal NativePlaybackEventDelegate pfnPlaybackEvent;
+    internal NativeSetFatPVSDelegate pfnSetFatPVS;
+    internal NativeSetFatPASDelegate pfnSetFatPAS;
+    internal NativeCheckVisibilityDelegate pfnCheckVisibility;
+    internal NativeDeltaSetFieldDelegate pfnDeltaSetField;
+    internal NativeDeltaUnsetFieldDelegate pfnDeltaUnsetField;
+    internal NativeDeltaAddEncoderDelegate pfnDeltaAddEncoder;
+    internal NativeGetCurrentPlayerDelegate pfnGetCurrentPlayer;
+    internal NativeCanSkipPlayerDelegate pfnCanSkipPlayer;
+    internal NativeDeltaFindFieldDelegate pfnDeltaFindField;
+    internal NativeDeltaSetFieldByIndexDelegate pfnDeltaSetFieldByIndex;
+    internal NativeDeltaUnsetFieldByIndexDelegate pfnDeltaUnsetFieldByIndex;
+    internal NativeSetGroupMaskDelegate pfnSetGroupMask;
+    internal NativeCreateInstancedBaselineDelegate pfnCreateInstancedBaseline;
+    internal NativeCvar_DirectSetDelegate pfnCvar_DirectSet;
+    internal NativeForceUnmodifiedDelegate pfnForceUnmodified;
+    internal NativeGetPlayerStatsDelegate pfnGetPlayerStats;
+    internal NativeAddServerCommandDelegate pfnAddServerCommand;
+    internal NativeVoice_GetClientListeningDelegate pfnVoice_GetClientListening;
+    internal NativeVoice_SetClientListeningDelegate pfnVoice_SetClientListening;
+    internal NativeGetPlayerAuthIdDelegate pfnGetPlayerAuthId;
+    internal NativeSequenceGetDelegate pfnSequenceGet;
+    internal NativeSequencePickSentenceDelegate pfnSequencePickSentence;
+    internal NativeGetFileSizeDelegate pfnGetFileSize;
+    internal NativeGetApproxWavePlayLenDelegate pfnGetApproxWavePlayLen;
+    internal NativeIsCareerMatchDelegate pfnIsCareerMatch;
+    internal NativeGetLocalizedStringLengthDelegate pfnGetLocalizedStringLength;
+    internal NativeRegisterTutorMessageShownDelegate pfnRegisterTutorMessageShown;
+    internal NativeGetTimesTutorMessageShownDelegate pfnGetTimesTutorMessageShown;
+    internal NativeProcessTutorMessageDecayBufferDelegate pfnProcessTutorMessageDecayBuffer;
+    internal NativeConstructTutorMessageDecayBufferDelegate pfnConstructTutorMessageDecayBuffer;
+    internal NativeResetTutorMessageDecayDataDelegate pfnResetTutorMessageDecayData;
+    internal NativeQueryClientCvarValueDelegate pfnQueryClientCvarValue;
+    internal NativeQueryClientCvarValue2Delegate pfnQueryClientCvarValue2;
+    internal NativeEngCheckParmDelegate pfnEngCheckParm;
 
     #region Delegate
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int PrecacheModelDelegate(nint s);
+    internal delegate int NativePrecacheModelDelegate(nint s);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int PrecacheSoundDelegate(nint s);
+    internal delegate int NativePrecacheSoundDelegate(nint s);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetModelDelegate(nint e, nint m);
+    internal delegate void NativeSetModelDelegate(nint e, nint m);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int ModelIndexDelegate(nint m);
+    internal delegate int NativeModelIndexDelegate(nint m);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int ModelFramesDelegate(int modelIndex);
+    internal delegate int NativeModelFramesDelegate(int modelIndex);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetSizeDelegate(nint e, nint rgflMin, nint rgflMax);
+    internal delegate void NativeSetSizeDelegate(nint e, nint rgflMin, nint rgflMax);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ChangeLevelDelegate(nint s1, nint s2);
+    internal delegate void NativeChangeLevelDelegate(nint s1, nint s2);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void GetSpawnParmsDelegate(nint ent);
+    internal delegate void NativeGetSpawnParmsDelegate(nint ent);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SaveSpawnParmsDelegate(nint ent);
+    internal delegate void NativeSaveSpawnParmsDelegate(nint ent);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate float VecToYawDelegate(nint rgflVector);
+    internal delegate float NativeVecToYawDelegate(nint rgflVector);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void VecToAnglesDelegate(nint rgflVectorIn, nint rgflVectorOut);
+    internal delegate void NativeVecToAnglesDelegate(nint rgflVectorIn, nint rgflVectorOut);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void MoveToOriginDelegate(nint ent, nint pflGoal, float dist, int iMoveType);
+    internal delegate void NativeMoveToOriginDelegate(nint ent, nint pflGoal, float dist, int iMoveType);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ChangeYawDelegate(nint ent);
+    internal delegate void NativeChangeYawDelegate(nint ent);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ChangePitchDelegate(nint ent);
+    internal delegate void NativeChangePitchDelegate(nint ent);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint FindEntityByStringDelegate(nint pEdictStartSearchAfter, nint pszField, nint pszValue);
+    internal delegate nint NativeFindEntityByStringDelegate(nint pEdictStartSearchAfter, nint pszField, nint pszValue);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetEntityIllumDelegate(nint pEnt);
+    internal delegate int NativeGetEntityIllumDelegate(nint pEnt);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint FindEntityInSphereDelegate(nint pEdictStartSearchAfter, nint org, float rad);
+    internal delegate nint NativeFindEntityInSphereDelegate(nint pEdictStartSearchAfter, nint org, float rad);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint FindClientInPVSDelegate(nint pEdict);
+    internal delegate nint NativeFindClientInPVSDelegate(nint pEdict);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint EntitiesInPVSDelegate(nint pplayer);
+    internal delegate nint NativeEntitiesInPVSDelegate(nint pplayer);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void MakeVectorsDelegate(nint rgflVector);
+    internal delegate void NativeMakeVectorsDelegate(nint rgflVector);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void AngleVectorsDelegate(nint rgflVector, nint forward, nint right, nint up);
+    internal delegate void NativeAngleVectorsDelegate(nint rgflVector, nint forward, nint right, nint up);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint CreateEntityDelegate();
+    internal delegate nint NativeCreateEntityDelegate();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void RemoveEntityDelegate(nint e);
+    internal delegate void NativeRemoveEntityDelegate(nint e);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint CreateNamedEntityDelegate(int className);
+    internal delegate nint NativeCreateNamedEntityDelegate(int className);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void MakeStaticDelegate(nint ent);
+    internal delegate void NativeMakeStaticDelegate(nint ent);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int EntIsOnFloorDelegate(nint e);
+    internal delegate int NativeEntIsOnFloorDelegate(nint e);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int DropToFloorDelegate(nint e);
+    internal delegate int NativeDropToFloorDelegate(nint e);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int WalkMoveDelegate(nint ent, float yaw, float dist, int iMode);
+    internal delegate int NativeWalkMoveDelegate(nint ent, float yaw, float dist, int iMode);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetOriginDelegate(nint e, nint rgflOrigin);
+    internal delegate void NativeSetOriginDelegate(nint e, nint rgflOrigin);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void EmitSoundDelegate(nint entity, int channel, nint sample, float volume, float attenuation, int fFlags, int pitch);
+    internal delegate void NativeEmitSoundDelegate(nint entity, int channel, nint sample, float volume, float attenuation, int fFlags, int pitch);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void EmitAmbientSoundDelegate(nint entity, nint pos, nint samp, float vol, float attenuation, int fFlags, int pitch);
+    internal delegate void NativeEmitAmbientSoundDelegate(nint entity, nint pos, nint samp, float vol, float attenuation, int fFlags, int pitch);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void TraceLineDelegate(nint v1, nint v2, int fNoMonsters, nint pentToSkip, nint ptr);
+    internal delegate void NativeTraceLineDelegate(nint v1, nint v2, int fNoMonsters, nint pentToSkip, nint ptr);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void TraceTossDelegate(nint pent, nint pentToIgnore, nint ptr);
+    internal delegate void NativeTraceTossDelegate(nint pent, nint pentToIgnore, nint ptr);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int TraceMonsterHullDelegate(nint pEdict, nint v1, nint v2, int fNoMonsters, nint pentToSkip, nint ptr);
+    internal delegate int NativeTraceMonsterHullDelegate(nint pEdict, nint v1, nint v2, int fNoMonsters, nint pentToSkip, nint ptr);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void TraceHullDelegate(nint v1, nint v2, int fNoMonsters, int hullNumber, nint pentToSkip, nint ptr);
+    internal delegate void NativeTraceHullDelegate(nint v1, nint v2, int fNoMonsters, int hullNumber, nint pentToSkip, nint ptr);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void TraceModelDelegate(nint v1, nint v2, int hullNumber, nint pent, nint ptr);
+    internal delegate void NativeTraceModelDelegate(nint v1, nint v2, int hullNumber, nint pent, nint ptr);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint TraceTextureDelegate(nint pTextureEntity, nint v1, nint v2);
+    internal delegate nint NativeTraceTextureDelegate(nint pTextureEntity, nint v1, nint v2);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void TraceSphereDelegate(nint v1, nint v2, int fNoMonsters, float radius, nint pentToSkip, nint ptr);
+    internal delegate void NativeTraceSphereDelegate(nint v1, nint v2, int fNoMonsters, float radius, nint pentToSkip, nint ptr);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void GetAimVectorDelegate(nint ent, float speed, nint rgflReturn);
+    internal delegate void NativeGetAimVectorDelegate(nint ent, float speed, nint rgflReturn);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ServerCommandDelegate(nint str);
+    internal delegate void NativeServerCommandDelegate(nint str);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ServerExecuteDelegate();
+    internal delegate void NativeServerExecuteDelegate();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ClientCommandDelegate(nint pEdict, nint szFmt);
+    internal delegate void NativeClientCommandDelegate(nint pEdict, nint szFmt);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ParticleEffectDelegate(nint org, nint dir, float color, float count);
+    internal delegate void NativeParticleEffectDelegate(nint org, nint dir, float color, float count);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void LightStyleDelegate(int style, nint val);
+    internal delegate void NativeLightStyleDelegate(int style, nint val);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int DecalIndexDelegate(nint name);
+    internal delegate int NativeDecalIndexDelegate(nint name);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int PointContentsDelegate(nint rgflVector);
+    internal delegate int NativePointContentsDelegate(nint rgflVector);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void MessageBeginDelegate(int msg_dest, int msg_type, nint pOrigin, nint ed);
+    internal delegate void NativeMessageBeginDelegate(int msg_dest, int msg_type, nint pOrigin, nint ed);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void MessageEndDelegate();
+    internal delegate void NativeMessageEndDelegate();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void WriteByteDelegate(int iValue);
+    internal delegate void NativeWriteByteDelegate(int iValue);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void WriteCharDelegate(int iValue);
+    internal delegate void NativeWriteCharDelegate(int iValue);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void WriteShortDelegate(int iValue);
+    internal delegate void NativeWriteShortDelegate(int iValue);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void WriteLongDelegate(int iValue);
+    internal delegate void NativeWriteLongDelegate(int iValue);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void WriteAngleDelegate(float flValue);
+    internal delegate void NativeWriteAngleDelegate(float flValue);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void WriteCoordDelegate(float flValue);
+    internal delegate void NativeWriteCoordDelegate(float flValue);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void WriteStringDelegate(nint sz);
+    internal delegate void NativeWriteStringDelegate(nint sz);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void WriteEntityDelegate(int iValue);
+    internal delegate void NativeWriteEntityDelegate(int iValue);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void CVarRegisterDelegate(nint pCvar);
+    internal delegate void NativeCVarRegisterDelegate(nint pCvar);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate float CVarGetFloatDelegate(nint szVarName);
+    internal delegate float NativeCVarGetFloatDelegate(nint szVarName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint CVarGetStringDelegate(nint szVarName);
+    internal delegate nint NativeCVarGetStringDelegate(nint szVarName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void CVarSetFloatDelegate(nint szVarName, float flValue);
+    internal delegate void NativeCVarSetFloatDelegate(nint szVarName, float flValue);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void CVarSetStringDelegate(nint szVarName, nint szValue);
+    internal delegate void NativeCVarSetStringDelegate(nint szVarName, nint szValue);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void AlertMessageDelegate(int atype, nint szFmt);
+    internal delegate void NativeAlertMessageDelegate(int atype, nint szFmt);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void EngineFprintfDelegate(nint pfile, nint szFmt);
+    internal delegate void NativeEngineFprintfDelegate(nint pfile, nint szFmt);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint PvAllocEntPrivateDataDelegate(nint pEdict, int cb);
+    internal delegate nint NativePvAllocEntPrivateDataDelegate(nint pEdict, int cb);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint PvEntPrivateDataDelegate(nint pEdict);
+    internal delegate nint NativePvEntPrivateDataDelegate(nint pEdict);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void FreeEntPrivateDataDelegate(nint pEdict);
+    internal delegate void NativeFreeEntPrivateDataDelegate(nint pEdict);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint SzFromIndexDelegate(int iString);
+    internal delegate nint NativeSzFromIndexDelegate(int iString);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int AllocStringDelegate(nint szValue);
+    internal delegate int NativeAllocStringDelegate(nint szValue);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint GetVarsOfEntDelegate(nint pEdict);
+    internal delegate nint NativeGetVarsOfEntDelegate(nint pEdict);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint PEntityOfEntOffsetDelegate(int iEntOffset);
+    internal delegate nint NativePEntityOfEntOffsetDelegate(int iEntOffset);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int EntOffsetOfPEntityDelegate(nint pEdict);
+    internal delegate int NativeEntOffsetOfPEntityDelegate(nint pEdict);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int IndexOfEdictDelegate(nint pEdict);
+    internal delegate int NativeIndexOfEdictDelegate(nint pEdict);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint PEntityOfEntIndexDelegate(int iEntIndex);
+    internal delegate nint NativePEntityOfEntIndexDelegate(int iEntIndex);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint FindEntityByVarsDelegate(nint pvars);
+    internal delegate nint NativeFindEntityByVarsDelegate(nint pvars);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint GetModelPtrDelegate(nint pEdict);
+    internal delegate nint NativeGetModelPtrDelegate(nint pEdict);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int RegUserMsgDelegate(nint pszName, int iSize);
+    internal delegate int NativeRegUserMsgDelegate(nint pszName, int iSize);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void AnimationAutomoveDelegate(nint pEdict, float flTime);
+    internal delegate void NativeAnimationAutomoveDelegate(nint pEdict, float flTime);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void GetBonePositionDelegate(nint pEdict, int iBone, nint rgflOrigin, nint rgflAngles);
+    internal delegate void NativeGetBonePositionDelegate(nint pEdict, int iBone, nint rgflOrigin, nint rgflAngles);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate uint FunctionFromNameDelegate(nint pName);
+    internal delegate uint NativeFunctionFromNameDelegate(nint pName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint NameForFunctionDelegate(uint function);
+    internal delegate nint NativeNameForFunctionDelegate(uint function);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ClientPrintfDelegate(nint pEdict, int ptype, nint szMsg);
+    internal delegate void NativeClientPrintfDelegate(nint pEdict, int ptype, nint szMsg);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ServerPrintDelegate(nint szMsg);
+    internal delegate void NativeServerPrintDelegate(nint szMsg);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint Cmd_ArgsDelegate();
+    internal delegate nint NativeCmd_ArgsDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint Cmd_ArgvDelegate(int argc);
+    internal delegate nint NativeCmd_ArgvDelegate(int argc);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int Cmd_ArgcDelegate();
+    internal delegate int NativeCmd_ArgcDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void GetAttachmentDelegate(nint pEdict, int iAttachment, nint rgflOrigin, nint rgflAngles);
+    internal delegate void NativeGetAttachmentDelegate(nint pEdict, int iAttachment, nint rgflOrigin, nint rgflAngles);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void CRC32_InitDelegate(nint pulCRC);
+    internal delegate void NativeCRC32_InitDelegate(nint pulCRC);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void CRC32_ProcessBufferDelegate(nint pulCRC, nint p, int len);
+    internal delegate void NativeCRC32_ProcessBufferDelegate(nint pulCRC, nint p, int len);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void CRC32_ProcessByteDelegate(nint pulCRC, byte ch);
+    internal delegate void NativeCRC32_ProcessByteDelegate(nint pulCRC, byte ch);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate NativeCRC32 CRC32_FinalDelegate(NativeCRC32 pulCRC);
+    internal delegate NativeCRC32 NativeCRC32_FinalDelegate(NativeCRC32 pulCRC);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int RandomLongDelegate(int lLow, int lHigh);
+    internal delegate int NativeRandomLongDelegate(int lLow, int lHigh);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate float RandomFloatDelegate(float flLow, float flHigh);
+    internal delegate float NativeRandomFloatDelegate(float flLow, float flHigh);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetViewDelegate(nint pClient, nint pViewent);
+    internal delegate void NativeSetViewDelegate(nint pClient, nint pViewent);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate float TimeDelegate();
+    internal delegate float NativeTimeDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void CrosshairAngleDelegate(nint pClient, float pitch, float yaw);
+    internal delegate void NativeCrosshairAngleDelegate(nint pClient, float pitch, float yaw);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint LoadFileForMeDelegate(nint filename, nint pLength);
+    internal delegate nint NativeLoadFileForMeDelegate(nint filename, nint pLength);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void FreeFileDelegate(nint buffer);
+    internal delegate void NativeFreeFileDelegate(nint buffer);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void EndSectionDelegate(nint pszSectionName);
+    internal delegate void NativeEndSectionDelegate(nint pszSectionName);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int CompareFileTimeDelegate(nint filename1, nint filename2, nint iCompare);
+    internal delegate int NativeCompareFileTimeDelegate(nint filename1, nint filename2, nint iCompare);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void GetGameDirDelegate(nint szGetGameDir);
+    internal delegate void NativeGetGameDirDelegate(nint szGetGameDir);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void Cvar_RegisterVariableDelegate(nint variable);
+    internal delegate void NativeCvar_RegisterVariableDelegate(nint variable);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void FadeClientVolumeDelegate(nint pEdict, int fadePercent, int fadeOutSeconds, int holdTime, int fadeInSeconds);
+    internal delegate void NativeFadeClientVolumeDelegate(nint pEdict, int fadePercent, int fadeOutSeconds, int holdTime, int fadeInSeconds);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetClientMaxspeedDelegate(nint pEdict, float fNewMaxspeed);
+    internal delegate void NativeSetClientMaxspeedDelegate(nint pEdict, float fNewMaxspeed);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint CreateFakeClientDelegate(nint netname);
+    internal delegate nint NativeCreateFakeClientDelegate(nint netname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void RunPlayerMoveDelegate(nint fakeclient, nint viewangles, float forwardmove, float sidemove, float upmove, ushort buttons, byte impulse, byte msec);
+    internal delegate void NativeRunPlayerMoveDelegate(nint fakeclient, nint viewangles, float forwardmove, float sidemove, float upmove, ushort buttons, byte impulse, byte msec);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int NumberOfEntitiesDelegate();
+    internal delegate int NativeNumberOfEntitiesDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint GetInfoKeyBufferDelegate(nint e);
+    internal delegate nint NativeGetInfoKeyBufferDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint InfoKeyValueDelegate(nint infobuffer, nint key);
+    internal delegate nint NativeInfoKeyValueDelegate(nint infobuffer, nint key);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetKeyValueDelegate(nint infobuffer, nint key, nint value);
+    internal delegate void NativeSetKeyValueDelegate(nint infobuffer, nint key, nint value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetClientKeyValueDelegate(int clientIndex, nint infobuffer, nint key, nint value);
+    internal delegate void NativeSetClientKeyValueDelegate(int clientIndex, nint infobuffer, nint key, nint value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int IsMapValidDelegate(nint filename);
+    internal delegate int NativeIsMapValidDelegate(nint filename);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void StaticDecalDelegate(nint origin, int decalIndex, int entityIndex, int modelIndex);
+    internal delegate void NativeStaticDecalDelegate(nint origin, int decalIndex, int entityIndex, int modelIndex);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int PrecacheGenericDelegate(nint s);
+    internal delegate int NativePrecacheGenericDelegate(nint s);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetPlayerUserIdDelegate(nint e);
+    internal delegate int NativeGetPlayerUserIdDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void BuildSoundMsgDelegate(nint entity, int channel, nint sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, nint pOrigin, nint ed);
+    internal delegate void NativeBuildSoundMsgDelegate(nint entity, int channel, nint sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, nint pOrigin, nint ed);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int IsDedicatedServerDelegate();
+    internal delegate int NativeIsDedicatedServerDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint CVarGetPointerDelegate(nint szVarName);
+    internal delegate nint NativeCVarGetPointerDelegate(nint szVarName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate uint GetPlayerWONIdDelegate(nint e);
+    internal delegate uint NativeGetPlayerWONIdDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void Info_RemoveKeyDelegate(nint s, nint key);
+    internal delegate void NativeInfo_RemoveKeyDelegate(nint s, nint key);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint GetPhysicsKeyValueDelegate(nint pClient, nint key);
+    internal delegate nint NativeGetPhysicsKeyValueDelegate(nint pClient, nint key);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetPhysicsKeyValueDelegate(nint pClient, nint key, nint value);
+    internal delegate void NativeSetPhysicsKeyValueDelegate(nint pClient, nint key, nint value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint GetPhysicsInfoStringDelegate(nint pClient);
+    internal delegate nint NativeGetPhysicsInfoStringDelegate(nint pClient);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate ushort PrecacheEventDelegate(int type, nint psz);
+    internal delegate ushort NativePrecacheEventDelegate(int type, nint psz);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void PlaybackEventDelegate(int flags, nint pInvoker, ushort eventindex, float delay, nint origin, nint angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2);
+    internal delegate void NativePlaybackEventDelegate(int flags, nint pInvoker, ushort eventindex, float delay, nint origin, nint angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint SetFatPVSDelegate(nint org);
+    internal delegate nint NativeSetFatPVSDelegate(nint org);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint SetFatPASDelegate(nint org);
+    internal delegate nint NativeSetFatPASDelegate(nint org);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int CheckVisibilityDelegate(nint entity, nint pset);
+    internal delegate int NativeCheckVisibilityDelegate(nint entity, nint pset);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaSetFieldDelegate(nint pFields, nint fieldname);
+    internal delegate void NativeDeltaSetFieldDelegate(nint pFields, nint fieldname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaUnsetFieldDelegate(nint pFields, nint fieldname);
+    internal delegate void NativeDeltaUnsetFieldDelegate(nint pFields, nint fieldname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaAddEncoderDelegate(nint name, nint conditionalencode);
+    internal delegate void NativeDeltaAddEncoderDelegate(nint name, nint conditionalencode);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetCurrentPlayerDelegate();
+    internal delegate int NativeGetCurrentPlayerDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int CanSkipPlayerDelegate(nint player);
+    internal delegate int NativeCanSkipPlayerDelegate(nint player);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int DeltaFindFieldDelegate(nint pFields, nint fieldname);
+    internal delegate int NativeDeltaFindFieldDelegate(nint pFields, nint fieldname);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaSetFieldByIndexDelegate(nint pFields, int fieldNumber);
+    internal delegate void NativeDeltaSetFieldByIndexDelegate(nint pFields, int fieldNumber);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void DeltaUnsetFieldByIndexDelegate(nint pFields, int fieldNumber);
+    internal delegate void NativeDeltaUnsetFieldByIndexDelegate(nint pFields, int fieldNumber);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void SetGroupMaskDelegate(int mask, int op);
+    internal delegate void NativeSetGroupMaskDelegate(int mask, int op);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int CreateInstancedBaselineDelegate(int classname, nint baseline);
+    internal delegate int NativeCreateInstancedBaselineDelegate(int classname, nint baseline);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void Cvar_DirectSetDelegate(nint var, nint value);
+    internal delegate void NativeCvar_DirectSetDelegate(nint var, nint value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ForceUnmodifiedDelegate(int type, nint mins, nint maxs, nint filename);
+    internal delegate void NativeForceUnmodifiedDelegate(int type, nint mins, nint maxs, nint filename);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void GetPlayerStatsDelegate(nint pClient, nint ping, nint packet_loss);
+    internal delegate void NativeGetPlayerStatsDelegate(nint pClient, nint ping, nint packet_loss);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void AddServerCommandDelegate(nint cmd_name, nint function);
+    internal delegate void NativeAddServerCommandDelegate(nint cmd_name, nint function);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int Voice_GetClientListeningDelegate(int iReceiver, int iSender);
+    internal delegate int NativeVoice_GetClientListeningDelegate(int iReceiver, int iSender);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int Voice_SetClientListeningDelegate(int iReceiver, int iSender, int bListen);
+    internal delegate int NativeVoice_SetClientListeningDelegate(int iReceiver, int iSender, int bListen);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint GetPlayerAuthIdDelegate(nint e);
+    internal delegate nint NativeGetPlayerAuthIdDelegate(nint e);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint SequenceGetDelegate(nint fileName, nint entryName);
+    internal delegate nint NativeSequenceGetDelegate(nint fileName, nint entryName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate nint SequencePickSentenceDelegate(nint groupName, int pickMethod, nint picked);
+    internal delegate nint NativeSequencePickSentenceDelegate(nint groupName, int pickMethod, nint picked);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetFileSizeDelegate(nint filename);
+    internal delegate int NativeGetFileSizeDelegate(nint filename);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate uint GetApproxWavePlayLenDelegate(nint filepath);
+    internal delegate uint NativeGetApproxWavePlayLenDelegate(nint filepath);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int IsCareerMatchDelegate();
+    internal delegate int NativeIsCareerMatchDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetLocalizedStringLengthDelegate(nint label);
+    internal delegate int NativeGetLocalizedStringLengthDelegate(nint label);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void RegisterTutorMessageShownDelegate(int mid);
+    internal delegate void NativeRegisterTutorMessageShownDelegate(int mid);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int GetTimesTutorMessageShownDelegate(int mid);
+    internal delegate int NativeGetTimesTutorMessageShownDelegate(int mid);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ProcessTutorMessageDecayBufferDelegate(nint buffer, int bufferLength);
+    internal delegate void NativeProcessTutorMessageDecayBufferDelegate(nint buffer, int bufferLength);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ConstructTutorMessageDecayBufferDelegate(nint buffer, int bufferLength);
+    internal delegate void NativeConstructTutorMessageDecayBufferDelegate(nint buffer, int bufferLength);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void ResetTutorMessageDecayDataDelegate();
+    internal delegate void NativeResetTutorMessageDecayDataDelegate();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void QueryClientCvarValueDelegate(nint player, nint cvarName);
+    internal delegate void NativeQueryClientCvarValueDelegate(nint player, nint cvarName);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void QueryClientCvarValue2Delegate(nint player, nint cvarName, int requestID);
+    internal delegate void NativeQueryClientCvarValue2Delegate(nint player, nint cvarName, int requestID);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate int EngCheckParmDelegate(nint pchCmdLineToken, out nint pchNextVal);
+    internal delegate int NativeEngCheckParmDelegate(nint pchCmdLineToken, out nint pchNextVal);
     #endregion
 }

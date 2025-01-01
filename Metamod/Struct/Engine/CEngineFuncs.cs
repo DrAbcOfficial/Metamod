@@ -580,6 +580,4 @@ public class CEngineFuncs(nint ptr) : BaseManaged<NativeEngineFuncs>(ptr)
             Marshal.FreeHGlobal(os);
         }
     }
-
-
 }

@@ -32,38 +32,5 @@ namespace Metamod.FuckWorld
         {
             return true;
         }
-
-        public bool GetEntityAPI(nint pFunctionTable, int interfaceVersion)
-        {
-            return true;
-        }
-        public bool GetEntityAPI2(nint pFunctionTable, int interfaceVersion)
-        {
-            return true;
-        }
-        public bool GetNewDLLFunctions(nint pNewFunctionTable, int interfaceVersion)
-        {
-            return true;
-        }
-        public bool GetEntityAPI_Post(nint pFunctionTable, int interfaceVersion)
-        {
-            return true;
-        }
-        public bool GetEntityAPI2_Post(nint pFunctionTable, int interfaceVersion)
-        {
-            return true;
-        }
-        public bool GetNewDLLFunctions_Post(nint pNewFunctionTable, int interfaceVersion)
-        {
-            return true;
-        }
-        public bool GetEngineFunctions(nint pengfuncsFromEngine, int interfaceVersion)
-        {
-            return true;
-        }
-        public bool GetEngineFunctions_Post(nint pengfuncsFromEngine, int interfaceVersion)
-        {
-            return true;
-        }
     }
 }

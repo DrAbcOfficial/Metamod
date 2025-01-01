@@ -3,7 +3,7 @@
 namespace Metamod.Native.Game;
 
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-internal delegate void SV_StudioSetupBonesDelegate(
+internal delegate void NativeSV_StudioSetupBonesDelegate(
        nint pModel,
        float frame,
        int sequence,
@@ -19,5 +19,5 @@ internal delegate void SV_StudioSetupBonesDelegate(
 public struct NativeServerBlendInterface
 {
     internal int version;
-    internal SV_StudioSetupBonesDelegate SV_StudioSetupBones;
+    internal NativeSV_StudioSetupBonesDelegate SV_StudioSetupBones;
 }

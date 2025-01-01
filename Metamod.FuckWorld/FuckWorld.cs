@@ -55,55 +55,5 @@ namespace Metamod.FuckWorld
         {
             return Native_Meta_Detach(now, reason);
         }
-
-        [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI", CallConvs = [typeof(CallConvCdecl)])]
-        public static int S_GetEntityAPI(nint pFunctionTable, int interfaceVersion)
-        {
-            return Native_GetEntityAPI(pFunctionTable, interfaceVersion);
-        }
-
-        [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI2", CallConvs = [typeof(CallConvCdecl)])]
-        public static int S_GetEntityAPI2(nint pFunctionTable, nint interfaceVersion)
-        {
-            return Native_GetEntityAPI2(pFunctionTable, interfaceVersion);
-        }
-
-        [UnmanagedCallersOnly(EntryPoint = "GetNewDLLFunctions", CallConvs = [typeof(CallConvCdecl)])]
-        public static int S_GetNewDLLFunctions(nint pNewFunctionTable, nint interfaceVersion)
-        {
-            return Native_GetNewDLLFunctions(pNewFunctionTable, interfaceVersion);
-        }
-
-        [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI_Post", CallConvs = [typeof(CallConvCdecl)])]
-        public static int S_GetEntityAPI_Post(nint pFunctionTable, nint interfaceVersion)
-        {
-            return Native_GetEntityAPI_Post(pFunctionTable, interfaceVersion);
-        }
-
-        [UnmanagedCallersOnly(EntryPoint = "GetEntityAPI2_Post", CallConvs = [typeof(CallConvCdecl)])]
-        public static int S_GetEntityAPI2_Post(nint pFunctionTable, nint interfaceVersion)
-        {
-            return Native_GetEntityAPI2_Post(pFunctionTable, interfaceVersion);
-        }
-
-        [UnmanagedCallersOnly(EntryPoint = "GetNewDLLFunctions_Post", CallConvs = [typeof(CallConvCdecl)])]
-        public static int S_GetNewDLLFunctions_Post(nint pNewFunctionTable, nint interfaceVersion)
-        {
-            return Native_GetNewDLLFunctions_Post(pNewFunctionTable, interfaceVersion);
-        }
-
-        [UnmanagedCallersOnly(EntryPoint = "GetEngineFunctions", CallConvs = [typeof(CallConvCdecl)])]
-        public static int S_GetEngineFunctions(nint pengfuncsFromEngine, nint interfaceVersion)
-        {
-
-            return Native_GetEngineFunctions(pengfuncsFromEngine, interfaceVersion);
-        }
-
-        [UnmanagedCallersOnly(EntryPoint = "GetEngineFunctions_Post", CallConvs = [typeof(CallConvCdecl)])]
-        public static int S_GetEngineFunctions_Post(nint pengfuncsFromEngine, nint interfaceVersion)
-        {
-            return Native_GetEngineFunctions_Post(pengfuncsFromEngine, interfaceVersion);
-
-        }
     }
 }
