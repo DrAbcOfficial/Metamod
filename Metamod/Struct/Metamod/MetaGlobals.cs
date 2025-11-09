@@ -5,34 +5,34 @@ namespace Metamod.Struct.Metamod
 {
     public class MetaGlobals(nint ptr) : BaseManaged<NativeMetaGlobals>(ptr)
     {
-        public MetaResult Result
+        public unsafe MetaResult Result
         {
-            get => _native.mres;
-            set => _native.mres = value;
+            get { ref var r = ref GetUnmanagedRef(); return r.mres; }
+            set { ref var r = ref GetUnmanagedRef(); r.mres = value; }
         }
 
-        public MetaResult PreverseResult
+        public unsafe MetaResult PreverseResult
         {
-            get => _native.prev_mres;
-            set => _native.prev_mres = value;
+            get { ref var r = ref GetUnmanagedRef(); return r.prev_mres; }
+            set { ref var r = ref GetUnmanagedRef(); r.prev_mres = value; }
         }
 
-        public MetaResult Status
+        public unsafe MetaResult Status
         {
-            get => _native.status;
-            set => _native.status = value;
+            get { ref var r = ref GetUnmanagedRef(); return r.status; }
+            set { ref var r = ref GetUnmanagedRef(); r.status = value; }
         }
 
-        public nint OriginReturn
+        public unsafe nint OriginReturn
         {
-            get => _native.orig_ret;
-            set => _native.orig_ret = value;
+            get { ref var r = ref GetUnmanagedRef(); return r.orig_ret; }
+            set { ref var r = ref GetUnmanagedRef(); r.orig_ret = value; }
         }
 
-        public nint OverrideReturn
+        public unsafe nint OverrideReturn
         {
-            get => _native.override_ret;
-            set => _native.override_ret = value;
+            get { ref var r = ref GetUnmanagedRef(); return r.override_ret; }
+            set { ref var r = ref GetUnmanagedRef(); r.override_ret = value; }
         }
     }
 }
