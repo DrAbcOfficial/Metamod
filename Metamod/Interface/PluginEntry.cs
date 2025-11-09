@@ -15,17 +15,13 @@ public abstract class PluginEntry
             throw new NullReferenceException(nameof(Interface));
         return Interface;
     }
-
-    protected static PluginInfo? Info;
     public static PluginInfo GetPluginInfo()
     {
-        if (Info == null)
-            throw new NullReferenceException(nameof(Info));
-        return Info;
+        if (Interface == null)
+            throw new NullReferenceException(nameof(Interface));
+        return Interface.GetPluginInfo();
     }
 
-    //[UnmanagedCallersOnly(EntryPoint = "GiveFnptrsToDll")]
-    //internal unsafe static void Native_GiveFnptrsToDll(NativeEngineFuncs* pengfuncsFromEngine, NativeGlobalVars* pGlobals)
     protected static void Native_GiveFnptrsToDll(nint pengfuncsFromEngine, nint pGlobals)
     {
         CEngineFuncs engineFuncs = new(pengfuncsFromEngine);
@@ -38,15 +34,11 @@ public abstract class PluginEntry
         pinterface.GiveFnptrsToDll(engineFuncs, globalVars);
     }
 
-    //[UnmanagedCallersOnly(EntryPoint = "Meta_Init", CallConvs = [typeof(CallConvCdecl)])]
-    //internal static void Native_Meta_Init()
     protected static void Native_Meta_Init()
     {
 
     }
 
-    //[UnmanagedCallersOnly(EntryPoint = "Meta_Query", CallConvs = [typeof(CallConvCdecl)])]
-    //internal unsafe static int Native_Meta_Query(byte* interfaceVersion, NativePluginInfo** plinfo, NativeMetaUtilFuncs* pMetaUtilFuncs)
     protected static int Native_Meta_Query(nint interfaceVersion, nint plinfo, nint pMetaUtilFuncs)
     {
         string? version = Marshal.PtrToStringAnsi(interfaceVersion) ?? throw new Exception("Interface version is null");
@@ -99,8 +91,6 @@ public abstract class PluginEntry
         return result ? 1 : 0;
     }
 
-    //[UnmanagedCallersOnly(EntryPoint = "Meta_Attach", CallConvs = [typeof(CallConvCdecl)])]
-    //internal unsafe static int Native_Meta_Attach(PluginLoadTime now, NativeMetaFuncs* pFunctionTable, NativeMetaGlobals* pMGlobals, NativeGameDllFuncs* pGamedllFuncs)
     protected static int Native_Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
     {
         MetaGlobals metaGlobals = new(pMGlobals);
@@ -115,8 +105,6 @@ public abstract class PluginEntry
         return result ? 1 : 0;
     }
 
-    //[UnmanagedCallersOnly(EntryPoint = "Meta_Detach", CallConvs = [typeof(CallConvCdecl)])]
-    //internal static int Native_Meta_Detach(PluginLoadTime now, PluginUnloadReason reason)
     protected static int Native_Meta_Detach(PluginLoadTime now, PluginUnloadReason reason)
     {
         var pinterface = GetPluginInterface();

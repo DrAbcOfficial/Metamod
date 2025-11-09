@@ -5,7 +5,7 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metamod", "Metamod\Metamod.csproj", "{8AA7D219-6C0E-431C-9421-5FB2B6765CEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metamod.FuckWorld", "Metamod.FuckWorld\Metamod.FuckWorld.csproj", "{EED7553F-919B-440D-97C6-EA7EE22B9C9D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metamod.Template", "Metamod.Template\Metamod.Template.csproj", "{B49F975D-9B53-4C35-8A5A-7970897B833F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +17,15 @@ Global
 		{8AA7D219-6C0E-431C-9421-5FB2B6765CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AA7D219-6C0E-431C-9421-5FB2B6765CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AA7D219-6C0E-431C-9421-5FB2B6765CEC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EED7553F-919B-440D-97C6-EA7EE22B9C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EED7553F-919B-440D-97C6-EA7EE22B9C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EED7553F-919B-440D-97C6-EA7EE22B9C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EED7553F-919B-440D-97C6-EA7EE22B9C9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B49F975D-9B53-4C35-8A5A-7970897B833F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B49F975D-9B53-4C35-8A5A-7970897B833F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B49F975D-9B53-4C35-8A5A-7970897B833F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B49F975D-9B53-4C35-8A5A-7970897B833F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37ED8830-25BC-4B96-B54A-EBE9D4F436DE}
 	EndGlobalSection
 EndGlobal

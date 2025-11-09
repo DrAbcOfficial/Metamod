@@ -1,0 +1,103 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".generated.cs" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+
+<#
+    string pluginClassName = "AutoGenPluginEntry";    // 生成的类名
+    // 尝试从项目中的 Plugin.cs 自动提取命名空间；失败时回退到默认
+    string pluginNamespace = "Metamod.Interface";
+
+    try
+    {
+        var templateDir = Path.GetDirectoryName(Host.TemplateFile) ?? ".";
+        var candidate = Path.GetFullPath(Path.Combine(templateDir, "Plugin.cs"));
+        if (File.Exists(candidate))
+        {
+            var text = File.ReadAllText(candidate, Encoding.UTF8);
+            var m = System.Text.RegularExpressions.Regex.Match(text, @"namespace\s+([A-Za-z0-9_.]+)");
+            if (m.Success)
+            {
+                pluginNamespace = m.Groups[1].Value;
+            }
+        }
+    }
+    catch
+    {
+        throw new Exception("Can not find Plugin namespace");
+    }
+#>
+
+using Metamod.Enum.Metamod;
+using Metamod.Interface;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+namespace  <#= pluginNamespace #>
+{
+    /// <summary>
+    /// 自动生成的插件入口类
+    /// 切在该文件中修改，可能会被覆盖，请在 Plugin.cs 中实现自定义逻辑
+    /// 基于 T4 模板生成，包含所有必要的非托管调用包装
+    /// </summary>
+    public class <#= pluginClassName #> : PluginEntry
+    {
+        static <#= pluginClassName #>()
+        {
+            // 初始化插件接口实例
+            Interface = new Plugin();
+        }
+
+        /// <summary>
+        /// 非托管入口：GiveFnptrsToDll
+        /// 转发到基类的 Native_GiveFnptrsToDll 实现
+        /// </summary>
+        [UnmanagedCallersOnly(EntryPoint = "GiveFnptrsToDll")]
+        public static void UnmanagedGiveFnptrsToDll(nint pengfuncsFromEngine, nint pGlobals)
+        {
+            Native_GiveFnptrsToDll(pengfuncsFromEngine, pGlobals);
+        }
+
+        /// <summary>
+        /// 非托管入口：Meta_Init
+        /// 转发到基类的 Native_Meta_Init 实现
+        /// </summary>
+        [UnmanagedCallersOnly(EntryPoint = "Meta_Init", CallConvs = [typeof(CallConvCdecl)])]
+        public static void UnmanagedMeta_Init()
+        {
+            Native_Meta_Init();
+        }
+
+        /// <summary>
+        /// 非托管入口：Meta_Query
+        /// 转发到基类的 Native_Meta_Query 实现
+        /// </summary>
+        [UnmanagedCallersOnly(EntryPoint = "Meta_Query", CallConvs = [typeof(CallConvCdecl)])]
+        public static int UnmanagedMeta_Query(nint interfaceVersion, nint plinfo, nint pMetaUtilFuncs)
+        {
+            return Native_Meta_Query(interfaceVersion, plinfo, pMetaUtilFuncs);
+        }
+
+        /// <summary>
+        /// 非托管入口：Meta_Attach
+        /// 转发到基类的 Native_Meta_Attach 实现
+        /// </summary>
+        [UnmanagedCallersOnly(EntryPoint = "Meta_Attach", CallConvs = [typeof(CallConvCdecl)])]
+        public static int UnmanagedMeta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
+        {
+            return Native_Meta_Attach(now, pFunctionTable, pMGlobals, pGamedllFuncs);
+        }
+
+        /// <summary>
+        /// 非托管入口：Meta_Detach
+        /// 转发到基类的 Native_Meta_Detach 实现
+        /// </summary>
+        [UnmanagedCallersOnly(EntryPoint = "Meta_Detach", CallConvs = [typeof(CallConvCdecl)])]
+        public static int UnmanagedMeta_Detach(PluginLoadTime now, PluginUnloadReason reason)
+        {
+            return Native_Meta_Detach(now, reason);
+        }
+    }
+}

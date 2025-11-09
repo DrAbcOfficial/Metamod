@@ -6,6 +6,7 @@ namespace Metamod.Interface;
 
 public interface IPlugin
 {
+    PluginInfo GetPluginInfo();
     void GiveFnptrsToDll(CEngineFuncs pengfuncsFromEngine, CGlobalVars pGlobals);
 
     void Meta_Init();
