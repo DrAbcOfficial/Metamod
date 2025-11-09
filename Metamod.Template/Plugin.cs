@@ -8,7 +8,6 @@ namespace Metamod.Template;
 
 public class Plugin : IPlugin
 {
-    private readonly static DLLEvents _entityapiEvents = new();
     private readonly static PluginInfo _pluginInfo = new()
     {
         InterfaceVersion = InterfaceVersion.V5_16,
@@ -55,6 +54,7 @@ public class Plugin : IPlugin
                 $"{(nameof(Global.PluginInfo.Loadable))}:{Global.PluginInfo.Loadable}\n" +
                 $"{(nameof(Global.PluginInfo.Unloadable))}:{Global.PluginInfo.Unloadable}\n");
         });
+        DLLEvents _entityapiEvents = new();
         _entityapiEvents.GameInit += () =>
         {
             Global.EngineFuncs.ServerPrint("Game Initialized!\n");
@@ -64,6 +64,14 @@ public class Plugin : IPlugin
             Global.EngineFuncs.ServerPrint("Server Activated!\n");
         };
         MetaFunctions.InitEntityApi(_entityapiEvents);
+        EngineEvents _engine = new();
+        _engine.PrecacheModel += (model) =>
+        {
+            Global.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            Global.EngineFuncs.ServerPrint($"Precached {model}!\n");
+            return 998;
+        };
+        MetaFunctions.InitEngineFunctions(_engine);
         return true;
     }
 
