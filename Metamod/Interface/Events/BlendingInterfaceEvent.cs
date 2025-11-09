@@ -1,0 +1,17 @@
+﻿using Metamod.Struct.Common;
+using Metamod.Struct.Engine;
+
+namespace Metamod.Interface.Events;
+
+#region Delegates
+public delegate void SV_StudioSetupBonesDelegate(nint pModel, float frame, int sequence, Vector3f angles, Vector3f origin, nint pcontroller, nint pblending, int iBone, Edict pEdict);
+#endregion
+
+public class BlendingInterfaceEvent
+{
+    public int Version { get; set; }
+    public event SV_StudioSetupBonesDelegate? SV_StudioSetupBones;
+    internal void InvokeSV_StudioSetupBones(nint pModel, float frame, int sequence, Vector3f angles, Vector3f origin, nint pcontroller, nint pblending, int iBone, Edict pEdict) =>
+        SV_StudioSetupBones?.Invoke(pModel, frame, sequence, angles, origin, pcontroller, pblending, iBone, pEdict);
+    internal bool IsSV_StudioSetupBonesNull => SV_StudioSetupBones == null;
+}

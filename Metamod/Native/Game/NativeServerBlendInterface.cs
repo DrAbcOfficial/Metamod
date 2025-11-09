@@ -19,5 +19,5 @@ internal delegate void NativeSV_StudioSetupBonesDelegate(
 public struct NativeServerBlendInterface : INativeStruct
 {
     internal int version;
-    internal NativeSV_StudioSetupBonesDelegate SV_StudioSetupBones;
+    internal NativeSV_StudioSetupBonesDelegate? pfnSV_StudioSetupBones;
 }

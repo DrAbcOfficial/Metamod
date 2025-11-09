@@ -16,9 +16,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="Interface\Events\NativeCaller\BlendingInterfaceNativeCaller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BlendingInterfaceNativeCaller.generated.cs</LastGenOutput>
+    </None>
     <None Update="Interface\Events\NativeCaller\DLLNativeCaller.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DLLNativeCaller.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Interface\Events\NativeCaller\EngineNativeCaller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EngineNativeCaller.generated.cs</LastGenOutput>
     </None>
     <None Update="Interface\Events\NativeCaller\NewDLLNativeCaller.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -31,10 +39,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Interface\Events\NativeCaller\BlendingInterfaceNativeCaller.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BlendingInterfaceNativeCaller.tt</DependentUpon>
+    </Compile>
     <Compile Update="Interface\Events\NativeCaller\DLLNativeCaller.generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DLLNativeCaller.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Interface\Events\NativeCaller\EngineNativeCaller.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EngineNativeCaller.tt</DependentUpon>
     </Compile>
     <Compile Update="Interface\Events\NativeCaller\NewDLLNativeCaller.generated.cs">
       <DesignTime>True</DesignTime>

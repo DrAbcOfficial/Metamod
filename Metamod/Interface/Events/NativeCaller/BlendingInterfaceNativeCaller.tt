@@ -1,0 +1,45 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".generated.cs" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+
+<#
+    string[] pluginClassName = ["BlendingInterface", "BlendingInterfacePost"];    // 生成的类名
+#>
+using Metamod.Native.Common;
+using Metamod.Native.Engine.PM;
+using Metamod.Native.Engine;
+using Metamod.Native.Game;
+using Metamod.Struct.Common;
+using Metamod.Struct.Engine;
+using Metamod.Struct.Engine.PM;
+using static Metamod.Native.Game.NativeDllFuncs;
+using System.Runtime.InteropServices;
+using Metamod.Enum.Metamod;
+using Metamod.Interface.Events;
+#nullable enable
+namespace Metamod.Interface;
+
+<# foreach (var cls in pluginClassName) { #>
+internal static class <#= cls #>NativeCaller
+{
+    internal static BlendingInterfaceEvent? _Events = null;
+    internal static NativeSV_StudioSetupBonesDelegate nativeOnSV_StudioSetupBonesCaller = (pModel, frame, sequence, angles, origin, pcontroller, pblending, iBone, pEdict) =>
+    {
+       _Events?.InvokeSV_StudioSetupBones(pModel, frame, sequence, new Vector3f(angles), new Vector3f(origin), pcontroller, pblending, iBone, new Edict(pEdict));
+    };
+    internal static NativeServerBlendInterface GetBlendingInterfaceNative()
+    {
+        if(_Events == null)
+            throw new NullReferenceException("BlendingInterfaceEvent instance is null in GetBlendingInterfaceNative.");
+        return new()
+        {
+            version = _Events.Version,
+            pfnSV_StudioSetupBones = _Events.IsSV_StudioSetupBonesNull ? null : nativeOnSV_StudioSetupBonesCaller,
+        };
+    }
+}
+#nullable restore
+<# } #>

@@ -1,0 +1,1121 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".generated.cs" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+
+<#
+    string[] pluginClassName = ["Engine", "EnginePost"];    // 生成的类名
+#>
+
+using Metamod.Native.Common;
+using Metamod.Native.Engine;
+using Metamod.Struct.Common;
+using Metamod.Struct.Engine;
+using Metamod.Enum.Common;
+using Metamod.Interface.Events;
+using static Metamod.Native.Engine.NativeEngineFuncs;
+using System.Runtime.InteropServices;
+using System.Text;
+#nullable enable
+namespace Metamod.Interface.Events.NativeCaller;
+
+<# foreach (var cls in pluginClassName) { #>
+internal static class <#= cls #>NativeCaller
+{
+    internal static EngineEvents? _engineEvents = null;
+
+    internal static NativePrecacheModelDelegate nativePrecacheModelCaller = (nint s) =>
+    {
+        string str = Marshal.PtrToStringUTF8(s) ?? string.Empty;
+        return _engineEvents?.InvokePrecacheModel(str) ?? 0;
+    };
+
+    internal static NativePrecacheSoundDelegate nativePrecacheSoundCaller = (nint s) =>
+    {
+        string str = Marshal.PtrToStringUTF8(s) ?? string.Empty;
+        return _engineEvents?.InvokePrecacheSound(str) ?? 0;
+    };
+
+    internal static NativeSetModelDelegate nativeSetModelCaller = (nint e, nint m) =>
+    {
+        _engineEvents?.InvokeSetModel(new Edict(e), Marshal.PtrToStringUTF8(m) ?? string.Empty);
+    };
+
+    internal static NativeModelIndexDelegate nativeModelIndexCaller = (nint m) =>
+    {
+        string str = Marshal.PtrToStringUTF8(m) ?? string.Empty;
+        return _engineEvents?.InvokeModelIndex(str) ?? 0;
+    };
+
+    internal static NativeModelFramesDelegate nativeModelFramesCaller = (int modelIndex) =>
+    {
+        return _engineEvents?.InvokeModelFrames(modelIndex) ?? 0;
+    };
+
+    internal static NativeSetSizeDelegate nativeSetSizeCaller = (nint e, nint rgflMin, nint rgflMax) =>
+    {
+        _engineEvents?.InvokeSetSize(new Edict(e), new Vector3f(rgflMin), new Vector3f(rgflMax));
+    };
+
+    internal static NativeChangeLevelDelegate nativeChangeLevelCaller = (nint s1, nint s2) =>
+    {
+        _engineEvents?.InvokeChangeLevel(Marshal.PtrToStringUTF8(s1) ?? string.Empty, Marshal.PtrToStringUTF8(s2) ?? string.Empty);
+    };
+
+    internal static NativeGetSpawnParmsDelegate nativeGetSpawnParmsCaller = (nint ent) =>
+    {
+        _engineEvents?.InvokeGetSpawnParms(new Edict(ent));
+    };
+
+    internal static NativeSaveSpawnParmsDelegate nativeSaveSpawnParmsCaller = (nint ent) =>
+    {
+        _engineEvents?.InvokeSaveSpawnParms(new Edict(ent));
+    };
+
+    internal static NativeVecToYawDelegate nativeVecToYawCaller = (nint rgflVector) =>
+    {
+        return _engineEvents?.InvokeVecToYaw(new Vector3f(rgflVector)) ?? 0f;
+    };
+
+    internal static NativeVecToAnglesDelegate nativeVecToAnglesCaller = (nint rgflVectorIn, nint rgflVectorOut) =>
+    {
+        _engineEvents?.InvokeVecToAngles(new Vector3f(rgflVectorIn), new Vector3f(rgflVectorOut));
+    };
+
+    internal static NativeMoveToOriginDelegate nativeMoveToOriginCaller = (nint ent, nint pflGoal, float dist, int iMoveType) =>
+    {
+        _engineEvents?.InvokeMoveToOrigin(new Edict(ent), new Vector3f(pflGoal), dist, iMoveType);
+    };
+
+    internal static NativeChangeYawDelegate nativeChangeYawCaller = (nint ent) =>
+    {
+        _engineEvents?.InvokeChangeYaw(new Edict(ent));
+    };
+
+    internal static NativeChangePitchDelegate nativeChangePitchCaller = (nint ent) =>
+    {
+        _engineEvents?.InvokeChangePitch(new Edict(ent));
+    };
+
+    private static nint s_findByString_name = Marshal.AllocHGlobal(256);
+    internal static NativeFindEntityByStringDelegate nativeFindEntityByStringCaller = (nint pEdictStartSearchAfter, nint pszField, nint pszValue) =>
+    {
+        var res = _engineEvents?.InvokeFindEntityByString(new Edict(pEdictStartSearchAfter), Marshal.PtrToStringUTF8(pszField) ?? string.Empty, Marshal.PtrToStringUTF8(pszValue) ?? string.Empty);
+        return res?.GetUnmanagedPtr() ?? 0;
+    };
+
+    internal static NativeGetEntityIllumDelegate nativeGetEntityIllumCaller = (nint pEnt) =>
+    {
+        return _engineEvents?.InvokeGetEntityIllum(new Edict(pEnt)) ?? 0;
+    };
+
+    internal static NativeFindEntityInSphereDelegate nativeFindEntityInSphereCaller = (nint pEdictStartSearchAfter, nint org, float rad) =>
+    {
+        var res = _engineEvents?.InvokeFindEntityInSphere(new Edict(pEdictStartSearchAfter), new Vector3f(org), rad);
+        return res?.GetUnmanagedPtr() ?? 0;
+    };
+
+    internal static NativeFindClientInPVSDelegate nativeFindClientInPVSCaller = (nint pEdict) =>
+    {
+        var res = _engineEvents?.InvokeFindClientInPVS(new Edict(pEdict));
+        return res?.GetUnmanagedPtr() ?? 0;
+    };
+
+    internal static NativeEntitiesInPVSDelegate nativeEntitiesInPVSCaller = (nint pplayer) =>
+    {
+        var res = _engineEvents?.InvokeEntitiesInPVS(new Edict(pplayer));
+        return res?.GetUnmanagedPtr() ?? 0;
+    };
+
+    internal static NativeMakeVectorsDelegate nativeMakeVectorsCaller = (nint rgflVector) =>
+    {
+        _engineEvents?.InvokeMakeVectors(new Vector3f(rgflVector));
+    };
+
+    internal static NativeAngleVectorsDelegate nativeAngleVectorsCaller = (nint rgflVector, nint forward, nint right, nint up) =>
+    {
+        _engineEvents?.InvokeAngleVectors(new Vector3f(rgflVector), new Vector3f(forward), new Vector3f(right), new Vector3f(up));
+    };
+
+    internal static NativeCreateEntityDelegate nativeCreateEntityCaller = () =>
+    {
+        var e = _engineEvents?.InvokeCreateEntity();
+        return e?.GetUnmanagedPtr() ?? 0;
+    };
+
+    internal static NativeRemoveEntityDelegate nativeRemoveEntityCaller = (nint e) =>
+    {
+        _engineEvents?.InvokeRemoveEntity(new Edict(e));
+    };
+
+    internal static NativeCreateNamedEntityDelegate nativeCreateNamedEntityCaller = (int className) =>
+    {
+        var e = _engineEvents?.InvokeCreateNamedEntity(className);
+        return e?.GetUnmanagedPtr() ?? 0;
+    };
+
+    internal static NativeMakeStaticDelegate nativeMakeStaticCaller = (nint ent) =>
+    {
+        _engineEvents?.InvokeMakeStatic(new Edict(ent));
+    };
+
+    internal static NativeEntIsOnFloorDelegate nativeEntIsOnFloorCaller = (nint e) =>
+    {
+        return _engineEvents?.InvokeEntIsOnFloor(new Edict(e)) ?? 0;
+    };
+
+    internal static NativeDropToFloorDelegate nativeDropToFloorCaller = (nint e) =>
+    {
+        return _engineEvents?.InvokeDropToFloor(new Edict(e)) ?? 0;
+    };
+
+    internal static NativeWalkMoveDelegate nativeWalkMoveCaller = (nint ent, float yaw, float dist, int iMode) =>
+    {
+        return _engineEvents?.InvokeWalkMove(new Edict(ent), yaw, dist, iMode) ?? 0;
+    };
+
+    internal static NativeSetOriginDelegate nativeSetOriginCaller = (nint e, nint rgflOrigin) =>
+    {
+        _engineEvents?.InvokeSetOrigin(new Edict(e), new Vector3f(rgflOrigin));
+    };
+
+    internal static NativeEmitSoundDelegate nativeEmitSoundCaller = (nint entity, int channel, nint sample, float volume, float attenuation, int fFlags, int pitch) =>
+    {
+        _engineEvents?.InvokeEmitSound(new Edict(entity), channel, Marshal.PtrToStringUTF8(sample) ?? string.Empty, volume, attenuation, fFlags, pitch);
+    };
+
+    internal static NativeEmitAmbientSoundDelegate nativeEmitAmbientSoundCaller = (nint entity, nint pos, nint samp, float vol, float attenuation, int fFlags, int pitch) =>
+    {
+        _engineEvents?.InvokeEmitAmbientSound(new Edict(entity), new Vector3f(pos), Marshal.PtrToStringUTF8(samp) ?? string.Empty, vol, attenuation, fFlags, pitch);
+    };
+
+    internal static NativeTraceLineDelegate nativeTraceLineCaller = (nint v1, nint v2, int fNoMonsters, nint pentToSkip, nint ptr) =>
+    {
+        TraceResult tr = new TraceResult();
+        tr.SetupFromPtr(ptr);
+        _engineEvents?.InvokeTraceLine(new Vector3f(v1), new Vector3f(v2), fNoMonsters, new Edict(pentToSkip), ref tr);
+    };
+
+    internal static NativeTraceTossDelegate nativeTraceTossCaller = (nint pent, nint pentToIgnore, nint ptr) =>
+    {
+        TraceResult tr = new TraceResult();
+        tr.SetupFromPtr(ptr);
+        _engineEvents?.InvokeTraceToss(new Edict(pent), new Edict(pentToIgnore), ref tr);
+    };
+
+    internal static NativeTraceMonsterHullDelegate nativeTraceMonsterHullCaller = (nint pEdict, nint v1, nint v2, int fNoMonsters, nint pentToSkip, nint ptr) =>
+    {
+        TraceResult tr = new TraceResult();
+        tr.SetupFromPtr(ptr);
+        return _engineEvents?.InvokeTraceMonsterHull(new Edict(pEdict), new Vector3f(v1), new Vector3f(v2), fNoMonsters, new Edict(pentToSkip), ref tr) ?? 0;
+    };
+
+    internal static NativeTraceHullDelegate nativeTraceHullCaller = (nint v1, nint v2, int fNoMonsters, int hullNumber, nint pentToSkip, nint ptr) =>
+    {
+        TraceResult tr = new TraceResult();
+        tr.SetupFromPtr(ptr);
+        _engineEvents?.InvokeTraceHull(new Vector3f(v1), new Vector3f(v2), fNoMonsters, hullNumber, new Edict(pentToSkip), ref tr);
+    };
+
+    internal static NativeTraceModelDelegate nativeTraceModelCaller = (nint v1, nint v2, int hullNumber, nint pent, nint ptr) =>
+    {
+        TraceResult tr = new TraceResult();
+        tr.SetupFromPtr(ptr);
+        _engineEvents?.InvokeTraceModel(new Vector3f(v1), new Vector3f(v2), hullNumber, new Edict(pent), ref tr);
+    };
+
+    private static nint s_traceTextureBuf = Marshal.AllocHGlobal(256);
+    internal static NativeTraceTextureDelegate nativeTraceTextureCaller = (nint pTextureEntity, nint v1, nint v2) =>
+    {
+        string res = _engineEvents?.InvokeTraceTexture(new Edict(pTextureEntity), new Vector3f(v1), new Vector3f(v2)) ?? string.Empty;
+        byte[] bytes = Encoding.UTF8.GetBytes(res);
+        if (bytes.Length > 255) Array.Resize(ref bytes, 255);
+        Marshal.Copy(bytes, 0, s_traceTextureBuf, bytes.Length);
+        return s_traceTextureBuf;
+    };
+
+    internal static NativeTraceSphereDelegate nativeTraceSphereCaller = (nint v1, nint v2, int fNoMonsters, float radius, nint pentToSkip, nint ptr) =>
+    {
+        TraceResult tr = new TraceResult();
+        tr.SetupFromPtr(ptr);
+        _engineEvents?.InvokeTraceSphere(new Vector3f(v1), new Vector3f(v2), fNoMonsters, radius, new Edict(pentToSkip), ref tr);
+    };
+
+    internal static NativeGetAimVectorDelegate nativeGetAimVectorCaller = (nint ent, float speed, nint rgflReturn) =>
+    {
+        Vector3f v = new Vector3f(rgflReturn);
+        _engineEvents?.InvokeGetAimVector(new Edict(ent), speed, ref v);
+        // marshal back if needed - assuming Vector3f wrapper writes into native memory in its constructor or has underlying pointer.
+    };
+
+    private static nint s_serverCommandBuf = Marshal.AllocHGlobal(256);
+    internal static NativeServerCommandDelegate nativeServerCommandCaller = (nint str) =>
+    {
+        string s = Marshal.PtrToStringUTF8(str) ?? string.Empty;
+        _engineEvents?.InvokeServerCommand(s);
+    };
+
+    internal static NativeServerExecuteDelegate nativeServerExecuteCaller = () =>
+    {
+        _engineEvents?.InvokeServerExecute();
+    };
+
+    internal static NativeClientCommandDelegate nativeClientCommandCaller = (nint pEdict, nint szFmt) =>
+    {
+        _engineEvents?.InvokeClientCommand(new Edict(pEdict), Marshal.PtrToStringUTF8(szFmt) ?? string.Empty);
+    };
+
+    internal static NativeParticleEffectDelegate nativeParticleEffectCaller = (nint org, nint dir, float color, float count) =>
+    {
+        _engineEvents?.InvokeParticleEffect(new Vector3f(org), new Vector3f(dir), color, count);
+    };
+
+    internal static NativeLightStyleDelegate nativeLightStyleCaller = (int style, nint val) =>
+    {
+        _engineEvents?.InvokeLightStyle(style, Marshal.PtrToStringUTF8(val) ?? string.Empty);
+    };
+
+    internal static NativeDecalIndexDelegate nativeDecalIndexCaller = (nint name) =>
+    {
+        return _engineEvents?.InvokeDecalIndex(Marshal.PtrToStringUTF8(name) ?? string.Empty) ?? 0;
+    };
+
+    internal static NativePointContentsDelegate nativePointContentsCaller = (nint rgflVector) =>
+    {
+        return _engineEvents?.InvokePointContents(new Vector3f(rgflVector)) ?? 0;
+    };
+
+    internal static NativeMessageBeginDelegate nativeMessageBeginCaller = (int msg_dest, int msg_type, nint pOrigin, nint ed) =>
+    {
+        _engineEvents?.InvokeMessageBegin(msg_dest, msg_type, new Vector3f(pOrigin), new Edict(ed));
+    };
+
+    internal static NativeMessageEndDelegate nativeMessageEndCaller = () =>
+    {
+        _engineEvents?.InvokeMessageEnd();
+    };
+
+    internal static NativeWriteByteDelegate nativeWriteByteCaller = (int iValue) =>
+    {
+        _engineEvents?.InvokeWriteByte(iValue);
+    };
+
+    internal static NativeWriteCharDelegate nativeWriteCharCaller = (int iValue) =>
+    {
+        _engineEvents?.InvokeWriteChar(iValue);
+    };
+
+    internal static NativeWriteShortDelegate nativeWriteShortCaller = (int iValue) =>
+    {
+        _engineEvents?.InvokeWriteShort(iValue);
+    };
+
+    internal static NativeWriteLongDelegate nativeWriteLongCaller = (int iValue) =>
+    {
+        _engineEvents?.InvokeWriteLong(iValue);
+    };
+
+    internal static NativeWriteAngleDelegate nativeWriteAngleCaller = (float flValue) =>
+    {
+        _engineEvents?.InvokeWriteAngle(flValue);
+    };
+
+    internal static NativeWriteCoordDelegate nativeWriteCoordCaller = (float flValue) =>
+    {
+        _engineEvents?.InvokeWriteCoord(flValue);
+    };
+
+    internal static NativeWriteStringDelegate nativeWriteStringCaller = (nint sz) =>
+    {
+        _engineEvents?.InvokeWriteString(Marshal.PtrToStringUTF8(sz) ?? string.Empty);
+    };
+
+    internal static NativeWriteEntityDelegate nativeWriteEntityCaller = (int iValue) =>
+    {
+        _engineEvents?.InvokeWriteEntity(iValue);
+    };
+
+    internal static NativeCVarRegisterDelegate nativeCVarRegisterCaller = (nint pCvar) =>
+    {
+        _engineEvents?.InvokeCVarRegister(new CVar());
+    };
+
+    internal static NativeCVarGetFloatDelegate nativeCVarGetFloatCaller = (nint szVarName) =>
+    {
+        return _engineEvents?.InvokeCVarGetFloat(Marshal.PtrToStringUTF8(szVarName) ?? string.Empty) ?? 0f;
+    };
+
+    internal static NativeCVarGetStringDelegate nativeCVarGetStringCaller = (nint szVarName) =>
+    {
+        string res = _engineEvents?.InvokeCVarGetString(Marshal.PtrToStringUTF8(szVarName) ?? string.Empty) ?? string.Empty;
+        // return as pointer to UTF8 allocated buffer
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeCVarSetFloatDelegate nativeCVarSetFloatCaller = (nint szVarName, float flValue) =>
+    {
+        _engineEvents?.InvokeCVarSetFloat(Marshal.PtrToStringUTF8(szVarName) ?? string.Empty, flValue);
+    };
+
+    internal static NativeCVarSetStringDelegate nativeCVarSetStringCaller = (nint szVarName, nint szValue) =>
+    {
+        _engineEvents?.InvokeCVarSetString(Marshal.PtrToStringUTF8(szVarName) ?? string.Empty, Marshal.PtrToStringUTF8(szValue) ?? string.Empty);
+    };
+
+    internal static NativeAlertMessageDelegate nativeAlertMessageCaller = (int atype, nint szFmt) =>
+    {
+        _engineEvents?.InvokeAlertMessage((AlertType)atype, Marshal.PtrToStringUTF8(szFmt) ?? string.Empty);
+    };
+
+    internal static NativeEngineFprintfDelegate nativeEngineFprintfCaller = (nint pfile, nint szFmt) =>
+    {
+        _engineEvents?.InvokeEngineFprintf(pfile, Marshal.PtrToStringUTF8(szFmt) ?? string.Empty);
+    };
+
+    internal static NativePvAllocEntPrivateDataDelegate nativePvAllocEntPrivateDataCaller = (nint pEdict, int cb) =>
+    {
+        return _engineEvents?.InvokePvAllocEntPrivateData(new Edict(pEdict), cb) ?? nint.Zero;
+    };
+
+    internal static NativePvEntPrivateDataDelegate nativePvEntPrivateDataCaller = (nint pEdict) =>
+    {
+        return _engineEvents?.InvokePvEntPrivateData(new Edict(pEdict)) ?? nint.Zero;
+    };
+
+    internal static NativeFreeEntPrivateDataDelegate nativeFreeEntPrivateDataCaller = (nint pEdict) =>
+    {
+        _engineEvents?.InvokeFreeEntPrivateData(new Edict(pEdict));
+    };
+
+    internal static NativeSzFromIndexDelegate nativeSzFromIndexCaller = (int iString) =>
+    {
+        string s = _engineEvents?.InvokeSzFromIndex(iString) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(s);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeAllocStringDelegate nativeAllocStringCaller = (nint szValue) =>
+    {
+        return _engineEvents?.InvokeAllocString(Marshal.PtrToStringUTF8(szValue) ?? string.Empty) ?? 0;
+    };
+
+    internal static NativeGetVarsOfEntDelegate nativeGetVarsOfEntCaller = (nint pEdict) =>
+    {
+        var ev = _engineEvents?.InvokeGetVarsOfEnt(new Edict(pEdict));
+        return ev != null ? nint.Zero : nint.Zero; // placeholder: real implementation depends on Entvars native mapping
+    };
+
+    internal static NativePEntityOfEntOffsetDelegate nativePEntityOfEntOffsetCaller = (int iEntOffset) =>
+    {
+        var e = _engineEvents?.InvokePEntityOfEntOffset(iEntOffset);
+        return e != null ? nint.Zero : nint.Zero;
+    };
+
+    internal static NativeEntOffsetOfPEntityDelegate nativeEntOffsetOfPEntityCaller = (nint pEdict) =>
+    {
+        return _engineEvents?.InvokeEntOffsetOfPEntity(new Edict(pEdict)) ?? 0;
+    };
+
+    internal static NativeIndexOfEdictDelegate nativeIndexOfEdictCaller = (nint pEdict) =>
+    {
+        return _engineEvents?.InvokeIndexOfEdict(new Edict(pEdict)) ?? 0;
+    };
+
+    internal static NativePEntityOfEntIndexDelegate nativePEntityOfEntIndexCaller = (int iEntIndex) =>
+    {
+        var e = _engineEvents?.InvokePEntityOfEntIndex(iEntIndex);
+        return e != null ? nint.Zero : nint.Zero;
+    };
+
+    internal static NativeFindEntityByVarsDelegate nativeFindEntityByVarsCaller = (nint pvars) =>
+    {
+        var e = _engineEvents?.InvokeFindEntityByVars(new Entvars()); // placeholder
+        return e != null ? nint.Zero : nint.Zero;
+    };
+
+    internal static NativeGetModelPtrDelegate nativeGetModelPtrCaller = (nint pEdict) =>
+    {
+        return _engineEvents?.InvokeGetModelPtr(new Edict(pEdict)) ?? nint.Zero;
+    };
+
+    internal static NativeRegUserMsgDelegate nativeRegUserMsgCaller = (nint pszName, int iSize) =>
+    {
+        return _engineEvents?.InvokeRegUserMsg(Marshal.PtrToStringUTF8(pszName) ?? string.Empty, iSize) ?? 0;
+    };
+
+    internal static NativeAnimationAutomoveDelegate nativeAnimationAutomoveCaller = (nint pEdict, float flTime) =>
+    {
+        _engineEvents?.InvokeAnimationAutomove(new Edict(pEdict), flTime);
+    };
+
+    internal static NativeGetBonePositionDelegate nativeGetBonePositionCaller = (nint pEdict, int iBone, nint rgflOrigin, nint rgflAngles) =>
+    {
+        Vector3f origin = new Vector3f(rgflOrigin);
+        Vector3f angles = new Vector3f(rgflAngles);
+        _engineEvents?.InvokeGetBonePosition(new Edict(pEdict), iBone, ref origin, ref angles);
+    };
+
+    internal static NativeFunctionFromNameDelegate nativeFunctionFromNameCaller = (nint pName) =>
+    {
+        return _engineEvents?.InvokeFunctionFromName(Marshal.PtrToStringUTF8(pName) ?? string.Empty) ?? 0u;
+    };
+
+    internal static NativeNameForFunctionDelegate nativeNameForFunctionCaller = (uint function) =>
+    {
+        string res = _engineEvents?.InvokeNameForFunction(function) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeClientPrintfDelegate nativeClientPrintfCaller = (nint pEdict, int ptype, nint szMsg) =>
+    {
+        _engineEvents?.InvokeClientPrintf(new Edict(pEdict), (PrintType)ptype, Marshal.PtrToStringUTF8(szMsg) ?? string.Empty);
+    };
+
+    internal static NativeServerPrintDelegate nativeServerPrintCaller = (nint szMsg) =>
+    {
+        _engineEvents?.InvokeServerPrint(Marshal.PtrToStringUTF8(szMsg) ?? string.Empty);
+    };
+
+    internal static NativeCmd_ArgsDelegate nativeCmd_ArgsCaller = () =>
+    {
+        string res = _engineEvents?.InvokeCmd_Args() ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeCmd_ArgvDelegate nativeCmd_ArgvCaller = (int argc) =>
+    {
+        string res = _engineEvents?.InvokeCmd_Argv(argc) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeCmd_ArgcDelegate nativeCmd_ArgcCaller = () =>
+    {
+        return _engineEvents?.InvokeCmd_Argc() ?? 0;
+    };
+
+    internal static NativeGetAttachmentDelegate nativeGetAttachmentCaller = (nint pEdict, int iAttachment, nint rgflOrigin, nint rgflAngles) =>
+    {
+        Vector3f origin = new Vector3f(rgflOrigin);
+        Vector3f angles = new Vector3f(rgflAngles);
+        _engineEvents?.InvokeGetAttachment(new Edict(pEdict), iAttachment, ref origin, ref angles);
+    };
+
+    internal static NativeCRC32_InitDelegate nativeCRC32_InitCaller = (nint pulCRC) =>
+    {
+        _engineEvents?.InvokeCRC32_Init(new CRC32(new NativeCRC32()));
+    };
+
+    internal static NativeCRC32_ProcessBufferDelegate nativeCRC32_ProcessBufferCaller = (nint pulCRC, nint p, int len) =>
+    {
+        _engineEvents?.InvokeCRC32_ProcessBuffer(new CRC32(new NativeCRC32()), p, len);
+    };
+
+    internal static NativeCRC32_ProcessByteDelegate nativeCRC32_ProcessByteCaller = (nint pulCRC, byte ch) =>
+    {
+        _engineEvents?.InvokeCRC32_ProcessByte(new CRC32(new NativeCRC32()), ch);
+    };
+
+    internal static NativeCRC32_FinalDelegate nativeCRC32_FinalCaller = (NativeCRC32 pulCRC) =>
+    {
+        return _engineEvents?.InvokeCRC32_Final(new CRC32(pulCRC))?._native ?? new NativeCRC32();
+    };
+
+    internal static NativeRandomLongDelegate nativeRandomLongCaller = (int lLow, int lHigh) =>
+    {
+        return _engineEvents?.InvokeRandomLong(lLow, lHigh) ?? 0;
+    };
+
+    internal static NativeRandomFloatDelegate nativeRandomFloatCaller = (float flLow, float flHigh) =>
+    {
+        return _engineEvents?.InvokeRandomFloat(flLow, flHigh) ?? 0f;
+    };
+
+    internal static NativeSetViewDelegate nativeSetViewCaller = (nint pClient, nint pViewent) =>
+    {
+        _engineEvents?.InvokeSetView(new Edict(pClient), new Edict(pViewent));
+    };
+
+    internal static NativeTimeDelegate nativeTimeCaller = () =>
+    {
+        return _engineEvents?.InvokeTime() ?? 0f;
+    };
+
+    internal static NativeCrosshairAngleDelegate nativeCrosshairAngleCaller = (nint pClient, float pitch, float yaw) =>
+    {
+        _engineEvents?.InvokeCrosshairAngle(new Edict(pClient), pitch, yaw);
+    };
+
+    internal static NativeLoadFileForMeDelegate nativeLoadFileForMeCaller = (nint filename, nint pLength) =>
+    {
+        int len = 0;
+        nint res = _engineEvents?.InvokeLoadFileForMe(Marshal.PtrToStringUTF8(filename) ?? string.Empty, out len) ?? nint.Zero;
+        Marshal.WriteInt32(pLength, len);
+        return res;
+    };
+
+    internal static NativeFreeFileDelegate nativeFreeFileCaller = (nint buffer) =>
+    {
+        _engineEvents?.InvokeFreeFile(buffer);
+    };
+
+    internal static NativeEndSectionDelegate nativeEndSectionCaller = (nint pszSectionName) =>
+    {
+        _engineEvents?.InvokeEndSection(Marshal.PtrToStringUTF8(pszSectionName) ?? string.Empty);
+    };
+
+    internal static NativeCompareFileTimeDelegate nativeCompareFileTimeCaller = (nint filename1, nint filename2, nint iCompare) =>
+    {
+        int cmp = 0;
+        int res = _engineEvents?.InvokeCompareFileTime(Marshal.PtrToStringUTF8(filename1) ?? string.Empty, Marshal.PtrToStringUTF8(filename2) ?? string.Empty, out cmp) ?? 0;
+        Marshal.WriteInt32(iCompare, cmp);
+        return res;
+    };
+
+    internal static NativeGetGameDirDelegate nativeGetGameDirCaller = (nint szGetGameDir) =>
+    {
+        string res = _engineEvents?.InvokeGetGameDir() ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        if (szGetGameDir != 0) Marshal.Copy(b, 0, szGetGameDir, b.Length);
+    };
+
+    internal static NativeCvar_RegisterVariableDelegate nativeCvar_RegisterVariableCaller = (nint variable) =>
+    {
+        _engineEvents?.InvokeCVar_RegisterVariable(new CVar());
+    };
+
+    internal static NativeFadeClientVolumeDelegate nativeFadeClientVolumeCaller = (nint pEdict, int fadePercent, int fadeOutSeconds, int holdTime, int fadeInSeconds) =>
+    {
+        _engineEvents?.InvokeFadeClientVolume(new Edict(pEdict), fadePercent, fadeOutSeconds, holdTime, fadeInSeconds);
+    };
+
+    internal static NativeSetClientMaxspeedDelegate nativeSetClientMaxspeedCaller = (nint pEdict, float fNewMaxspeed) =>
+    {
+        _engineEvents?.InvokeSetClientMaxspeed(new Edict(pEdict), fNewMaxspeed);
+    };
+
+    internal static NativeCreateFakeClientDelegate nativeCreateFakeClientCaller = (nint netname) =>
+    {
+        var e = _engineEvents?.InvokeCreateFakeClient(Marshal.PtrToStringUTF8(netname) ?? string.Empty);
+        return e?.GetUnmanagedPtr() ?? 0;
+    };
+
+    internal static NativeRunPlayerMoveDelegate nativeRunPlayerMoveCaller = (nint fakeclient, nint viewangles, float forwardmove, float sidemove, float upmove, ushort buttons, byte impulse, byte msec) =>
+    {
+        _engineEvents?.InvokeRunPlayerMove(new Edict(fakeclient), new Vector3f(viewangles), forwardmove, sidemove, upmove, buttons, impulse, msec);
+    };
+
+    internal static NativeNumberOfEntitiesDelegate nativeNumberOfEntitiesCaller = () =>
+    {
+        return _engineEvents?.InvokeNumberOfEntities() ?? 0;
+    };
+
+    internal static NativeGetInfoKeyBufferDelegate nativeGetInfoKeyBufferCaller = (nint e) =>
+    {
+        string res = _engineEvents?.InvokeGetInfoKeyBuffer(new Edict(e)) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeInfoKeyValueDelegate nativeInfoKeyValueCaller = (nint infobuffer, nint key) =>
+    {
+        string res = _engineEvents?.InvokeInfoKeyValue(Marshal.PtrToStringUTF8(infobuffer) ?? string.Empty, Marshal.PtrToStringUTF8(key) ?? string.Empty) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeSetKeyValueDelegate nativeSetKeyValueCaller = (nint infobuffer, nint key, nint value) =>
+    {
+        string inf = Marshal.PtrToStringUTF8(infobuffer) ?? string.Empty;
+        _engineEvents?.InvokeSetKeyValue(ref inf, Marshal.PtrToStringUTF8(key) ?? string.Empty, Marshal.PtrToStringUTF8(value) ?? string.Empty);
+        // If needed, write back inf to infobuffer pointer - depends on native expectations.
+    };
+
+    internal static NativeSetClientKeyValueDelegate nativeSetClientKeyValueCaller = (int clientIndex, nint infobuffer, nint key, nint value) =>
+    {
+        _engineEvents?.InvokeSetClientKeyValue(clientIndex, Marshal.PtrToStringUTF8(infobuffer) ?? string.Empty, Marshal.PtrToStringUTF8(key) ?? string.Empty, Marshal.PtrToStringUTF8(value) ?? string.Empty);
+    };
+
+    internal static NativeIsMapValidDelegate nativeIsMapValidCaller = (nint filename) =>
+    {
+        return _engineEvents?.InvokeIsMapValid(Marshal.PtrToStringUTF8(filename) ?? string.Empty) ?? false ? 1 : 0;
+    };
+
+    internal static NativeStaticDecalDelegate nativeStaticDecalCaller = (nint origin, int decalIndex, int entityIndex, int modelIndex) =>
+    {
+        _engineEvents?.InvokeStaticDecal(new Vector3f(origin), decalIndex, entityIndex, modelIndex);
+    };
+
+    internal static NativePrecacheGenericDelegate nativePrecacheGenericCaller = (nint s) =>
+    {
+        return _engineEvents?.InvokePrecacheGeneric(Marshal.PtrToStringUTF8(s) ?? string.Empty) ?? 0;
+    };
+
+    internal static NativeGetPlayerUserIdDelegate nativeGetPlayerUserIdCaller = (nint e) =>
+    {
+        return _engineEvents?.InvokeGetPlayerUserId(new Edict(e)) ?? 0;
+    };
+
+    internal static NativeBuildSoundMsgDelegate nativeBuildSoundMsgCaller = (nint entity, int channel, nint sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, nint pOrigin, nint ed) =>
+    {
+        _engineEvents?.InvokeBuildSoundMsg(new Edict(entity), channel, Marshal.PtrToStringUTF8(sample) ?? string.Empty, volume, attenuation, fFlags, pitch, msg_dest, msg_type, new Vector3f(pOrigin), new Edict(ed));
+    };
+
+    internal static NativeIsDedicatedServerDelegate nativeIsDedicatedServerCaller = () =>
+    {
+        return _engineEvents?.InvokeIsDedicatedServer() ?? false ? 1 : 0;
+    };
+
+    internal static NativeCVarGetPointerDelegate nativeCVarGetPointerCaller = (nint szVarName) =>
+    {
+        var c = _engineEvents?.InvokeCVarGetPointer(Marshal.PtrToStringUTF8(szVarName) ?? string.Empty);
+        return c != null ? nint.Zero : nint.Zero;
+    };
+
+    internal static NativeGetPlayerWONIdDelegate nativeGetPlayerWONIdCaller = (nint e) =>
+    {
+        return _engineEvents?.InvokeGetPlayerWONId(new Edict(e)) ?? 0u;
+    };
+
+    internal static NativeInfo_RemoveKeyDelegate nativeInfo_RemoveKeyCaller = (nint s, nint key) =>
+    {
+        string str = Marshal.PtrToStringUTF8(s) ?? string.Empty;
+        _engineEvents?.InvokeInfo_RemoveKey(ref str, Marshal.PtrToStringUTF8(key) ?? string.Empty);
+    };
+
+    internal static NativeGetPhysicsKeyValueDelegate nativeGetPhysicsKeyValueCaller = (nint pClient, nint key) =>
+    {
+        string res = _engineEvents?.InvokeGetPhysicsKeyValue(new Edict(pClient), Marshal.PtrToStringUTF8(key) ?? string.Empty) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeSetPhysicsKeyValueDelegate nativeSetPhysicsKeyValueCaller = (nint pClient, nint key, nint value) =>
+    {
+        _engineEvents?.InvokeSetPhysicsKeyValue(new Edict(pClient), Marshal.PtrToStringUTF8(key) ?? string.Empty, Marshal.PtrToStringUTF8(value) ?? string.Empty);
+    };
+
+    internal static NativeGetPhysicsInfoStringDelegate nativeGetPhysicsInfoStringCaller = (nint pClient) =>
+    {
+        string res = _engineEvents?.InvokeGetPhysicsInfoString(new Edict(pClient)) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativePrecacheEventDelegate nativePrecacheEventCaller = (int type, nint psz) =>
+    {
+        return _engineEvents?.InvokePrecacheEvent(type, Marshal.PtrToStringUTF8(psz) ?? string.Empty) ?? (ushort)0;
+    };
+
+    internal static NativePlaybackEventDelegate nativePlaybackEventCaller = (int flags, nint pInvoker, ushort eventindex, float delay, nint origin, nint angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2) =>
+    {
+        _engineEvents?.InvokePlaybackEvent(flags, new Edict(pInvoker), eventindex, delay, new Vector3f(origin), new Vector3f(angles), fparam1, fparam2, iparam1, iparam2, bparam1, bparam2);
+    };
+
+    internal static NativeSetFatPVSDelegate nativeSetFatPVSCaller = (nint org) =>
+    {
+        string res = _engineEvents?.InvokeSetFatPVS(new Vector3f(org)) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeSetFatPASDelegate nativeSetFatPASCaller = (nint org) =>
+    {
+        string res = _engineEvents?.InvokeSetFatPAS(new Vector3f(org)) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeCheckVisibilityDelegate nativeCheckVisibilityCaller = (nint entity, nint pset) =>
+    {
+        return _engineEvents?.InvokeCheckVisibility(new Edict(entity), pset) ?? false ? 1 : 0;
+    };
+
+    internal static NativeDeltaSetFieldDelegate nativeDeltaSetFieldCaller = (nint pFields, nint fieldname) =>
+    {
+        _engineEvents?.InvokeDeltaSetField(pFields, Marshal.PtrToStringUTF8(fieldname) ?? string.Empty);
+    };
+
+    internal static NativeDeltaUnsetFieldDelegate nativeDeltaUnsetFieldCaller = (nint pFields, nint fieldname) =>
+    {
+        _engineEvents?.InvokeDeltaUnsetField(pFields, Marshal.PtrToStringUTF8(fieldname) ?? string.Empty);
+    };
+
+    internal static NativeDeltaAddEncoderDelegate nativeDeltaAddEncoderCaller = (nint name, nint callback) =>
+    {
+        _engineEvents?.InvokeDeltaAddEncoder(Marshal.PtrToStringUTF8(name) ?? string.Empty, callback);
+    };
+
+    internal static NativeGetCurrentPlayerDelegate nativeGetCurrentPlayerCaller = () =>
+    {
+        return _engineEvents?.InvokeGetCurrentPlayer() ?? 0;
+    };
+
+    internal static NativeCanSkipPlayerDelegate nativeCanSkipPlayerCaller = (nint player) =>
+    {
+        return _engineEvents?.InvokeCanSkipPlayer(new Edict(player)) ?? 0;
+    };
+
+    internal static NativeDeltaFindFieldDelegate nativeDeltaFindFieldCaller = (nint pFields, nint fieldName) =>
+    {
+        return _engineEvents?.InvokeDeltaFindField(pFields, Marshal.PtrToStringUTF8(fieldName) ?? string.Empty) ?? 0;
+    };
+
+    internal static NativeDeltaSetFieldByIndexDelegate nativeDeltaSetFieldByIndexCaller = (nint pFields, int fieldNumber) =>
+    {
+        _engineEvents?.InvokeDeltaSetFieldByIndex(pFields, fieldNumber);
+    };
+
+    internal static NativeDeltaUnsetFieldByIndexDelegate nativeDeltaUnsetFieldByIndexCaller = (nint pFields, int fieldNumber) =>
+    {
+        _engineEvents?.InvokeDeltaUnsetFieldByIndex(pFields, fieldNumber);
+    };
+
+    internal static NativeSetGroupMaskDelegate nativeSetGroupMaskCaller = (int mask, int op) =>
+    {
+        _engineEvents?.InvokeSetGroupMask(mask, op);
+    };
+
+    internal static NativeCreateInstancedBaselineDelegate nativeCreateInstancedBaselineCaller = (int classname, nint baseline) =>
+    {
+        return _engineEvents?.InvokeCreateInstancedBaseline(classname, new EntityState(baseline)) ?? 0;
+    };
+
+    internal static NativeCvar_DirectSetDelegate nativeCvar_DirectSetCaller = (nint cvar, nint value) =>
+    {
+        _engineEvents?.InvokeCvar_DirectSet(new CVar(), Marshal.PtrToStringUTF8(value) ?? string.Empty);
+    };
+
+    internal static NativeForceUnmodifiedDelegate nativeForceUnmodifiedCaller = (int type, nint mins, nint maxs, nint filename) =>
+    {
+        _engineEvents?.InvokeForceUnmodified((ForceType)type, new Vector3f(mins), new Vector3f(maxs), Marshal.PtrToStringUTF8(filename) ?? string.Empty);
+    };
+
+    internal static NativeGetPlayerStatsDelegate nativeGetPlayerStatsCaller = (nint ent, nint ping, nint packet_loss) =>
+    {
+        int p = 0, pl = 0;
+        _engineEvents?.InvokeGetPlayerStats(new Edict(ent), out p, out pl);
+        if (ping != 0) 
+            Marshal.WriteInt32(ping, p);
+        if (packet_loss != 0) 
+            Marshal.WriteInt32(packet_loss, pl);
+    };
+
+    internal static NativeAddServerCommandDelegate nativeAddServerCommandCaller = (nint cmd_name, nint function) =>
+    {
+        var fnptr = Marshal.GetDelegateForFunctionPointer<ServerCommandDelegate>(function);
+        _engineEvents?.InvokeAddServerCommand(Marshal.PtrToStringUTF8(cmd_name) ?? string.Empty, fnptr);
+    };
+
+    internal static NativeVoice_GetClientListeningDelegate nativeVoice_GetClientListeningCaller = (int iReceiver, int iSender) =>
+    {
+        return _engineEvents?.InvokeVoice_GetClientListening(iReceiver, iSender) ?? false ? 1 : 0;
+    };
+
+    internal static NativeVoice_SetClientListeningDelegate nativeVoice_SetClientListeningCaller = (int iReceiver, int iSender, int bListen) =>
+    {
+        return _engineEvents?.InvokeVoice_SetClientListening(iReceiver, iSender, bListen != 0) ?? false ? 1 : 0;
+    };
+
+    internal static NativeGetPlayerAuthIdDelegate nativeGetPlayerAuthIdCaller = (nint e) =>
+    {
+        string res = _engineEvents?.InvokeGetPlayerAuthId(new Edict(e)) ?? string.Empty;
+        byte[] b = Encoding.UTF8.GetBytes(res);
+        nint ptr = Marshal.AllocHGlobal(b.Length + 1);
+        Marshal.Copy(b, 0, ptr, b.Length);
+        Marshal.WriteByte(ptr + b.Length, 0);
+        return ptr;
+    };
+
+    internal static NativeSequenceGetDelegate nativeSequenceGetCaller = (nint fieldName, nint entryName) =>
+    {
+        return _engineEvents?.InvokeSequenceGet(Marshal.PtrToStringUTF8(fieldName) ?? string.Empty, Marshal.PtrToStringUTF8(entryName) ?? string.Empty) ?? nint.Zero;
+    };
+
+    internal static NativeSequencePickSentenceDelegate nativeSequencePickSentenceCaller = (nint groupName, int pickMethod, nint picked) =>
+    {
+        int p = 0;
+        nint res = _engineEvents?.InvokeSequencePickSentence(Marshal.PtrToStringUTF8(groupName) ?? string.Empty, pickMethod, out p) ?? nint.Zero;
+        if (picked != 0) 
+            Marshal.WriteInt32(picked, p);
+        return res;
+    };
+
+    internal static NativeGetFileSizeDelegate nativeGetFileSizeCaller = (nint filename) =>
+    {
+        return _engineEvents?.InvokeGetFileSize(Marshal.PtrToStringUTF8(filename) ?? string.Empty) ?? 0;
+    };
+
+    internal static NativeGetApproxWavePlayLenDelegate nativeGetApproxWavePlayLenCaller = (nint filepath) =>
+    {
+        return _engineEvents?.InvokeGetApproxWavePlayLen(Marshal.PtrToStringUTF8(filepath) ?? string.Empty) ?? 0u;
+    };
+
+    internal static NativeIsCareerMatchDelegate nativeIsCareerMatchCaller = () =>
+    {
+        return _engineEvents?.InvokeIsCareerMatch() ?? 0;
+    };
+
+    internal static NativeGetLocalizedStringLengthDelegate nativeGetLocalizedStringLengthCaller = (nint label) =>
+    {
+        return _engineEvents?.InvokeGetLocalizedStringLength(Marshal.PtrToStringUTF8(label) ?? string.Empty) ?? 0;
+    };
+
+    internal static NativeRegisterTutorMessageShownDelegate nativeRegisterTutorMessageShownCaller = (int mid) =>
+    {
+        _engineEvents?.InvokeRegisterTutorMessageShown(mid);
+    };
+
+    internal static NativeGetTimesTutorMessageShownDelegate nativeGetTimesTutorMessageShownCaller = (int mid) =>
+    {
+        return _engineEvents?.InvokeGetTimesTutorMessageShown(mid) ?? 0;
+    };
+
+    internal static NativeProcessTutorMessageDecayBufferDelegate nativeProcessTutorMessageDecayBufferCaller = (nint buffer, int bufferLength) =>
+    {
+        _engineEvents?.InvokeProcessTutorMessageDecayBuffer(buffer, bufferLength);
+    };
+
+    internal static NativeConstructTutorMessageDecayBufferDelegate nativeConstructTutorMessageDecayBufferCaller = (nint buffer, int bufferLength) =>
+    {
+        _engineEvents?.InvokeConstructTutorMessageDecayBuffer(buffer, bufferLength);
+    };
+
+    internal static NativeResetTutorMessageDecayDataDelegate nativeResetTutorMessageDecayDataCaller = () =>
+    {
+        _engineEvents?.InvokeResetTutorMessageDecayData();
+    };
+
+    internal static NativeQueryClientCvarValueDelegate nativeQueryClientCvarValueCaller = (nint player, nint cvarName) =>
+    {
+        _engineEvents?.InvokeQueryClientCvarValue(new Edict(player), Marshal.PtrToStringUTF8(cvarName) ?? string.Empty);
+    };
+
+    internal static NativeQueryClientCvarValue2Delegate nativeQueryClientCvarValue2Caller = (nint player, nint cvarName, int requestID) =>
+    {
+        _engineEvents?.InvokeQueryClientCvarValue2(new Edict(player), Marshal.PtrToStringUTF8(cvarName) ?? string.Empty, requestID);
+    };
+
+    internal static NativeEngCheckParmDelegate nativeEngCheckParmCaller = (nint pchCmdLineToken, out nint ppszValue) =>
+    {
+        string outVal = string.Empty;
+        int res = _engineEvents?.InvokeEngCheckParm(Marshal.PtrToStringUTF8(pchCmdLineToken) ?? string.Empty, out outVal) ?? 0;
+        byte[] descBytes = System.Text.Encoding.UTF8.GetBytes(outVal);
+        if (descBytes.Length > 255)
+            Array.Resize(ref descBytes, 255);
+        ppszValue = 0;
+        Marshal.Copy(descBytes, 0, ppszValue, descBytes.Length);
+        return res;
+    };
+
+    internal static NativeEngineFuncs? _nativeEngineFuncs = null;
+    internal static NativeEngineFuncs GetEngineFunctionsNative()
+    {
+#pragma warning disable CS8601
+        if (_engineEvents == null)
+            throw new NullReferenceException("EngineEvents instance is null in GetEngineFunctionsNative.");
+        _nativeEngineFuncs ??= new NativeEngineFuncs()
+        {
+            pfnPrecacheModel = _engineEvents.IsPrecacheModelNull ? null : nativePrecacheModelCaller,
+            pfnPrecacheSound = _engineEvents.IsPrecacheSoundNull ? null : nativePrecacheSoundCaller,
+            pfnSetModel = _engineEvents.IsSetModelNull ? null : nativeSetModelCaller,
+            pfnModelIndex = _engineEvents.IsModelIndexNull ? null : nativeModelIndexCaller,
+            pfnModelFrames = _engineEvents.IsModelFramesNull ? null : nativeModelFramesCaller,
+            pfnSetSize = _engineEvents.IsSetSizeNull ? null : nativeSetSizeCaller,
+            pfnChangeLevel = _engineEvents.IsChangeLevelNull ? null : nativeChangeLevelCaller,
+            pfnGetSpawnParms = _engineEvents.IsGetSpawnParmsNull ? null : nativeGetSpawnParmsCaller,
+            pfnSaveSpawnParms = _engineEvents.IsSaveSpawnParmsNull ? null : nativeSaveSpawnParmsCaller,
+            pfnVecToYaw = _engineEvents.IsVecToYawNull ? null : nativeVecToYawCaller,
+            pfnVecToAngles = _engineEvents.IsVecToAnglesNull ? null : nativeVecToAnglesCaller,
+            pfnMoveToOrigin = _engineEvents.IsMoveToOriginNull ? null : nativeMoveToOriginCaller,
+            pfnChangeYaw = _engineEvents.IsChangeYawNull ? null : nativeChangeYawCaller,
+            pfnChangePitch = _engineEvents.IsChangePitchNull ? null : nativeChangePitchCaller,
+            pfnFindEntityByString = _engineEvents.IsFindEntityByStringNull ? null : nativeFindEntityByStringCaller,
+            pfnGetEntityIllum = _engineEvents.IsGetEntityIllumNull ? null : nativeGetEntityIllumCaller,
+            pfnFindEntityInSphere = _engineEvents.IsFindEntityInSphereNull ? null : nativeFindEntityInSphereCaller,
+            pfnFindClientInPVS = _engineEvents.IsFindClientInPVSNull ? null : nativeFindClientInPVSCaller,
+            pfnEntitiesInPVS = _engineEvents.IsEntitiesInPVSNull ? null : nativeEntitiesInPVSCaller,
+            pfnMakeVectors = _engineEvents.IsMakeVectorsNull ? null : nativeMakeVectorsCaller,
+            pfnAngleVectors = _engineEvents.IsAngleVectorsNull ? null : nativeAngleVectorsCaller,
+            pfnCreateEntity = _engineEvents.IsCreateEntityNull ? null : nativeCreateEntityCaller,
+            pfnRemoveEntity = _engineEvents.IsRemoveEntityNull ? null : nativeRemoveEntityCaller,
+            pfnCreateNamedEntity = _engineEvents.IsCreateNamedEntityNull ? null : nativeCreateNamedEntityCaller,
+            pfnMakeStatic = _engineEvents.IsMakeStaticNull ? null : nativeMakeStaticCaller,
+            pfnEntIsOnFloor = _engineEvents.IsEntIsOnFloorNull ? null : nativeEntIsOnFloorCaller,
+            pfnDropToFloor = _engineEvents.IsDropToFloorNull ? null : nativeDropToFloorCaller,
+            pfnWalkMove = _engineEvents.IsWalkMoveNull ? null : nativeWalkMoveCaller,
+            pfnSetOrigin = _engineEvents.IsSetOriginNull ? null : nativeSetOriginCaller,
+            pfnEmitSound = _engineEvents.IsEmitSoundNull ? null : nativeEmitSoundCaller,
+            pfnEmitAmbientSound = _engineEvents.IsEmitAmbientSoundNull ? null : nativeEmitAmbientSoundCaller,
+            pfnTraceLine = _engineEvents.IsTraceLineNull ? null : nativeTraceLineCaller,
+            pfnTraceToss = _engineEvents.IsTraceTossNull ? null : nativeTraceTossCaller,
+            pfnTraceMonsterHull = _engineEvents.IsTraceMonsterHullNull ? null : nativeTraceMonsterHullCaller,
+            pfnTraceHull = _engineEvents.IsTraceHullNull ? null : nativeTraceHullCaller,
+            pfnTraceModel = _engineEvents.IsTraceModelNull ? null : nativeTraceModelCaller,
+            pfnTraceTexture = _engineEvents.IsTraceTextureNull ? null : nativeTraceTextureCaller,
+            pfnTraceSphere = _engineEvents.IsTraceSphereNull ? null : nativeTraceSphereCaller,
+            pfnGetAimVector = _engineEvents.IsGetAimVectorNull ? null : nativeGetAimVectorCaller,
+            pfnServerCommand = _engineEvents.IsServerCommandNull ? null : nativeServerCommandCaller,
+            pfnServerExecute = _engineEvents.IsServerExecuteNull ? null : nativeServerExecuteCaller,
+            pfnClientCommand = _engineEvents.IsClientCommandNull ? null : nativeClientCommandCaller,
+            pfnParticleEffect = _engineEvents.IsParticleEffectNull ? null : nativeParticleEffectCaller,
+            pfnLightStyle = _engineEvents.IsLightStyleNull ? null : nativeLightStyleCaller,
+            pfnDecalIndex = _engineEvents.IsDecalIndexNull ? null : nativeDecalIndexCaller,
+            pfnPointContents = _engineEvents.IsPointContentsNull ? null : nativePointContentsCaller,
+            pfnMessageBegin = _engineEvents.IsMessageBeginNull ? null : nativeMessageBeginCaller,
+            pfnMessageEnd = _engineEvents.IsMessageEndNull ? null : nativeMessageEndCaller,
+            pfnWriteByte = _engineEvents.IsWriteByteNull ? null : nativeWriteByteCaller,
+            pfnWriteChar = _engineEvents.IsWriteCharNull ? null : nativeWriteCharCaller,
+            pfnWriteShort = _engineEvents.IsWriteShortNull ? null : nativeWriteShortCaller,
+            pfnWriteLong = _engineEvents.IsWriteLongNull ? null : nativeWriteLongCaller,
+            pfnWriteAngle = _engineEvents.IsWriteAngleNull ? null : nativeWriteAngleCaller,
+            pfnWriteCoord = _engineEvents.IsWriteCoordNull ? null : nativeWriteCoordCaller,
+            pfnWriteString = _engineEvents.IsWriteStringNull ? null : nativeWriteStringCaller,
+            pfnWriteEntity = _engineEvents.IsWriteEntityNull ? null : nativeWriteEntityCaller,
+            pfnCVarRegister = _engineEvents.IsCVarRegisterNull ? null : nativeCVarRegisterCaller,
+            pfnCVarGetFloat = _engineEvents.IsCVarGetFloatNull ? null : nativeCVarGetFloatCaller,
+            pfnCVarGetString = _engineEvents.IsCVarGetStringNull ? null : nativeCVarGetStringCaller,
+            pfnCVarSetFloat = _engineEvents.IsCVarSetFloatNull ? null : nativeCVarSetFloatCaller,
+            pfnCVarSetString = _engineEvents.IsCVarSetStringNull ? null : nativeCVarSetStringCaller,
+            pfnAlertMessage = _engineEvents.IsAlertMessageNull ? null : nativeAlertMessageCaller,
+            pfnEngineFprintf = _engineEvents.IsEngineFprintfNull ? null : nativeEngineFprintfCaller,
+            pfnPvAllocEntPrivateData = _engineEvents.IsPvAllocEntPrivateDataNull ? null : nativePvAllocEntPrivateDataCaller,
+            pfnPvEntPrivateData = _engineEvents.IsPvEntPrivateDataNull ? null : nativePvEntPrivateDataCaller,
+            pfnFreeEntPrivateData = _engineEvents.IsFreeEntPrivateDataNull ? null : nativeFreeEntPrivateDataCaller,
+            pfnSzFromIndex = _engineEvents.IsSzFromIndexNull ? null : nativeSzFromIndexCaller,
+            pfnAllocString = _engineEvents.IsAllocStringNull ? null : nativeAllocStringCaller,
+            pfnGetVarsOfEnt = _engineEvents.IsGetVarsOfEntNull ? null : nativeGetVarsOfEntCaller,
+            pfnPEntityOfEntOffset = _engineEvents.IsPEntityOfEntOffsetNull ? null : nativePEntityOfEntOffsetCaller,
+            pfnEntOffsetOfPEntity = _engineEvents.IsEntOffsetOfPEntityNull ? null : nativeEntOffsetOfPEntityCaller,
+            pfnIndexOfEdict = _engineEvents.IsIndexOfEdictNull ? null : nativeIndexOfEdictCaller,
+            pfnPEntityOfEntIndex = _engineEvents.IsPEntityOfEntIndexNull ? null : nativePEntityOfEntIndexCaller,
+            pfnFindEntityByVars = _engineEvents.IsFindEntityByVarsNull ? null : nativeFindEntityByVarsCaller,
+            pfnGetModelPtr = _engineEvents.IsGetModelPtrNull ? null : nativeGetModelPtrCaller,
+            pfnRegUserMsg = _engineEvents.IsRegUserMsgNull ? null : nativeRegUserMsgCaller,
+            pfnAnimationAutomove = _engineEvents.IsAnimationAutomoveNull ? null : nativeAnimationAutomoveCaller,
+            pfnGetBonePosition = _engineEvents.IsGetBonePositionNull ? null : nativeGetBonePositionCaller,
+            pfnFunctionFromName = _engineEvents.IsFunctionFromNameNull ? null : nativeFunctionFromNameCaller,
+            pfnNameForFunction = _engineEvents.IsNameForFunctionNull ? null : nativeNameForFunctionCaller,
+            pfnClientPrintf = _engineEvents.IsClientPrintfNull ? null : nativeClientPrintfCaller,
+            pfnServerPrint = _engineEvents.IsServerPrintNull ? null : nativeServerPrintCaller,
+            pfnCmd_Args = _engineEvents.IsCmd_ArgsNull ? null : nativeCmd_ArgsCaller,
+            pfnCmd_Argv = _engineEvents.IsCmd_ArgvNull ? null : nativeCmd_ArgvCaller,
+            pfnCmd_Argc = _engineEvents.IsCmd_ArgcNull ? null : nativeCmd_ArgcCaller,
+            pfnGetAttachment = _engineEvents.IsGetAttachmentNull ? null : nativeGetAttachmentCaller,
+            pfnCRC32_Init = _engineEvents.IsCRC32_InitNull ? null : nativeCRC32_InitCaller,
+            pfnCRC32_ProcessBuffer = _engineEvents.IsCRC32_ProcessBufferNull ? null : nativeCRC32_ProcessBufferCaller,
+            pfnCRC32_ProcessByte = _engineEvents.IsCRC32_ProcessByteNull ? null : nativeCRC32_ProcessByteCaller,
+            pfnCRC32_Final = _engineEvents.IsCRC32_FinalNull ? null : nativeCRC32_FinalCaller,
+            pfnRandomLong = _engineEvents.IsRandomLongNull ? null : nativeRandomLongCaller,
+            pfnRandomFloat = _engineEvents.IsRandomFloatNull ? null : nativeRandomFloatCaller,
+            pfnSetView = _engineEvents.IsSetViewNull ? null : nativeSetViewCaller,
+            pfnTime = _engineEvents.IsTimeNull ? null : nativeTimeCaller,
+            pfnCrosshairAngle = _engineEvents.IsCrosshairAngleNull ? null : nativeCrosshairAngleCaller,
+            pfnLoadFileForMe = _engineEvents.IsLoadFileForMeNull ? null : nativeLoadFileForMeCaller,
+            pfnFreeFile = _engineEvents.IsFreeFileNull ? null : nativeFreeFileCaller,
+            pfnEndSection = _engineEvents.IsEndSectionNull ? null : nativeEndSectionCaller,
+            pfnCompareFileTime = _engineEvents.IsCompareFileTimeNull ? null : nativeCompareFileTimeCaller,
+            pfnGetGameDir = _engineEvents.IsGetGameDirNull ? null : nativeGetGameDirCaller,
+            pfnCvar_RegisterVariable = _engineEvents.IsCvar_RegisterVariableNull ? null : nativeCvar_RegisterVariableCaller,
+            pfnFadeClientVolume = _engineEvents.IsFadeClientVolumeNull ? null : nativeFadeClientVolumeCaller,
+            pfnSetClientMaxspeed = _engineEvents.IsSetClientMaxspeedNull ? null : nativeSetClientMaxspeedCaller,
+            pfnCreateFakeClient = _engineEvents.IsCreateFakeClientNull ? null : nativeCreateFakeClientCaller,
+            pfnRunPlayerMove = _engineEvents.IsRunPlayerMoveNull ? null : nativeRunPlayerMoveCaller,
+            pfnNumberOfEntities = _engineEvents.IsNumberOfEntitiesNull ? null : nativeNumberOfEntitiesCaller,
+            pfnGetInfoKeyBuffer = _engineEvents.IsGetInfoKeyBufferNull ? null : nativeGetInfoKeyBufferCaller,
+            pfnInfoKeyValue = _engineEvents.IsInfoKeyValueNull ? null : nativeInfoKeyValueCaller,
+            pfnSetKeyValue = _engineEvents.IsSetKeyValueNull ? null : nativeSetKeyValueCaller,
+            pfnSetClientKeyValue = _engineEvents.IsSetClientKeyValueNull ? null : nativeSetClientKeyValueCaller,
+            pfnIsMapValid = _engineEvents.IsIsMapValidNull ? null : nativeIsMapValidCaller,
+            pfnStaticDecal = _engineEvents.IsStaticDecalNull ? null : nativeStaticDecalCaller,
+            pfnPrecacheGeneric = _engineEvents.IsPrecacheGenericNull ? null : nativePrecacheGenericCaller,
+            pfnGetPlayerUserId = _engineEvents.IsGetPlayerUserIdNull ? null : nativeGetPlayerUserIdCaller,
+            pfnBuildSoundMsg = _engineEvents.IsBuildSoundMsgNull ? null : nativeBuildSoundMsgCaller,
+            pfnIsDedicatedServer = _engineEvents.IsIsDedicatedServerNull ? null : nativeIsDedicatedServerCaller,
+            pfnCVarGetPointer = _engineEvents.IsCVarGetPointerNull ? null : nativeCVarGetPointerCaller,
+            pfnGetPlayerWONId = _engineEvents.IsGetPlayerWONIdNull ? null : nativeGetPlayerWONIdCaller,
+            pfnInfo_RemoveKey = _engineEvents.IsInfo_RemoveKeyNull ? null : nativeInfo_RemoveKeyCaller,
+            pfnGetPhysicsKeyValue = _engineEvents.IsGetPhysicsKeyValueNull ? null : nativeGetPhysicsKeyValueCaller,
+            pfnSetPhysicsKeyValue = _engineEvents.IsSetPhysicsKeyValueNull ? null : nativeSetPhysicsKeyValueCaller,
+            pfnGetPhysicsInfoString = _engineEvents.IsGetPhysicsInfoStringNull ? null : nativeGetPhysicsInfoStringCaller,
+            pfnPrecacheEvent = _engineEvents.IsPrecacheEventNull ? null : nativePrecacheEventCaller,
+            pfnPlaybackEvent = _engineEvents.IsPlaybackEventNull ? null : nativePlaybackEventCaller,
+            pfnSetFatPVS = _engineEvents.IsSetFatPVSNull ? null : nativeSetFatPVSCaller,
+            pfnSetFatPAS = _engineEvents.IsSetFatPASNull ? null : nativeSetFatPASCaller,
+            pfnCheckVisibility = _engineEvents.IsCheckVisibilityNull ? null : nativeCheckVisibilityCaller,
+            pfnDeltaSetField = _engineEvents.IsDeltaSetFieldNull ? null : nativeDeltaSetFieldCaller,
+            pfnDeltaUnsetField = _engineEvents.IsDeltaUnsetFieldNull ? null : nativeDeltaUnsetFieldCaller,
+            pfnDeltaAddEncoder = _engineEvents.IsDeltaAddEncoderNull ? null : nativeDeltaAddEncoderCaller,
+            pfnGetCurrentPlayer = _engineEvents.IsGetCurrentPlayerNull ? null : nativeGetCurrentPlayerCaller,
+            pfnCanSkipPlayer = _engineEvents.IsCanSkipPlayerNull ? null : nativeCanSkipPlayerCaller,
+            pfnDeltaFindField = _engineEvents.IsDeltaFindFieldNull ? null : nativeDeltaFindFieldCaller,
+            pfnDeltaSetFieldByIndex = _engineEvents.IsDeltaSetFieldByIndexNull ? null : nativeDeltaSetFieldByIndexCaller,
+            pfnDeltaUnsetFieldByIndex = _engineEvents.IsDeltaUnsetFieldByIndexNull ? null : nativeDeltaUnsetFieldByIndexCaller,
+            pfnSetGroupMask = _engineEvents.IsSetGroupMaskNull ? null : nativeSetGroupMaskCaller,
+            pfnCreateInstancedBaseline = _engineEvents.IsCreateInstancedBaselineNull ? null : nativeCreateInstancedBaselineCaller,
+            pfnCvar_DirectSet = _engineEvents.IsCvar_DirectSetNull ? null : nativeCvar_DirectSetCaller,
+            pfnForceUnmodified = _engineEvents.IsForceUnmodifiedNull ? null : nativeForceUnmodifiedCaller,
+            pfnGetPlayerStats = _engineEvents.IsGetPlayerStatsNull ? null : nativeGetPlayerStatsCaller,
+            pfnAddServerCommand = _engineEvents.IsAddServerCommandNull ? null : nativeAddServerCommandCaller,
+            pfnVoice_GetClientListening = _engineEvents.IsVoice_GetClientListeningNull ? null : nativeVoice_GetClientListeningCaller,
+            pfnVoice_SetClientListening = _engineEvents.IsVoice_SetClientListeningNull ? null : nativeVoice_SetClientListeningCaller,
+            pfnGetPlayerAuthId = _engineEvents.IsGetPlayerAuthIdNull ? null : nativeGetPlayerAuthIdCaller,
+            pfnSequenceGet = _engineEvents.IsSequenceGetNull ? null : nativeSequenceGetCaller,
+            pfnSequencePickSentence = _engineEvents.IsSequencePickSentenceNull ? null : nativeSequencePickSentenceCaller,
+            pfnGetFileSize = _engineEvents.IsGetFileSizeNull ? null : nativeGetFileSizeCaller,
+            pfnGetApproxWavePlayLen = _engineEvents.IsGetApproxWavePlayLenNull ? null : nativeGetApproxWavePlayLenCaller,
+            pfnIsCareerMatch = _engineEvents.IsIsCareerMatchNull ? null : nativeIsCareerMatchCaller,
+            pfnGetLocalizedStringLength = _engineEvents.IsGetLocalizedStringLengthNull ? null : nativeGetLocalizedStringLengthCaller,
+            pfnRegisterTutorMessageShown = _engineEvents.IsRegisterTutorMessageShownNull ? null : nativeRegisterTutorMessageShownCaller,
+            pfnGetTimesTutorMessageShown = _engineEvents.IsGetTimesTutorMessageShownNull ? null : nativeGetTimesTutorMessageShownCaller,
+            pfnProcessTutorMessageDecayBuffer = _engineEvents.IsProcessTutorMessageDecayBufferNull ? null : nativeProcessTutorMessageDecayBufferCaller,
+            pfnConstructTutorMessageDecayBuffer = _engineEvents.IsConstructTutorMessageDecayBufferNull ? null : nativeConstructTutorMessageDecayBufferCaller,
+            pfnResetTutorMessageDecayData = _engineEvents.IsResetTutorMessageDecayDataNull ? null : nativeResetTutorMessageDecayDataCaller,
+            pfnQueryClientCvarValue = _engineEvents.IsQueryClientCvarValueNull ? null : nativeQueryClientCvarValueCaller,
+            pfnQueryClientCvarValue2 = _engineEvents.IsQueryClientCvarValue2Null ? null : nativeQueryClientCvarValue2Caller,
+            pfnEngCheckParm = _engineEvents.IsEngCheckParmNull ? null : nativeEngCheckParmCaller
+        };
+        return (NativeEngineFuncs)_nativeEngineFuncs;
+#pragma warning restore CS8601
+    }
+}
+#nullable restore
+<# } #>

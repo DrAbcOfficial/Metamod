@@ -1,6 +1,4 @@
-﻿using Metamod.Native.Engine;
-using Metamod.Native.Game;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Metamod;
 
@@ -13,9 +11,9 @@ internal unsafe delegate int NativeGetEntityApi2Delegate(nint pFunctionTable, ni
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 internal delegate int NativeGetNewDllFunctionsDelegate(nint pFunctionTable, nint interfaceVersion);
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-internal unsafe delegate int NativeGetEngineFunctionsDelegate(NativeEngineFuncs* pengfuncsFromEngine, int* interfaceVersion);
+internal unsafe delegate int NativeGetEngineFunctionsDelegate(nint pengfuncsFromEngine, nint interfaceVersion);
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-internal unsafe delegate int NativeGetStudioBlendingInterfaceDelegate(NativeServerBlendInterface* pStudioBlendingInterface, int* interfaceVersion);
+internal unsafe delegate int NativeGetStudioBlendingInterfaceDelegate(nint pStudioBlendingInterface, nint interfaceVersion);
 
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeMetaFuncs : INativeStruct
