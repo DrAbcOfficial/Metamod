@@ -2,7 +2,7 @@
 
 namespace Metamod.Helper;
 
-public class CUtility
+public class Utility
 {
     public static string String(StringHandle str)
     {

@@ -19,7 +19,7 @@ public class PluginInfo
     public string GetInterfaceVersionString()
     {
         string str = InterfaceVersion.ToString();
-        str = str.Remove(0, 1).Replace('_', ':');
+        str = str[1..].Replace('_', ':');
         return str;
     }
 }

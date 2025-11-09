@@ -24,8 +24,8 @@ public abstract class PluginEntry
 
     protected static void Native_GiveFnptrsToDll(nint pengfuncsFromEngine, nint pGlobals)
     {
-        CEngineFuncs engineFuncs = new(pengfuncsFromEngine);
-        CGlobalVars globalVars = new(pGlobals);
+        EngineFuncs engineFuncs = new(pengfuncsFromEngine);
+        GlobalVars globalVars = new(pGlobals);
         Global.EngineFuncs = engineFuncs;
         Global.GlobalVars = globalVars;
         Global.Utility = new();
@@ -71,7 +71,7 @@ public abstract class PluginEntry
         var pinterface = GetPluginInterface();
         var pinfo = GetPluginInfo();
         Global.PluginInfo = pinfo;
-        Global.MetaUtilFuncs = new CMetaUtilFuncs(pMetaUtilFuncs);
+        Global.MetaUtilFuncs = new MetaUtilFuncs(pMetaUtilFuncs);
         bool result = pinterface.Meta_Query(ifver, Global.MetaUtilFuncs);
         unsafe
         {

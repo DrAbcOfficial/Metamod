@@ -3,7 +3,7 @@ using Metamod.Struct.Common;
 
 namespace Metamod.Struct.Engine;
 
-public class CGlobalVars(nint ptr) : BaseManaged<NativeGlobalVars>(ptr)
+public class GlobalVars(nint ptr) : BaseManaged<NativeGlobalVars>(ptr)
 {
     public float Time
     {

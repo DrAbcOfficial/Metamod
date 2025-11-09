@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Struct.Metamod;
 
-public class CMetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
+public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
 {
     public void LogConsole(string fmt, params string[] parm)
     {
@@ -199,7 +199,7 @@ public class CMetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
     }
 
     //TODO: Finish it
-    public void GetHookTables(/*out*/ CEngineFuncs peng, /*out*/ int pdll, /*out*/ int pnewdll)
+    public void GetHookTables(/*out*/ EngineFuncs peng, /*out*/ int pdll, /*out*/ int pnewdll)
     {
 
     }

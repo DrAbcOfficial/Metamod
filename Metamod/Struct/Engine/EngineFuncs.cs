@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Struct.Engine;
 
-public class CEngineFuncs(nint ptr) : BaseManaged<NativeEngineFuncs>(ptr)
+public class EngineFuncs(nint ptr) : BaseManaged<NativeEngineFuncs>(ptr)
 {
     public void PrecacheModel(string s)
     {

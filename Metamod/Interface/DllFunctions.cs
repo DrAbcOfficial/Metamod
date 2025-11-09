@@ -1,13 +1,10 @@
-﻿using Metamod.Native.Common;
-using Metamod.Native.Engine.PM;
-using Metamod.Native.Engine;
+﻿using Metamod.Enum.Metamod;
 using Metamod.Native.Game;
 using Metamod.Struct.Common;
 using Metamod.Struct.Engine;
 using Metamod.Struct.Engine.PM;
-using static Metamod.Native.Game.NativeDllFuncs;
 using System.Runtime.InteropServices;
-using Metamod.Enum.Metamod;
+using static Metamod.Native.Game.NativeDllFuncs;
 
 namespace Metamod.Interface;
 
@@ -403,7 +400,7 @@ public class DllFunctions
     private static nint s_disconnect_message = Marshal.AllocHGlobal(sizeof(byte) * 256);
     internal static NativeInconsistentFileDelegate nativeOnInconsistentFileCaller = (nint player, nint filename, nint disconnect_message) =>
     {
-        string mfilename =  Marshal.PtrToStringUTF8(filename) ?? string.Empty;
+        string mfilename = Marshal.PtrToStringUTF8(filename) ?? string.Empty;
         string mdisconnect = "";
         int res = pfnInconsistentFile?.Invoke(new Edict(player), mfilename, ref mdisconnect) ?? 0;
         byte[] disconnect = System.Text.Encoding.UTF8.GetBytes(mdisconnect);
@@ -411,7 +408,7 @@ public class DllFunctions
             Array.Resize(ref disconnect, 255);
         Marshal.Copy(disconnect, 0, s_disconnect_message, disconnect.Length);
         disconnect_message = s_disconnect_message;
-        return res ;
+        return res;
     };
 
     internal static NativeAllowLagCompensationDelegate nativeOnAllowLagCompensationCaller = () =>

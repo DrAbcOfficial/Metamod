@@ -7,13 +7,13 @@ namespace Metamod.Interface
     public static class Global
     {
 #pragma warning disable CS8618
-        public static CEngineFuncs EngineFuncs;
-        public static CGlobalVars GlobalVars;
-        public static CUtility Utility;
-        public static CMetaUtilFuncs MetaUtilFuncs;
-        public static PluginInfo PluginInfo;
-        public static MetaGlobals MetaGlobals;
-        public static GameDllFuncs GameDllFuncs;
+        public static readonly EngineFuncs EngineFuncs;
+        public static readonly GlobalVars GlobalVars;
+        public static readonly Utility Utility;
+        public static readonly MetaUtilFuncs MetaUtilFuncs;
+        public static readonly PluginInfo PluginInfo;
+        public static readonly MetaGlobals MetaGlobals;
+        public static readonly GameDllFuncs GameDllFuncs;
 #pragma warning restore CS8618
     }
 }

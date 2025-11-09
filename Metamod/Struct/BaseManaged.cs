@@ -9,33 +9,33 @@ public abstract class BaseManaged<[DynamicallyAccessedMembers(DynamicallyAccesse
     private nint _ptr;
     internal bool _fromNative;
 
-    public nint GetUnmanagedPtr()
+    internal nint GetUnmanagedPtr()
     {
         if (_ptr == IntPtr.Zero)
             Marshal.StructureToPtr<T>(_native, _ptr, !_fromNative);
         return _ptr;
     }
 
-    public BaseManaged()
+    internal BaseManaged()
     {
         _native = new T();
         _fromNative = false;
     }
 
-    public BaseManaged(T managed)
+    internal BaseManaged(T managed)
     {
         _native = managed;
         _fromNative = false;
     }
 
-    public void SetupFromPtr(nint ptr)
+    internal void SetupFromPtr(nint ptr)
     {
         _ptr = ptr;
         _native = Marshal.PtrToStructure<T>(ptr);
         _fromNative = true;
     }
 
-    public BaseManaged(nint ptr)
+    internal BaseManaged(nint ptr)
     {
         SetupFromPtr(ptr);
     }
