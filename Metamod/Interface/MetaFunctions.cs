@@ -32,6 +32,8 @@ public class MetaFunctions
         unsafe
         {
             DllFunctions ff = new();
+            if (pfnGetEntityAPI == null)
+                throw new NullReferenceException($"{nameof(pfnGetEntityAPI)} is null"!);
             pfnGetEntityAPI(ref ff, interfaceVersion);
 
             NativeDllFuncs nfuncs = DllFunctions.GetNative();
@@ -328,6 +330,7 @@ public class MetaFunctions
             pfnGetEntityAPI2_Post = pfnGetEntityAPI2_Post == null ? null : GetEntityApi2PostWrapper,
             pfnGetNewDLLFunctions = pfnGetNewDllFunctions == null ? null : GetNewDllFunctionsWrapper,
             pfnGetNewDLLFunctions_Post = pfnGetNewDllFunctions_Post == null ? null : GetNewDllFunctions_PostWrapper,
+            //TODO: Finish these wrappers
             pfnGetEngineFunctions = null,
             pfnGetEngineFunctions_Post = null,
             pfnGetStudioBlendingInterface = null,

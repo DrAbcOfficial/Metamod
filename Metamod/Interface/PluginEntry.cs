@@ -26,9 +26,9 @@ public abstract class PluginEntry
     {
         EngineFuncs engineFuncs = new(pengfuncsFromEngine);
         GlobalVars globalVars = new(pGlobals);
-        Global.EngineFuncs = engineFuncs;
-        Global.GlobalVars = globalVars;
-        Global.Utility = new();
+        Global._engineFuncs = engineFuncs;
+        Global._globalVars = globalVars;
+        Global._utility = new();
 
         var pinterface = GetPluginInterface();
         pinterface.GiveFnptrsToDll(engineFuncs, globalVars);
@@ -70,8 +70,8 @@ public abstract class PluginEntry
 
         var pinterface = GetPluginInterface();
         var pinfo = GetPluginInfo();
-        Global.PluginInfo = pinfo;
-        Global.MetaUtilFuncs = new MetaUtilFuncs(pMetaUtilFuncs);
+        Global._pluginInfo = pinfo;
+        Global._metaUtilFuncs = new MetaUtilFuncs(pMetaUtilFuncs);
         bool result = pinterface.Meta_Query(ifver, Global.MetaUtilFuncs);
         unsafe
         {
@@ -95,8 +95,8 @@ public abstract class PluginEntry
     {
         MetaGlobals metaGlobals = new(pMGlobals);
         GameDllFuncs gameDllFuncs = new(pGamedllFuncs);
-        Global.MetaGlobals = metaGlobals;
-        Global.GameDllFuncs = gameDllFuncs;
+        Global._metaGlobals = metaGlobals;
+        Global._gameDllFuncs = gameDllFuncs;
         var pinterface = GetPluginInterface();
         bool result = pinterface.Meta_Attach(now, metaGlobals, gameDllFuncs);
 
