@@ -100,8 +100,18 @@ public abstract class PluginEntry
         var pinterface = GetPluginInterface();
         bool result = pinterface.Meta_Attach(now, metaGlobals, gameDllFuncs);
 
+        var original = Marshal.PtrToStructure<NativeMetaFuncs>(pFunctionTable);
         NativeMetaFuncs funcs = MetaFunctions.GetNative();
-        Marshal.StructureToPtr(funcs, pFunctionTable, false);
+        original.pfnGetEntityAPI = funcs.pfnGetEntityAPI;
+        original.pfnGetEntityAPI_Post = funcs.pfnGetEntityAPI_Post;
+        original.pfnGetEntityAPI2 = funcs.pfnGetEntityAPI2;
+        original.pfnGetEntityAPI2_Post = funcs.pfnGetEntityAPI2_Post;
+        original.pfnGetNewDLLFunctions = funcs.pfnGetNewDLLFunctions;
+        original.pfnGetNewDLLFunctions_Post = funcs.pfnGetNewDLLFunctions_Post;
+        original.pfnGetEngineFunctions = funcs.pfnGetEngineFunctions;
+        original.pfnGetEngineFunctions_Post = funcs.pfnGetEngineFunctions_Post;
+        original.pfnGetStudioBlendingInterface = funcs.pfnGetStudioBlendingInterface;
+        original.pfnGetStudioBlendingInterface_Post = funcs.pfnGetStudioBlendingInterface_Post;
         return result ? 1 : 0;
     }
 

@@ -1,0 +1,73 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".generated.cs" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+
+<#
+    string[] pluginClassName = ["NewDLLFunctions", "NewDLLFunctionsPost"];    // 生成的类名
+#>
+using Metamod.Native.Common;
+using Metamod.Native.Engine.PM;
+using Metamod.Native.Engine;
+using Metamod.Native.Game;
+using Metamod.Struct.Common;
+using Metamod.Struct.Engine;
+using Metamod.Struct.Engine.PM;
+using static Metamod.Native.Game.NativeDllFuncs;
+using System.Runtime.InteropServices;
+using Metamod.Enum.Metamod;
+using Metamod.Interface.Events;
+#nullable enable
+namespace Metamod.Interface;
+
+<# foreach (var cls in pluginClassName) { #>
+internal static class <#= cls #>NativeCaller
+{
+    internal static NewDLLEvents? _newEvents = null;
+    internal static NativeOnFreeEntPrivateDataDelegate nativeOnFreeEntPrivateDataCaller = (pEnt) =>
+    {
+        _newEvents?.InvokeOnFreeEntPrivateData(new(pEnt));
+    };
+    internal static NativeGameShutdownDelegate nativeGameShutdown = () =>
+    {
+        _newEvents?.InvokeGameShutdown();
+    };
+    internal static NativeShouldCollideDelegate nativeShouldCollide = (pentTouched, pentOther) =>
+    {
+        return _newEvents?.InvokeShouldCollide(new(pentTouched), new(pentOther)) ?? 0;
+    };
+    internal static NativeCvarValueDelegate nativeCvarValue = (pEnt, value) =>
+    {
+        if (_newEvents != null)
+        {
+            string str = Marshal.PtrToStringAnsi(value) ?? string.Empty;
+            _newEvents.InvokeCvarValue(new(pEnt), str);
+        }
+    };
+    internal static NativeCvarValue2Delegate nativeCvarValue2 = (pEnt, requestID, cvarName, value) =>
+    {
+        if (_newEvents != null)
+        {
+            string name = Marshal.PtrToStringAnsi(cvarName) ?? string.Empty;
+            string v = Marshal.PtrToStringAnsi(value) ?? string.Empty;
+            _newEvents.InvokeCvarValue2(new(pEnt), requestID, name, v);
+        }
+    };
+    internal static NativeNewDllFuncs GetNewDLLFunctionsNative()
+    {
+        if(_newEvents == null)
+            throw new NullReferenceException("NewDLLEvents instance is null in GetNewDLLFunctionsNative.");
+        return new()
+        {
+            pfnOnFreeEntPrivateData = _newEvents.IsOnFreeEntPrivateDataNull ? null : nativeOnFreeEntPrivateDataCaller,
+            pfnGameShutdown = _newEvents.IsGameShutdownNull ? null : nativeGameShutdown,
+            pfnShouldCollide = _newEvents.IsShouldCollideNull ? null : nativeShouldCollide,
+            pfnCvarValue = _newEvents.IsCvarValueNull ? null : nativeCvarValue,
+            pfnCvarValue2 = _newEvents.IsCvarValue2Null ? null : nativeCvarValue2
+        };
+    }
+}
+#nullable restore
+<# } #>

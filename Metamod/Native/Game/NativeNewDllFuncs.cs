@@ -9,7 +9,7 @@ internal delegate void NativeCvarValueDelegate(nint pEnt, nint value);
 internal delegate void NativeCvarValue2Delegate(nint pEnt, int requestID, nint cvarName, nint value);
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeNewDllFuncs
+public struct NativeNewDllFuncs : INativeStruct
 {
     // Called right before the object's memory is freed. 
     // Calls its destructor.

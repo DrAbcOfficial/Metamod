@@ -3,7 +3,7 @@
 namespace Metamod.Native.Metamod;
 
 [StructLayout(LayoutKind.Sequential)]
-internal struct NativePluginInfo
+internal struct NativePluginInfo : INativeStruct
 {
     internal nint ifvers;             // meta_interface version
     internal nint name;                   // full name of plugin

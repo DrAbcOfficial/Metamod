@@ -809,25 +809,25 @@ public class Entvars : BaseManaged<NativeEntvars>
         set => _native.watertype = value;
     }
 
-    public string_t Target
+    public NativeStringHandle Target
     {
         get => _native.target;
         set => _native.target = value;
     }
 
-    public string_t TargetName
+    public NativeStringHandle TargetName
     {
         get => _native.targetname;
         set => _native.targetname = value;
     }
 
-    public string_t NetName
+    public NativeStringHandle NetName
     {
         get => _native.netname;
         set => _native.netname = value;
     }
 
-    public string_t Message
+    public NativeStringHandle Message
     {
         get => _native.message;
         set => _native.message = value;

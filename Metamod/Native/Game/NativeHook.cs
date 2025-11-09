@@ -3,7 +3,7 @@
 namespace Metamod.Native.Game;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeHook
+public struct NativeHook : INativeStruct
 {
     internal int iType;
     internal int bCommitted;

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct NativeEngineFuncs
+public unsafe struct NativeEngineFuncs : INativeStruct
 {
     internal NativePrecacheModelDelegate pfnPrecacheModel;
     internal NativePrecacheSoundDelegate pfnPrecacheSound;

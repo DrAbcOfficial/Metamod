@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Game;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeDllFuncs
+public struct NativeDllFuncs : INativeStruct
 {
     internal NativeGameInitDelegate pfnGameInit;
     internal NativeSpawnDelegate pfnSpawn;

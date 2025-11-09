@@ -14,7 +14,7 @@ internal unsafe delegate void LoadCacheFileDelegate(byte* path, nint cacheUser);
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 internal delegate nint Mod_ExtradataDelegate(nint model);
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeServerStudioAPI
+public struct NativeServerStudioAPI : INativeStruct
 {
     internal Mem_CallocDelegate Mem_Calloc;
     internal Cache_CheckDelegate Cache_Check;

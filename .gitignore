@@ -361,5 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/Metamod.Template/PluginEntry.generated.cs
-/Metamod/Interface/Events/NativeCaller/DLLNativeCaller.generated.cs
+
+#auto generated code
+*.generated.cs

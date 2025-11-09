@@ -16,7 +16,7 @@ internal delegate void NativeSV_StudioSetupBonesDelegate(
    );
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeServerBlendInterface
+public struct NativeServerBlendInterface : INativeStruct
 {
     internal int version;
     internal NativeSV_StudioSetupBonesDelegate SV_StudioSetupBones;

@@ -3,7 +3,7 @@
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct NativeKeyValueData
+public unsafe struct NativeKeyValueData : INativeStruct
 {
     internal byte* szClassName;  // in: entity classname
     internal byte* szKeyName;        // in: name of key

@@ -1,7 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using Metamod.Native;
+using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeHudParams
+public struct NativeHudParams : INativeStruct
 {
     internal float x;           // x-coordinate for the HUD text
     internal float y;           // y-coordinate for the HUD text

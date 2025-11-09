@@ -18,16 +18,16 @@ internal unsafe delegate int NativeGetEngineFunctionsDelegate(NativeEngineFuncs*
 internal unsafe delegate int NativeGetStudioBlendingInterfaceDelegate(NativeServerBlendInterface* pStudioBlendingInterface, int* interfaceVersion);
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeMetaFuncs
+public struct NativeMetaFuncs : INativeStruct
 {
-    internal NativeGetEntityApiDelegate pfnGetEntityAPI;
-    internal NativeGetEntityApiDelegate pfnGetEntityAPI_Post;
-    internal NativeGetEntityApi2Delegate pfnGetEntityAPI2;
-    internal NativeGetEntityApi2Delegate pfnGetEntityAPI2_Post;
-    internal NativeGetNewDllFunctionsDelegate pfnGetNewDLLFunctions;
-    internal NativeGetNewDllFunctionsDelegate pfnGetNewDLLFunctions_Post;
-    internal NativeGetEngineFunctionsDelegate pfnGetEngineFunctions;
-    internal NativeGetEngineFunctionsDelegate pfnGetEngineFunctions_Post;
-    internal NativeGetStudioBlendingInterfaceDelegate pfnGetStudioBlendingInterface;
-    internal NativeGetStudioBlendingInterfaceDelegate pfnGetStudioBlendingInterface_Post;
+    internal NativeGetEntityApiDelegate? pfnGetEntityAPI;
+    internal NativeGetEntityApiDelegate? pfnGetEntityAPI_Post;
+    internal NativeGetEntityApi2Delegate? pfnGetEntityAPI2;
+    internal NativeGetEntityApi2Delegate? pfnGetEntityAPI2_Post;
+    internal NativeGetNewDllFunctionsDelegate? pfnGetNewDLLFunctions;
+    internal NativeGetNewDllFunctionsDelegate? pfnGetNewDLLFunctions_Post;
+    internal NativeGetEngineFunctionsDelegate? pfnGetEngineFunctions;
+    internal NativeGetEngineFunctionsDelegate? pfnGetEngineFunctions_Post;
+    internal NativeGetStudioBlendingInterfaceDelegate? pfnGetStudioBlendingInterface;
+    internal NativeGetStudioBlendingInterfaceDelegate? pfnGetStudioBlendingInterface_Post;
 }

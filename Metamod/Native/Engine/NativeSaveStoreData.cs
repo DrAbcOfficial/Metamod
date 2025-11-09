@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct NativeSaveStoreData
+public unsafe struct NativeSaveStoreData : INativeStruct
 {
     internal byte* pBaseData;        // Start of all entity save data
     internal byte* pCurrentData; // Current buffer pointer for sequential access

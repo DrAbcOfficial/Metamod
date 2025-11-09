@@ -5,10 +5,10 @@ namespace Metamod.Native.Engine;
 
 #pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct NativeEntvars
+public unsafe struct NativeEntvars : INativeStruct
 {
-    internal string_t classname;
-    internal string_t globalname;
+    internal NativeStringHandle classname;
+    internal NativeStringHandle globalname;
 
     internal NativeVector3f origin;
     internal NativeVector3f oldorigin;
@@ -36,7 +36,7 @@ public unsafe struct NativeEntvars
     internal float yaw_speed;
 
     internal int modelindex;
-    internal string_t model;
+    internal NativeStringHandle model;
 
     internal int viewmodel;      // player's viewmodel
     internal int weaponmodel;    // what other players see
@@ -111,20 +111,20 @@ public unsafe struct NativeEntvars
     internal int waterlevel;
     internal int watertype;
 
-    internal string_t target;
-    internal string_t targetname;
-    internal string_t netname;
-    internal string_t message;
+    internal NativeStringHandle target;
+    internal NativeStringHandle targetname;
+    internal NativeStringHandle netname;
+    internal NativeStringHandle message;
 
     internal float dmg_take;
     internal float dmg_save;
     internal float dmg;
     internal float dmgtime;
 
-    internal string_t noise;
-    internal string_t noise1;
-    internal string_t noise2;
-    internal string_t noise3;
+    internal NativeStringHandle noise;
+    internal NativeStringHandle noise1;
+    internal NativeStringHandle noise2;
+    internal NativeStringHandle noise3;
 
     internal float speed;
     internal float air_finished;

@@ -1,0 +1,396 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".generated.cs" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+
+<#
+    string[] pluginClassName = ["EntityAPI", "EntityAPI2", "EntityAPIPost", "EntityAPI2Post"];    // 生成的类名
+#>
+using Metamod.Native.Common;
+using Metamod.Native.Engine.PM;
+using Metamod.Native.Engine;
+using Metamod.Native.Game;
+using Metamod.Struct.Common;
+using Metamod.Struct.Engine;
+using Metamod.Struct.Engine.PM;
+using static Metamod.Native.Game.NativeDllFuncs;
+using System.Runtime.InteropServices;
+using Metamod.Enum.Metamod;
+using Metamod.Interface.Events;
+#nullable enable
+namespace Metamod.Interface;
+
+<# foreach (var cls in pluginClassName) { #>
+internal static class <#= cls #>NativeCaller
+{
+    internal static DLLEvents? _dllEvents = null;
+    internal static NativeGameInitDelegate nativeGameInitCaller = () =>
+    {
+        _dllEvents?.InvokeGameInit();
+    };
+
+    internal static NativeSpawnDelegate nativeOnSpawnCaller = (nint pent) =>
+    {
+        return _dllEvents?.InvokeSpawn(new Edict(pent)) ?? 0;
+    };
+
+    internal static NativeThinkDelegate nativeOnThinkCaller = (nint pent) =>
+    {
+        _dllEvents?.InvokeThink(new Edict(pent));
+    };
+
+    internal static NativeUseDelegate nativeOnUseCaller = (nint pentUsed, nint pentOther) =>
+    {
+        _dllEvents?.InvokeUse(new Edict(pentUsed), new Edict(pentOther));
+    };
+
+    internal static NativeTouchDelegate nativeOnTouchCaller = (nint pentTouched, nint pentOther) =>
+    {
+        _dllEvents?.InvokeTouch(new Edict(pentTouched), new Edict(pentOther));
+    };
+
+    internal static NativeBlockedDelegate nativeOnBlockedCaller = (nint pentBlocked, nint pentOther) =>
+    {
+        _dllEvents?.InvokeBlocked(new Edict(pentBlocked), new Edict(pentOther));
+    };
+
+    internal static NativeKeyValueDelegate nativeOnKeyValueCaller = (nint pentKeyvalue, nint pkvd) =>
+    {
+        _dllEvents?.InvokeKeyValue(new Edict(pentKeyvalue), new KeyValueData(pkvd));
+    };
+
+    internal static NativeSaveDelegate nativeOnSaveCaller = (nint pent, nint pSaveData) =>
+    {
+        _dllEvents?.InvokeSave(new Edict(pent), pSaveData);
+    };
+
+    internal static NativeRestoreDelegate nativeOnRestoreCaller = (nint pent, nint pSaveData, int globalEntity) =>
+    {
+        return _dllEvents?.InvokeRestore(new Edict(pent), pSaveData, globalEntity) ?? 0;
+    };
+
+    internal static NativeSetAbsBoxDelegate nativeOnSetAbsBoxCaller = (nint pent) =>
+    {
+        _dllEvents?.InvokeSetAbsBox(new Edict(pent));
+    };
+
+    internal static NativeSaveWriteFieldsDelegate nativeOnSaveWriteFieldsCaller = (nint a, nint b, nint c, nint d, int max) =>
+    {
+        _dllEvents?.InvokeSaveWriteFields(a, b, c, d, max);
+    };
+
+    internal static NativeSaveReadFieldsDelegate nativeOnSaveReadFieldsCaller = (nint a, nint b, nint c, nint d, int max) =>
+    {
+        _dllEvents?.InvokeSaveReadFields(a, b, c, d, max);
+    };
+
+    internal static NativeSaveGlobalStateDelegate nativeOnSaveGlobalStateCaller = (nint pSaveData) =>
+    {
+        _dllEvents?.InvokeSaveGlobalState(pSaveData);
+    };
+
+    internal static NativeRestoreGlobalStateDelegate nativeOnRestoreGlobalStateCaller = (nint pSaveData) =>
+    {
+        _dllEvents?.InvokeRestoreGlobalState(pSaveData);
+    };
+
+    internal static NativeResetGlobalStateDelegate nativeOnResetGlobalStateCaller = () =>
+    {
+        _dllEvents?.InvokeResetGlobalState();
+    };
+
+    internal static NativeClientConnectDelegate nativeOnClientConnectCaller = (nint pEntity, nint pszName, nint pszAddress, nint szRejectReason) =>
+    {
+        string reject = Marshal.PtrToStringUTF8(szRejectReason) ?? string.Empty;
+        bool result = _dllEvents?.InvokeClientConnect(new Edict(pEntity),
+            Marshal.PtrToStringUTF8(pszName) ?? string.Empty, Marshal.PtrToStringUTF8(pszAddress) ?? string.Empty, ref reject) ?? false;
+        byte[] rejectBytes = System.Text.Encoding.UTF8.GetBytes(reject);
+        if (rejectBytes.Length > 127)
+            Array.Resize(ref rejectBytes, 127);
+        unsafe
+        {
+            byte* ppReject = (byte*)szRejectReason;
+            Marshal.Copy(rejectBytes, 0, (IntPtr)ppReject, rejectBytes.Length);
+            ppReject[rejectBytes.Length] = 0;
+        }
+        return result ? QBoolean.TRUE : QBoolean.FALSE;
+    };
+
+    internal static NativeClientDisconnectDelegate nativeOnClientDisconnectCaller = (nint pEntity) =>
+    {
+        _dllEvents?.InvokeClientDisconnect(new Edict(pEntity));
+    };
+
+    internal static NativeClientKillDelegate nativeOnClientKillCaller = (nint pEntity) =>
+    {
+        _dllEvents?.InvokeClientKill(new Edict(pEntity));
+    };
+
+    internal static NativeClientPutInServerDelegate nativeOnClientPutInServerCaller = (nint pEntity) =>
+    {
+        _dllEvents?.InvokeClientPutInServer(new Edict(pEntity));
+    };
+
+    internal static NativeClientCommandDelegate nativeOnClientCommandCaller = (nint pEntity) =>
+    {
+        _dllEvents?.InvokeClientCommand(new Edict(pEntity));
+    };
+
+    internal static NativeClientUserInfoChangedDelegate nativeOnClientUserInfoChangedCaller = (nint pEntity, nint infobuffer) =>
+    {
+        string str = Marshal.PtrToStringUTF8(infobuffer) ?? string.Empty;
+        _dllEvents?.InvokeClientUserInfoChanged(new Edict(pEntity), ref str);
+
+    };
+
+    internal static NativeServerActivateDelegate nativeOnServerActivateCaller = (nint pEdictList, int edictCount, int clientMax) =>
+    {
+        _dllEvents?.InvokeServerActivate(new Edict(pEdictList), edictCount, clientMax);
+    };
+
+    internal static NativeServerDeactivateDelegate nativeOnServerDeactivateCaller = () =>
+    {
+        _dllEvents?.InvokeServerDeactivate();
+    };
+
+    internal static NativePlayerPreThinkDelegate nativeOnPlayerPreThinkCaller = (nint pEntity) =>
+    {
+        _dllEvents?.InvokePlayerPreThink(new Edict(pEntity));
+    };
+
+    internal static NativePlayerPostThinkDelegate nativeOnPlayerPostThinkCaller = (nint pEntity) =>
+    {
+        _dllEvents?.InvokePlayerPostThink(new Edict(pEntity));
+    };
+
+    internal static NativeStartFrameDelegate nativeOnStartFrameCaller = () =>
+    {
+        _dllEvents?.InvokeStartFrame();
+    };
+
+    internal static NativeParmsNewLevelDelegate nativeOnParmsNewLevelCaller = () =>
+    {
+        _dllEvents?.InvokeParmsNewLevel();
+    };
+
+    internal static NativeParmsChangeLevelDelegate nativeOnParmsChangeLevelCaller = () =>
+    {
+        _dllEvents?.InvokeParmsChangeLevel();
+    };
+
+    private static nint s_szGameDscription = Marshal.AllocHGlobal(sizeof(byte) * 256);
+    internal static NativeGetGameDescriptionDelegate nativeOnGetGameDescriptionCaller = () =>
+    {
+        string description = _dllEvents?.InvokeGetGameDescription() ?? string.Empty;
+        byte[] descBytes = System.Text.Encoding.UTF8.GetBytes(description);
+        if (descBytes.Length > 255)
+            Array.Resize(ref descBytes, 255);
+        Marshal.Copy(descBytes, 0, s_szGameDscription, descBytes.Length);
+        return s_szGameDscription;
+    };
+
+    internal static NativePlayerCustomizationDelegate nativeOnPlayerCustomizationCaller = (nint pEntity, nint pCustom) =>
+    {
+        _dllEvents?.InvokePlayerCustomization(new Edict(pEntity), new Customization(pCustom));
+    };
+
+    internal static NativeSpectatorConnectDelegate nativeOnSpectatorConnectCaller = (nint pEntity) =>
+    {
+        _dllEvents?.InvokeSpectatorConnect(new Edict(pEntity));
+    };
+
+    internal static NativeSpectatorDisconnectDelegate nativeOnSpectatorDisconnectCaller = (nint pEntity) =>
+    {
+        _dllEvents?.InvokeSpectatorDisconnect(new Edict(pEntity));
+    };
+
+    internal static NativeSpectatorThinkDelegate nativeOnSpectatorThinkCaller = (nint pEntity) =>
+    {
+        _dllEvents?.InvokeSpectatorThink(new Edict(pEntity));
+    };
+
+    internal static NativeSysErrorDelegate nativeOnSysErrorCaller = (nint error_string) =>
+    {
+        string err = Marshal.PtrToStringUTF8(error_string) ?? string.Empty;
+        _dllEvents?.InvokeSysError(err);
+    };
+
+    internal static NativePMMoveDelegate nativeOnPM_MoveCaller = (nint pm, QBoolean server) =>
+    {
+        _dllEvents?.InvokePM_Move(new PlayerMove(pm), server == QBoolean.TRUE);
+    };
+
+    internal static NativePMInitDelegate nativeOnPM_InitCaller = (nint pm) =>
+    {
+        _dllEvents?.InvokePM_Init(new PlayerMove(pm));
+    };
+
+    internal static NativePMFindTextureTypeDelegate nativeOnPM_FindTextureTypeCaller = (nint name) =>
+    {
+        string n = Marshal.PtrToStringUTF8(name) ?? string.Empty;
+        return _dllEvents?.InvokePM_FindTextureType(n) ?? 0;
+    };
+
+    private static nint ppvs = Marshal.AllocHGlobal(sizeof(byte) * 32);
+    private static nint ppas = Marshal.AllocHGlobal(sizeof(byte) * 32);
+    internal static NativeSetupVisibilityDelegate nativeOnSetupVisibilityCaller = (nint pViewEntity, nint pClient, nint pvs, nint pas) =>
+    {
+        byte[] mpvs = new byte[32];
+        byte[] mpas = new byte[32];
+        _dllEvents?.InvokeSetupVisibility(new Edict(pViewEntity), new Edict(pClient), ref mpvs, ref mpas);
+        Marshal.Copy(mpvs, 0, ppvs, mpvs.Length);
+        Marshal.Copy(mpas, 0, ppas, mpas.Length);
+        Marshal.WriteIntPtr(pvs, ppvs);
+        Marshal.WriteIntPtr(pas, ppas);
+    };
+
+    internal static NativeUpdateClientDataDelegate nativeOnUpdateClientDataCaller = (nint ent, int sendweapons, nint cd) =>
+    {
+        _dllEvents?.InvokeUpdateClientData(new Edict(ent), sendweapons, new ClientData(cd));
+    };
+
+    internal static NativeAddToFullPackDelegate nativeOnAddToFullPackCaller = (nint state, int e, nint ent, nint host, int hostflags, int player, nint pSet) =>
+    {
+        byte[] mbb = [Marshal.ReadByte(pSet)];
+        return _dllEvents?.InvokeAddToFullPack(new EntityState(state), e, new Edict(ent), new Edict(host), hostflags, player, mbb) ?? 0;
+    };
+
+    internal static NativeCreateBaselineDelegate nativeOnCreateBaselineCaller = (int player, int eindex, nint baseline, nint entity, int playermodelindex, nint player_mins, nint player_maxs) =>
+    {
+        _dllEvents?.InvokeCreateBaseline(player, eindex, new EntityState(baseline), new Edict(entity), playermodelindex, new Vector3f(player_mins), new Vector3f(player_maxs));
+    };
+
+    internal static NativeRegisterEncodersDelegate nativeOnRegisterEncodersCaller = () =>
+    {
+        _dllEvents?.InvokeRegisterEncoders();
+    };
+
+    internal static NativeGetWeaponDataDelegate nativeOnGetWeaponDataCaller = (nint player, nint info) =>
+    {
+        return _dllEvents?.InvokeGetWeaponData(new Edict(player), new WeaponData(info)) ?? 0;
+    };
+
+    internal static NativeCmdStartDelegate nativeOnCmdStartCaller = (nint plyer, nint cmd, uint random_seed) =>
+    {
+        _dllEvents?.InvokeCmdStart(new Edict(plyer), new UserCmd(cmd), random_seed);
+    };
+
+    internal static NativeCmdEndDelegate nativeOnCmdEndCaller = (nint plyer) =>
+    {
+        _dllEvents?.InvokeCmdEnd(new Edict(plyer));
+    };
+
+    private static nint s_respondbuffer = Marshal.AllocHGlobal(sizeof(byte) * 256);
+    internal static NativeConnectionlessPacketDelegate nativeOnConnectionlessPacketCaller = (nint net_from, nint args, nint response_buffer, nint response_buffer_size) =>
+    {
+        string aargs = Marshal.PtrToStringUTF8(args) ?? string.Empty;
+        string mrespond = "";
+        int respond_len = 0;
+        int res = _dllEvents?.InvokeConnectionlessPacket(new NetAdr(net_from), aargs, ref mrespond, ref respond_len) ?? 0;
+        byte[] respond = System.Text.Encoding.UTF8.GetBytes(mrespond);
+        if (respond.Length > 255)
+            Array.Resize(ref respond, 255);
+        Marshal.Copy(respond, 0, s_respondbuffer, respond.Length);
+        response_buffer = s_respondbuffer;
+        Marshal.WriteInt32(response_buffer_size, respond.Length);
+        return res;
+    };
+
+    internal static NativeGetHullBoundsDelegate nativeOnGetHullBoundsCaller = (int hullnumber, nint mins, nint maxs) =>
+    {
+        var v1 = new Vector3f(mins);
+        var v2 = new Vector3f(maxs);
+        return _dllEvents?.InvokeGetHullBounds(hullnumber, ref v1, ref v2) ?? 0;
+    };
+
+    internal static NativeCreateInstancedBaselinesDelegate nativeOnCreateInstancedBaselinesCaller = () =>
+    {
+        _dllEvents?.InvokeCreateInstancedBaselines();
+    };
+
+    private static nint s_disconnect_message = Marshal.AllocHGlobal(sizeof(byte) * 256);
+    internal static NativeInconsistentFileDelegate nativeOnInconsistentFileCaller = (nint player, nint filename, nint disconnect_message) =>
+    {
+        string mfilename =  Marshal.PtrToStringUTF8(filename) ?? string.Empty;
+        string mdisconnect = "";
+        int res = _dllEvents?.InvokeInconsistentFile(new Edict(player), mfilename, ref mdisconnect) ?? 0;
+        byte[] disconnect = System.Text.Encoding.UTF8.GetBytes(mdisconnect);
+        if (disconnect.Length > 255)
+            Array.Resize(ref disconnect, 255);
+        Marshal.Copy(disconnect, 0, s_disconnect_message, disconnect.Length);
+        disconnect_message = s_disconnect_message;
+        return res ;
+    };
+
+    internal static NativeAllowLagCompensationDelegate nativeOnAllowLagCompensationCaller = () =>
+    {
+        return _dllEvents?.InvokeAllowLagCompensation() ?? 0;
+    };
+
+    internal static NativeDllFuncs? _nativeDllFuncs = null;
+internal static NativeDllFuncs GetDLLFunctionsNative()
+{
+#pragma warning disable CS8601 // 引用类型赋值可能为 null。
+    if (_dllEvents == null)
+        throw new NullReferenceException("DLLEvents instance is null in GetDLLFunctionsNative.");
+    _nativeDllFuncs ??= new NativeDllFuncs()
+        {
+            pfnGameInit = _dllEvents.IsGameInitNull ? null : nativeGameInitCaller,
+            pfnSpawn = _dllEvents.IsSpawnNull ? null : nativeOnSpawnCaller,
+            pfnThink = _dllEvents.IsThinkNull ? null : nativeOnThinkCaller,
+            pfnUse = _dllEvents.IsUseNull ? null : nativeOnUseCaller,
+            pfnTouch = _dllEvents.IsTouchNull ? null : nativeOnTouchCaller,
+            pfnBlocked = _dllEvents.IsBlockedNull ? null : nativeOnBlockedCaller,
+            pfnKeyValue = _dllEvents.IsKeyValueNull ? null : nativeOnKeyValueCaller,
+            pfnSave = _dllEvents.IsSaveNull ? null : nativeOnSaveCaller,
+            pfnRestore = _dllEvents.IsRestoreNull ? null : nativeOnRestoreCaller,
+            pfnSetAbsBox = _dllEvents.IsSetAbsBoxNull ? null : nativeOnSetAbsBoxCaller,
+            pfnSaveWriteFields = _dllEvents.IsSaveWriteFieldsNull ? null : nativeOnSaveWriteFieldsCaller,
+            pfnSaveReadFields = _dllEvents.IsSaveReadFieldsNull ? null : nativeOnSaveReadFieldsCaller,
+            pfnSaveGlobalState = _dllEvents.IsSaveGlobalStateNull ? null : nativeOnSaveGlobalStateCaller,
+            pfnRestoreGlobalState = _dllEvents.IsRestoreGlobalStateNull ? null : nativeOnRestoreGlobalStateCaller,
+            pfnResetGlobalState = _dllEvents.IsResetGlobalStateNull ? null : nativeOnResetGlobalStateCaller,
+            pfnClientConnect = _dllEvents.IsClientConnectNull ? null : nativeOnClientConnectCaller,
+            pfnClientDisconnect = _dllEvents.IsClientDisconnectNull ? null : nativeOnClientDisconnectCaller,
+            pfnClientKill = _dllEvents.IsClientKillNull ? null : nativeOnClientKillCaller,
+            pfnClientPutInServer = _dllEvents.IsClientPutInServerNull ? null : nativeOnClientPutInServerCaller,
+            pfnClientCommand = _dllEvents.IsClientCommandNull ? null : nativeOnClientCommandCaller,
+            pfnClientUserInfoChanged = _dllEvents.IsClientUserInfoChangedNull ? null : nativeOnClientUserInfoChangedCaller,
+            pfnServerActivate = _dllEvents.IsServerActivateNull ? null : nativeOnServerActivateCaller,
+            pfnServerDeactivate = _dllEvents.IsServerDeactivateNull ? null : nativeOnServerDeactivateCaller,
+            pfnPlayerPreThink = _dllEvents.IsPlayerPreThinkNull ? null : nativeOnPlayerPreThinkCaller,
+            pfnPlayerPostThink = _dllEvents.IsPlayerPostThinkNull ? null : nativeOnPlayerPostThinkCaller,
+            pfnStartFrame = _dllEvents.IsStartFrameNull ? null : nativeOnStartFrameCaller,
+            pfnParmsNewLevel = _dllEvents.IsParmsNewLevelNull ? null : nativeOnParmsNewLevelCaller,
+            pfnParmsChangeLevel = _dllEvents.IsParmsChangeLevelNull ? null : nativeOnParmsChangeLevelCaller,
+            pfnGetGameDescription = _dllEvents.IsGetGameDescriptionNull ? null : nativeOnGetGameDescriptionCaller,
+            pfnPlayerCustomization = _dllEvents.IsPlayerCustomizationNull ? null : nativeOnPlayerCustomizationCaller,
+            pfnSpectatorConnect = _dllEvents.IsSpectatorConnectNull ? null : nativeOnSpectatorConnectCaller,
+            pfnSpectatorDisconnect = _dllEvents.IsSpectatorDisconnectNull ? null : nativeOnSpectatorDisconnectCaller,
+            pfnSpectatorThink = _dllEvents.IsSpectatorThinkNull ? null : nativeOnSpectatorThinkCaller,
+            pfnSysError = _dllEvents.IsSysErrorNull ? null : nativeOnSysErrorCaller,
+            pfnPMMove = _dllEvents.IsPM_MoveNull ? null : nativeOnPM_MoveCaller,
+            pfnPMInit = _dllEvents.IsPM_InitNull ? null : nativeOnPM_InitCaller,
+            pfnPMFindTextureType = _dllEvents.IsPM_FindTextureTypeNull ? null : nativeOnPM_FindTextureTypeCaller,
+            pfnSetupVisibility = _dllEvents.IsSetupVisibilityNull ? null : nativeOnSetupVisibilityCaller,
+            pfnUpdateClientData = _dllEvents.IsUpdateClientDataNull ? null : nativeOnUpdateClientDataCaller,
+            pfnAddToFullPack = _dllEvents.IsAddToFullPackNull ? null : nativeOnAddToFullPackCaller,
+            pfnCreateBaseline = _dllEvents.IsCreateBaselineNull ? null : nativeOnCreateBaselineCaller,
+            pfnRegisterEncoders = _dllEvents.IsRegisterEncodersNull ? null : nativeOnRegisterEncodersCaller,
+            pfnGetWeaponData = _dllEvents.IsGetWeaponDataNull ? null : nativeOnGetWeaponDataCaller,
+            pfnCmdStart = _dllEvents.IsCmdStartNull ? null : nativeOnCmdStartCaller,
+            pfnCmdEnd = _dllEvents.IsCmdEndNull ? null : nativeOnCmdEndCaller,
+            pfnConnectionlessPacket = _dllEvents.IsConnectionlessPacketNull ? null : nativeOnConnectionlessPacketCaller,
+            pfnGetHullBounds = _dllEvents.IsGetHullBoundsNull ? null : nativeOnGetHullBoundsCaller,
+            pfnCreateInstancedBaselines = _dllEvents.IsCreateInstancedBaselinesNull ? null : nativeOnCreateInstancedBaselinesCaller,
+            pfnInconsistentFile = _dllEvents.IsInconsistentFileNull ? null : nativeOnInconsistentFileCaller,
+            pfnAllowLagCompensation = _dllEvents.IsAllowLagCompensationNull ? null : nativeOnAllowLagCompensationCaller
+        };
+    return (NativeDllFuncs)_nativeDllFuncs;
+#pragma warning restore CS8601 // 引用类型赋值可能为 null。
+}
+}
+#nullable restore
+<# } #>

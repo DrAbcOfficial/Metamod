@@ -3,7 +3,7 @@
 namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeUserCmd
+public struct NativeUserCmd : INativeStruct
 {
     internal short lerp_msec;      // Interpolation time on client
     internal byte msec;           // Duration in ms of command

@@ -3,7 +3,7 @@
 namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeVector3f
+public struct NativeVector3f : INativeStruct
 {
     internal unsafe float* startpos;
     internal readonly nint ToNInt()

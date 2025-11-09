@@ -15,4 +15,32 @@
     <IsAotCompatible>True</IsAotCompatible>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="Interface\Events\NativeCaller\DLLNativeCaller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DLLNativeCaller.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Interface\Events\NativeCaller\NewDLLNativeCaller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NewDLLNativeCaller.generated.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Interface\Events\NativeCaller\DLLNativeCaller.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DLLNativeCaller.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Interface\Events\NativeCaller\NewDLLNativeCaller.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NewDLLNativeCaller.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeTraceResult
+public struct NativeTraceResult : INativeStruct
 {
     internal int fAllSolid;          // if true, plane is not valid
     internal int fStartSolid;        // if true, the initial point was in a solid area

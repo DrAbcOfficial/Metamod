@@ -1,5 +1,6 @@
 ﻿using Metamod.Enum.Metamod;
 using Metamod.Interface;
+using Metamod.Interface.Events;
 using Metamod.Struct.Engine;
 using Metamod.Struct.Metamod;
 
@@ -7,6 +8,7 @@ namespace Metamod.Template;
 
 public class Plugin : IPlugin
 {
+    private readonly static DLLEvents _entityapiEvents = new();
     private readonly static PluginInfo _pluginInfo = new()
     {
         InterfaceVersion = InterfaceVersion.V5_16,
@@ -27,13 +29,14 @@ public class Plugin : IPlugin
     {
 
     }
-
     public void Meta_Init()
     {
 
     }
     public bool Meta_Query(InterfaceVersion interfaceVersion, MetaUtilFuncs pMetaUtilFuncs)
     {
+        if (interfaceVersion != _pluginInfo.InterfaceVersion)
+            return false;
         return true;
     }
     public bool Meta_Attach(PluginLoadTime now, MetaGlobals pMGlobals, GameDllFuncs pGamedllFuncs)
@@ -52,8 +55,18 @@ public class Plugin : IPlugin
                 $"{(nameof(Global.PluginInfo.Loadable))}:{Global.PluginInfo.Loadable}\n" +
                 $"{(nameof(Global.PluginInfo.Unloadable))}:{Global.PluginInfo.Unloadable}\n");
         });
+        _entityapiEvents.GameInit += () =>
+        {
+            Global.EngineFuncs.ServerPrint("Game Initialized!\n");
+        };
+        _entityapiEvents.ServerActivate += (edictList, edictCount, clientMax) =>
+        {
+            Global.EngineFuncs.ServerPrint("Server Activated!\n");
+        };
+        MetaFunctions.InitEntityApi(_entityapiEvents);
         return true;
     }
+
     public bool Meta_Detach(PluginLoadTime now, PluginUnloadReason reason)
     {
         return true;

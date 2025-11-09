@@ -3,7 +3,7 @@
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct string_t
+public struct NativeStringHandle : INativeStruct
 {
     internal int value;
 }

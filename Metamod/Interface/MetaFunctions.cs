@@ -1,342 +1,208 @@
-﻿using Metamod.Native.Game;
+﻿using Metamod.Interface.Events;
+using Metamod.Native.Game;
 using Metamod.Native.Metamod;
 
 namespace Metamod.Interface;
 
-public delegate int GetEntityAPIDelegate(ref DllFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetEntityAPIPostDelegate(ref DllFunctions_Post pFunctionTable, int interfaceVersion);
-public delegate int GetEntityAPI2Delegate(ref DllFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetEntityAPI2PostDelegate(ref DllFunctions_Post pFunctionTable, int interfaceVersion);
-public delegate int GetNewDllFunctions(ref NewDllFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetNewDllPostFunctions(ref NewDllFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetEngineFunctions(ref IEngineFunctions pFunctionTable, int interfaceVersion);
-public delegate int GetStudioBlendingInterfaceDelegate(ref IBlendingInterface pStudioBlendingInterface, int interfaceVersion);
-
 #pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 public class MetaFunctions
 {
-    public static GetEntityAPIDelegate? pfnGetEntityAPI;
-    public static GetEntityAPIPostDelegate? pfnGetEntityAPI_Post;
-    public static GetEntityAPI2Delegate? pfnGetEntityAPI2;
-    public static GetEntityAPI2Delegate? pfnGetEntityAPI2_Post;
-    public static GetNewDllFunctions? pfnGetNewDllFunctions;
-    public static GetNewDllPostFunctions? pfnGetNewDllFunctions_Post;
-    public static GetEngineFunctions? pfnGetEngineFunctions;
-    public static GetEngineFunctions? pfnGetEngineFunctions_Post;
-    public static GetStudioBlendingInterfaceDelegate? pfnGetBlendingInterface;
-    public static GetStudioBlendingInterfaceDelegate? pfnGetBlendingInterface_Post;
+    #region 内部函数
+    private static DLLEvents? _entityApi = null;
+    private static DLLEvents? _entityApi_Post = null;
+    private static DLLEvents? _entityApi2 = null;
+    private static DLLEvents? _entityApi2_Post = null;
+    private static NewDLLEvents? _newDllFunctions = null;
+    private static NewDLLEvents? _newDLLFunctions_Post = null;
 
-    internal static NativeGetEntityApiDelegate GetEntityApiWrapper = (nint pFunctionTable, int interfaceVersion) =>
+    private static unsafe void LinkNativeDLLEvents(NativeDllFuncs* target, NativeDllFuncs source)
     {
-        int res = 0;
-        unsafe
-        {
-            DllFunctions ff = new();
-            if (pfnGetEntityAPI == null)
-                throw new NullReferenceException($"{nameof(pfnGetEntityAPI)} is null"!);
-            pfnGetEntityAPI(ref ff, interfaceVersion);
-
-            NativeDllFuncs nfuncs = DllFunctions.GetNative();
-            NativeDllFuncs* funcs = (NativeDllFuncs*)pFunctionTable;
-
-            funcs->pfnGameInit = nfuncs.pfnGameInit;
-            funcs->pfnSpawn = nfuncs.pfnSpawn;
-            funcs->pfnThink = nfuncs.pfnThink;
-            funcs->pfnUse = nfuncs.pfnUse;
-            funcs->pfnTouch = nfuncs.pfnTouch;
-            funcs->pfnBlocked = nfuncs.pfnBlocked;
-            funcs->pfnKeyValue = nfuncs.pfnKeyValue;
-            funcs->pfnSave = nfuncs.pfnSave;
-            funcs->pfnRestore = nfuncs.pfnRestore;
-            funcs->pfnSetAbsBox = nfuncs.pfnSetAbsBox;
-            funcs->pfnSaveWriteFields = nfuncs.pfnSaveWriteFields;
-            funcs->pfnSaveReadFields = nfuncs.pfnSaveReadFields;
-            funcs->pfnSaveGlobalState = nfuncs.pfnSaveGlobalState;
-            funcs->pfnRestoreGlobalState = nfuncs.pfnRestoreGlobalState;
-            funcs->pfnResetGlobalState = nfuncs.pfnResetGlobalState;
-            funcs->pfnClientConnect = nfuncs.pfnClientConnect;
-            funcs->pfnClientDisconnect = nfuncs.pfnClientDisconnect;
-            funcs->pfnClientKill = nfuncs.pfnClientKill;
-            funcs->pfnClientPutInServer = nfuncs.pfnClientPutInServer;
-            funcs->pfnClientCommand = nfuncs.pfnClientCommand;
-            funcs->pfnClientUserInfoChanged = nfuncs.pfnClientUserInfoChanged;
-            funcs->pfnServerActivate = nfuncs.pfnServerActivate;
-            funcs->pfnServerDeactivate = nfuncs.pfnServerDeactivate;
-            funcs->pfnPlayerPreThink = nfuncs.pfnPlayerPreThink;
-            funcs->pfnPlayerPostThink = nfuncs.pfnPlayerPostThink;
-            funcs->pfnStartFrame = nfuncs.pfnStartFrame;
-            funcs->pfnParmsNewLevel = nfuncs.pfnParmsNewLevel;
-            funcs->pfnParmsChangeLevel = nfuncs.pfnParmsChangeLevel;
-            funcs->pfnGetGameDescription = nfuncs.pfnGetGameDescription;
-            funcs->pfnPlayerCustomization = nfuncs.pfnPlayerCustomization;
-            funcs->pfnSpectatorConnect = nfuncs.pfnSpectatorConnect;
-            funcs->pfnSpectatorDisconnect = nfuncs.pfnSpectatorDisconnect;
-            funcs->pfnSpectatorThink = nfuncs.pfnSpectatorThink;
-            funcs->pfnSysError = nfuncs.pfnSysError;
-            funcs->pfnPMMove = nfuncs.pfnPMMove;
-            funcs->pfnPMInit = nfuncs.pfnPMInit;
-            funcs->pfnPMFindTextureType = nfuncs.pfnPMFindTextureType;
-            funcs->pfnSetupVisibility = nfuncs.pfnSetupVisibility;
-            funcs->pfnUpdateClientData = nfuncs.pfnUpdateClientData;
-            funcs->pfnAddToFullPack = nfuncs.pfnAddToFullPack;
-            funcs->pfnCreateBaseline = nfuncs.pfnCreateBaseline;
-            funcs->pfnRegisterEncoders = nfuncs.pfnRegisterEncoders;
-            funcs->pfnGetWeaponData = nfuncs.pfnGetWeaponData;
-            funcs->pfnCmdStart = nfuncs.pfnCmdStart;
-            funcs->pfnCmdEnd = nfuncs.pfnCmdEnd;
-            funcs->pfnConnectionlessPacket = nfuncs.pfnConnectionlessPacket;
-            funcs->pfnGetHullBounds = nfuncs.pfnGetHullBounds;
-            funcs->pfnCreateInstancedBaselines = nfuncs.pfnCreateInstancedBaselines;
-            funcs->pfnInconsistentFile = nfuncs.pfnInconsistentFile;
-            funcs->pfnAllowLagCompensation = nfuncs.pfnAllowLagCompensation;
-
-            res = 1;
-        }
-        return res;
-    };
-    internal static NativeGetEntityApiDelegate GetEntityApiPostWrapper = (nint pFunctionTable, int interfaceVersion) =>
-    {
-        int res = 0;
-        unsafe
-        {
-            NativeDllFuncs nfuncs = DllFunctions_Post.GetNative();
-            NativeDllFuncs* funcs = (NativeDllFuncs*)pFunctionTable;
-
-            funcs->pfnGameInit = nfuncs.pfnGameInit;
-            funcs->pfnSpawn = nfuncs.pfnSpawn;
-            funcs->pfnThink = nfuncs.pfnThink;
-            funcs->pfnUse = nfuncs.pfnUse;
-            funcs->pfnTouch = nfuncs.pfnTouch;
-            funcs->pfnBlocked = nfuncs.pfnBlocked;
-            funcs->pfnKeyValue = nfuncs.pfnKeyValue;
-            funcs->pfnSave = nfuncs.pfnSave;
-            funcs->pfnRestore = nfuncs.pfnRestore;
-            funcs->pfnSetAbsBox = nfuncs.pfnSetAbsBox;
-            funcs->pfnSaveWriteFields = nfuncs.pfnSaveWriteFields;
-            funcs->pfnSaveReadFields = nfuncs.pfnSaveReadFields;
-            funcs->pfnSaveGlobalState = nfuncs.pfnSaveGlobalState;
-            funcs->pfnRestoreGlobalState = nfuncs.pfnRestoreGlobalState;
-            funcs->pfnResetGlobalState = nfuncs.pfnResetGlobalState;
-            funcs->pfnClientConnect = nfuncs.pfnClientConnect;
-            funcs->pfnClientDisconnect = nfuncs.pfnClientDisconnect;
-            funcs->pfnClientKill = nfuncs.pfnClientKill;
-            funcs->pfnClientPutInServer = nfuncs.pfnClientPutInServer;
-            funcs->pfnClientCommand = nfuncs.pfnClientCommand;
-            funcs->pfnClientUserInfoChanged = nfuncs.pfnClientUserInfoChanged;
-            funcs->pfnServerActivate = nfuncs.pfnServerActivate;
-            funcs->pfnServerDeactivate = nfuncs.pfnServerDeactivate;
-            funcs->pfnPlayerPreThink = nfuncs.pfnPlayerPreThink;
-            funcs->pfnPlayerPostThink = nfuncs.pfnPlayerPostThink;
-            funcs->pfnStartFrame = nfuncs.pfnStartFrame;
-            funcs->pfnParmsNewLevel = nfuncs.pfnParmsNewLevel;
-            funcs->pfnParmsChangeLevel = nfuncs.pfnParmsChangeLevel;
-            funcs->pfnGetGameDescription = nfuncs.pfnGetGameDescription;
-            funcs->pfnPlayerCustomization = nfuncs.pfnPlayerCustomization;
-            funcs->pfnSpectatorConnect = nfuncs.pfnSpectatorConnect;
-            funcs->pfnSpectatorDisconnect = nfuncs.pfnSpectatorDisconnect;
-            funcs->pfnSpectatorThink = nfuncs.pfnSpectatorThink;
-            funcs->pfnSysError = nfuncs.pfnSysError;
-            funcs->pfnPMMove = nfuncs.pfnPMMove;
-            funcs->pfnPMInit = nfuncs.pfnPMInit;
-            funcs->pfnPMFindTextureType = nfuncs.pfnPMFindTextureType;
-            funcs->pfnSetupVisibility = nfuncs.pfnSetupVisibility;
-            funcs->pfnUpdateClientData = nfuncs.pfnUpdateClientData;
-            funcs->pfnAddToFullPack = nfuncs.pfnAddToFullPack;
-            funcs->pfnCreateBaseline = nfuncs.pfnCreateBaseline;
-            funcs->pfnRegisterEncoders = nfuncs.pfnRegisterEncoders;
-            funcs->pfnGetWeaponData = nfuncs.pfnGetWeaponData;
-            funcs->pfnCmdStart = nfuncs.pfnCmdStart;
-            funcs->pfnCmdEnd = nfuncs.pfnCmdEnd;
-            funcs->pfnConnectionlessPacket = nfuncs.pfnConnectionlessPacket;
-            funcs->pfnGetHullBounds = nfuncs.pfnGetHullBounds;
-            funcs->pfnCreateInstancedBaselines = nfuncs.pfnCreateInstancedBaselines;
-            funcs->pfnInconsistentFile = nfuncs.pfnInconsistentFile;
-            funcs->pfnAllowLagCompensation = nfuncs.pfnAllowLagCompensation;
-
-            res = 1;
-        }
-        return res;
-    };
-
-    internal static NativeGetEntityApi2Delegate GetEntityApi2Wrapper = (nint pFunctionTable, nint interfaceVersion) =>
-    {
-        int res = 0;
-        unsafe
-        {
-            NativeDllFuncs nfuncs = DllFunctions.GetNative();
-            NativeDllFuncs* funcs = (NativeDllFuncs*)pFunctionTable;
-
-            funcs->pfnGameInit = nfuncs.pfnGameInit;
-            funcs->pfnSpawn = nfuncs.pfnSpawn;
-            funcs->pfnThink = nfuncs.pfnThink;
-            funcs->pfnUse = nfuncs.pfnUse;
-            funcs->pfnTouch = nfuncs.pfnTouch;
-            funcs->pfnBlocked = nfuncs.pfnBlocked;
-            funcs->pfnKeyValue = nfuncs.pfnKeyValue;
-            funcs->pfnSave = nfuncs.pfnSave;
-            funcs->pfnRestore = nfuncs.pfnRestore;
-            funcs->pfnSetAbsBox = nfuncs.pfnSetAbsBox;
-            funcs->pfnSaveWriteFields = nfuncs.pfnSaveWriteFields;
-            funcs->pfnSaveReadFields = nfuncs.pfnSaveReadFields;
-            funcs->pfnSaveGlobalState = nfuncs.pfnSaveGlobalState;
-            funcs->pfnRestoreGlobalState = nfuncs.pfnRestoreGlobalState;
-            funcs->pfnResetGlobalState = nfuncs.pfnResetGlobalState;
-            funcs->pfnClientConnect = nfuncs.pfnClientConnect;
-            funcs->pfnClientDisconnect = nfuncs.pfnClientDisconnect;
-            funcs->pfnClientKill = nfuncs.pfnClientKill;
-            funcs->pfnClientPutInServer = nfuncs.pfnClientPutInServer;
-            funcs->pfnClientCommand = nfuncs.pfnClientCommand;
-            funcs->pfnClientUserInfoChanged = nfuncs.pfnClientUserInfoChanged;
-            funcs->pfnServerActivate = nfuncs.pfnServerActivate;
-            funcs->pfnServerDeactivate = nfuncs.pfnServerDeactivate;
-            funcs->pfnPlayerPreThink = nfuncs.pfnPlayerPreThink;
-            funcs->pfnPlayerPostThink = nfuncs.pfnPlayerPostThink;
-            funcs->pfnStartFrame = nfuncs.pfnStartFrame;
-            funcs->pfnParmsNewLevel = nfuncs.pfnParmsNewLevel;
-            funcs->pfnParmsChangeLevel = nfuncs.pfnParmsChangeLevel;
-            funcs->pfnGetGameDescription = nfuncs.pfnGetGameDescription;
-            funcs->pfnPlayerCustomization = nfuncs.pfnPlayerCustomization;
-            funcs->pfnSpectatorConnect = nfuncs.pfnSpectatorConnect;
-            funcs->pfnSpectatorDisconnect = nfuncs.pfnSpectatorDisconnect;
-            funcs->pfnSpectatorThink = nfuncs.pfnSpectatorThink;
-            funcs->pfnSysError = nfuncs.pfnSysError;
-            funcs->pfnPMMove = nfuncs.pfnPMMove;
-            funcs->pfnPMInit = nfuncs.pfnPMInit;
-            funcs->pfnPMFindTextureType = nfuncs.pfnPMFindTextureType;
-            funcs->pfnSetupVisibility = nfuncs.pfnSetupVisibility;
-            funcs->pfnUpdateClientData = nfuncs.pfnUpdateClientData;
-            funcs->pfnAddToFullPack = nfuncs.pfnAddToFullPack;
-            funcs->pfnCreateBaseline = nfuncs.pfnCreateBaseline;
-            funcs->pfnRegisterEncoders = nfuncs.pfnRegisterEncoders;
-            funcs->pfnGetWeaponData = nfuncs.pfnGetWeaponData;
-            funcs->pfnCmdStart = nfuncs.pfnCmdStart;
-            funcs->pfnCmdEnd = nfuncs.pfnCmdEnd;
-            funcs->pfnConnectionlessPacket = nfuncs.pfnConnectionlessPacket;
-            funcs->pfnGetHullBounds = nfuncs.pfnGetHullBounds;
-            funcs->pfnCreateInstancedBaselines = nfuncs.pfnCreateInstancedBaselines;
-            funcs->pfnInconsistentFile = nfuncs.pfnInconsistentFile;
-            funcs->pfnAllowLagCompensation = nfuncs.pfnAllowLagCompensation;
-
-            res = 1;
-        }
-        return res;
-    };
-    internal static NativeGetEntityApi2Delegate GetEntityApi2PostWrapper = (nint pFunctionTable, nint interfaceVersion) =>
-    {
-        int res = 0;
-        unsafe
-        {
-            NativeDllFuncs nfuncs = DllFunctions_Post.GetNative();
-            NativeDllFuncs* funcs = (NativeDllFuncs*)pFunctionTable;
-
-            funcs->pfnGameInit = nfuncs.pfnGameInit;
-            funcs->pfnSpawn = nfuncs.pfnSpawn;
-            funcs->pfnThink = nfuncs.pfnThink;
-            funcs->pfnUse = nfuncs.pfnUse;
-            funcs->pfnTouch = nfuncs.pfnTouch;
-            funcs->pfnBlocked = nfuncs.pfnBlocked;
-            funcs->pfnKeyValue = nfuncs.pfnKeyValue;
-            funcs->pfnSave = nfuncs.pfnSave;
-            funcs->pfnRestore = nfuncs.pfnRestore;
-            funcs->pfnSetAbsBox = nfuncs.pfnSetAbsBox;
-            funcs->pfnSaveWriteFields = nfuncs.pfnSaveWriteFields;
-            funcs->pfnSaveReadFields = nfuncs.pfnSaveReadFields;
-            funcs->pfnSaveGlobalState = nfuncs.pfnSaveGlobalState;
-            funcs->pfnRestoreGlobalState = nfuncs.pfnRestoreGlobalState;
-            funcs->pfnResetGlobalState = nfuncs.pfnResetGlobalState;
-            funcs->pfnClientConnect = nfuncs.pfnClientConnect;
-            funcs->pfnClientDisconnect = nfuncs.pfnClientDisconnect;
-            funcs->pfnClientKill = nfuncs.pfnClientKill;
-            funcs->pfnClientPutInServer = nfuncs.pfnClientPutInServer;
-            funcs->pfnClientCommand = nfuncs.pfnClientCommand;
-            funcs->pfnClientUserInfoChanged = nfuncs.pfnClientUserInfoChanged;
-            funcs->pfnServerActivate = nfuncs.pfnServerActivate;
-            funcs->pfnServerDeactivate = nfuncs.pfnServerDeactivate;
-            funcs->pfnPlayerPreThink = nfuncs.pfnPlayerPreThink;
-            funcs->pfnPlayerPostThink = nfuncs.pfnPlayerPostThink;
-            funcs->pfnStartFrame = nfuncs.pfnStartFrame;
-            funcs->pfnParmsNewLevel = nfuncs.pfnParmsNewLevel;
-            funcs->pfnParmsChangeLevel = nfuncs.pfnParmsChangeLevel;
-            funcs->pfnGetGameDescription = nfuncs.pfnGetGameDescription;
-            funcs->pfnPlayerCustomization = nfuncs.pfnPlayerCustomization;
-            funcs->pfnSpectatorConnect = nfuncs.pfnSpectatorConnect;
-            funcs->pfnSpectatorDisconnect = nfuncs.pfnSpectatorDisconnect;
-            funcs->pfnSpectatorThink = nfuncs.pfnSpectatorThink;
-            funcs->pfnSysError = nfuncs.pfnSysError;
-            funcs->pfnPMMove = nfuncs.pfnPMMove;
-            funcs->pfnPMInit = nfuncs.pfnPMInit;
-            funcs->pfnPMFindTextureType = nfuncs.pfnPMFindTextureType;
-            funcs->pfnSetupVisibility = nfuncs.pfnSetupVisibility;
-            funcs->pfnUpdateClientData = nfuncs.pfnUpdateClientData;
-            funcs->pfnAddToFullPack = nfuncs.pfnAddToFullPack;
-            funcs->pfnCreateBaseline = nfuncs.pfnCreateBaseline;
-            funcs->pfnRegisterEncoders = nfuncs.pfnRegisterEncoders;
-            funcs->pfnGetWeaponData = nfuncs.pfnGetWeaponData;
-            funcs->pfnCmdStart = nfuncs.pfnCmdStart;
-            funcs->pfnCmdEnd = nfuncs.pfnCmdEnd;
-            funcs->pfnConnectionlessPacket = nfuncs.pfnConnectionlessPacket;
-            funcs->pfnGetHullBounds = nfuncs.pfnGetHullBounds;
-            funcs->pfnCreateInstancedBaselines = nfuncs.pfnCreateInstancedBaselines;
-            funcs->pfnInconsistentFile = nfuncs.pfnInconsistentFile;
-            funcs->pfnAllowLagCompensation = nfuncs.pfnAllowLagCompensation;
-
-            res = 1;
-        }
-        return res;
-    };
-
-    internal static NativeGetNewDllFunctionsDelegate GetNewDllFunctionsWrapper = (nint pFunctionTable, nint interfaceVersion) =>
-    {
-        int res = 0;
-        unsafe
-        {
-            NativeNewDllFuncs nfuncs = NewDllFunctions.GetNativeTable();
-            NativeNewDllFuncs* funcs = (NativeNewDllFuncs*)pFunctionTable;
-            funcs->pfnOnFreeEntPrivateData = nfuncs.pfnOnFreeEntPrivateData;
-            funcs->pfnGameShutdown = nfuncs.pfnGameShutdown;
-            funcs->pfnShouldCollide = nfuncs.pfnShouldCollide;
-            funcs->pfnCvarValue = nfuncs.pfnCvarValue;
-            funcs->pfnCvarValue2 = nfuncs.pfnCvarValue2;
-            res = 1;
-        }
-        return res;
-    };
-    internal static NativeGetNewDllFunctionsDelegate GetNewDllFunctions_PostWrapper = (nint pFunctionTable, nint interfaceVersion) =>
-    {
-        int res = 0;
-        unsafe
-        {
-            NativeNewDllFuncs nfuncs = NewDllFunctions_Post.GetNativeTable();
-            NativeNewDllFuncs* funcs = (NativeNewDllFuncs*)pFunctionTable;
-            funcs->pfnOnFreeEntPrivateData = nfuncs.pfnOnFreeEntPrivateData;
-            funcs->pfnGameShutdown = nfuncs.pfnGameShutdown;
-            funcs->pfnShouldCollide = nfuncs.pfnShouldCollide;
-            funcs->pfnCvarValue = nfuncs.pfnCvarValue;
-            funcs->pfnCvarValue2 = nfuncs.pfnCvarValue2;
-            res = 1;
-        }
-        return res;
-    };
-
-
-    public static NativeMetaFuncs GetNative()
-    {
-#pragma warning disable CS8601 // 引用类型赋值可能为 null。
-        return new()
-        {
-            pfnGetEntityAPI = pfnGetEntityAPI == null ? null : GetEntityApiWrapper,
-            pfnGetEntityAPI_Post = GetEntityApiPostWrapper == null ? null : GetEntityApiPostWrapper,
-            pfnGetEntityAPI2 = pfnGetEntityAPI2 == null ? null : GetEntityApi2Wrapper,
-            pfnGetEntityAPI2_Post = pfnGetEntityAPI2_Post == null ? null : GetEntityApi2PostWrapper,
-            pfnGetNewDLLFunctions = pfnGetNewDllFunctions == null ? null : GetNewDllFunctionsWrapper,
-            pfnGetNewDLLFunctions_Post = pfnGetNewDllFunctions_Post == null ? null : GetNewDllFunctions_PostWrapper,
-            //TODO: Finish these wrappers
-            pfnGetEngineFunctions = null,
-            pfnGetEngineFunctions_Post = null,
-            pfnGetStudioBlendingInterface = null,
-            pfnGetStudioBlendingInterface_Post = null
-        };
-#pragma warning restore CS8601 // 引用类型赋值可能为 null。
+        target->pfnGameInit = source.pfnGameInit;
+        target->pfnSpawn = source.pfnSpawn;
+        target->pfnThink = source.pfnThink;
+        target->pfnUse = source.pfnUse;
+        target->pfnTouch = source.pfnTouch;
+        target->pfnBlocked = source.pfnBlocked;
+        target->pfnKeyValue = source.pfnKeyValue;
+        target->pfnSave = source.pfnSave;
+        target->pfnRestore = source.pfnRestore;
+        target->pfnSetAbsBox = source.pfnSetAbsBox;
+        target->pfnSaveWriteFields = source.pfnSaveWriteFields;
+        target->pfnSaveReadFields = source.pfnSaveReadFields;
+        target->pfnSaveGlobalState = source.pfnSaveGlobalState;
+        target->pfnRestoreGlobalState = source.pfnRestoreGlobalState;
+        target->pfnResetGlobalState = source.pfnResetGlobalState;
+        target->pfnClientConnect = source.pfnClientConnect;
+        target->pfnClientDisconnect = source.pfnClientDisconnect;
+        target->pfnClientKill = source.pfnClientKill;
+        target->pfnClientPutInServer = source.pfnClientPutInServer;
+        target->pfnClientCommand = source.pfnClientCommand;
+        target->pfnClientUserInfoChanged = source.pfnClientUserInfoChanged;
+        target->pfnServerActivate = source.pfnServerActivate;
+        target->pfnServerDeactivate = source.pfnServerDeactivate;
+        target->pfnPlayerPreThink = source.pfnPlayerPreThink;
+        target->pfnPlayerPostThink = source.pfnPlayerPostThink;
+        target->pfnStartFrame = source.pfnStartFrame;
+        target->pfnParmsNewLevel = source.pfnParmsNewLevel;
+        target->pfnParmsChangeLevel = source.pfnParmsChangeLevel;
+        target->pfnGetGameDescription = source.pfnGetGameDescription;
+        target->pfnPlayerCustomization = source.pfnPlayerCustomization;
+        target->pfnSpectatorConnect = source.pfnSpectatorConnect;
+        target->pfnSpectatorDisconnect = source.pfnSpectatorDisconnect;
+        target->pfnSpectatorThink = source.pfnSpectatorThink;
+        target->pfnSysError = source.pfnSysError;
+        target->pfnPMMove = source.pfnPMMove;
+        target->pfnPMInit = source.pfnPMInit;
+        target->pfnPMFindTextureType = source.pfnPMFindTextureType;
+        target->pfnSetupVisibility = source.pfnSetupVisibility;
+        target->pfnUpdateClientData = source.pfnUpdateClientData;
+        target->pfnAddToFullPack = source.pfnAddToFullPack;
+        target->pfnCreateBaseline = source.pfnCreateBaseline;
+        target->pfnRegisterEncoders = source.pfnRegisterEncoders;
+        target->pfnGetWeaponData = source.pfnGetWeaponData;
+        target->pfnCmdStart = source.pfnCmdStart;
+        target->pfnCmdEnd = source.pfnCmdEnd;
+        target->pfnConnectionlessPacket = source.pfnConnectionlessPacket;
+        target->pfnGetHullBounds = source.pfnGetHullBounds;
+        target->pfnCreateInstancedBaselines = source.pfnCreateInstancedBaselines;
+        target->pfnInconsistentFile = source.pfnInconsistentFile;
+        target->pfnAllowLagCompensation = source.pfnAllowLagCompensation;
     }
+    private static unsafe void LinkNativeNewDLLEvents(NativeNewDllFuncs* target, NativeNewDllFuncs source)
+    {
+        target->pfnOnFreeEntPrivateData = source.pfnOnFreeEntPrivateData;
+        target->pfnGameShutdown = source.pfnGameShutdown;
+        target->pfnShouldCollide = source.pfnShouldCollide;
+        target->pfnCvarValue = source.pfnCvarValue;
+        target->pfnCvarValue2 = source.pfnCvarValue2;
+    }
+
+    internal static NativeGetEntityApiDelegate GetEntityApiWrapper = (pFunctionTable, interfaceVersion) =>
+    {
+        int res = 0;
+        unsafe
+        {
+            if (_entityApi == null)
+                throw new NullReferenceException("DLLEvents instance is null in GetEntityApiWrapper.");
+            EntityAPINativeCaller._dllEvents = _entityApi;
+            LinkNativeDLLEvents((NativeDllFuncs*)pFunctionTable, EntityAPINativeCaller.GetDLLFunctionsNative());
+            res = 1;
+        }
+        return res;
+    };
+    internal static NativeGetEntityApiDelegate GetEntityApiPostWrapper = (pFunctionTable, interfaceVersion) =>
+    {
+        int res = 0;
+        unsafe
+        {
+            if (_entityApi_Post == null)
+                throw new NullReferenceException("DLLEvents instance is null in GetEntityApiPostWrapper.");
+            EntityAPIPostNativeCaller._dllEvents = _entityApi_Post;
+            LinkNativeDLLEvents((NativeDllFuncs*)pFunctionTable, EntityAPIPostNativeCaller.GetDLLFunctionsNative());
+            res = 1;
+        }
+        return res;
+    };
+    internal static NativeGetEntityApi2Delegate GetEntityApi2Wrapper = (pFunctionTable, interfaceVersion) =>
+    {
+        int res = 0;
+        unsafe
+        {
+            if (_entityApi2 == null)
+                throw new NullReferenceException("DLLEvents instance is null in GetEntityApi2Wrapper.");
+            EntityAPI2NativeCaller._dllEvents = _entityApi2;
+            LinkNativeDLLEvents((NativeDllFuncs*)pFunctionTable, EntityAPI2NativeCaller.GetDLLFunctionsNative());
+            res = 1;
+        }
+        return res;
+    };
+    internal static NativeGetEntityApi2Delegate GetEntityApi2PostWrapper = (pFunctionTable, interfaceVersion) =>
+    {
+        int res = 0;
+        unsafe
+        {
+            if (_entityApi2_Post == null)
+                throw new NullReferenceException("DLLEvents instance is null in GetEntityApi2PostWrapper.");
+            EntityAPI2PostNativeCaller._dllEvents = _entityApi2_Post;
+            LinkNativeDLLEvents((NativeDllFuncs*)pFunctionTable, EntityAPI2PostNativeCaller.GetDLLFunctionsNative());
+            res = 1;
+        }
+        return res;
+    };
+    internal static NativeGetNewDllFunctionsDelegate GetNewDllFunctionsWrapper = (pFunctionTable, interfaceVersion) =>
+    {
+        int res = 0;
+        unsafe
+        {
+            if (_newDllFunctions == null)
+                throw new NullReferenceException("DLLEvents instance is null in GetEntityApi2PostWrapper.");
+            NewDLLFunctionsNativeCaller._newEvents = _newDllFunctions;
+            LinkNativeNewDLLEvents((NativeNewDllFuncs*)pFunctionTable, NewDLLFunctionsNativeCaller.GetNewDLLFunctionsNative());
+            res = 1;
+        }
+        return res;
+    };
+    internal static NativeGetNewDllFunctionsDelegate GetNewDllFunctions_PostWrapper = (pFunctionTable, interfaceVersion) =>
+    {
+        int res = 0;
+        unsafe
+        {
+            if (_newDLLFunctions_Post == null)
+                throw new NullReferenceException("DLLEvents instance is null in GetEntityApi2PostWrapper.");
+            NewDLLFunctionsPostNativeCaller._newEvents = _newDllFunctions;
+            LinkNativeNewDLLEvents((NativeNewDllFuncs*)pFunctionTable, NewDLLFunctionsPostNativeCaller.GetNewDLLFunctionsNative());
+            res = 1;
+        }
+        return res;
+    };
+
+    internal static NativeMetaFuncs? _native = null;
+
+    internal static NativeMetaFuncs GetNative()
+    {
+        _native ??= new()
+            {
+                pfnGetEntityAPI = _entityApi == null ? null : GetEntityApiWrapper,
+                pfnGetEntityAPI_Post = _entityApi_Post == null ? null : GetEntityApiPostWrapper,
+                pfnGetEntityAPI2 = _entityApi2 == null ? null : GetEntityApi2Wrapper,
+                pfnGetEntityAPI2_Post = _entityApi2_Post == null ? null : GetEntityApi2PostWrapper,
+                pfnGetNewDLLFunctions = _newDllFunctions == null ? null : GetNewDllFunctionsWrapper,
+                pfnGetNewDLLFunctions_Post = _newDLLFunctions_Post == null ? null : GetNewDllFunctions_PostWrapper,
+                //TODO: Finish these wrappers
+                pfnGetEngineFunctions = null,
+                pfnGetEngineFunctions_Post = null,
+                pfnGetStudioBlendingInterface = null,
+                pfnGetStudioBlendingInterface_Post = null
+            };
+        return (NativeMetaFuncs)_native;
+    }
+    #endregion
+
+    #region 对外函数
+    public static void InitEntityApi(DLLEvents entityApi)
+    {
+        _entityApi = entityApi;
+    }
+    public static void InitEntityApi_Post(DLLEvents entityApiPost)
+    {
+        _entityApi_Post = entityApiPost;
+    }
+    public static void InitEntityApi2(DLLEvents entityApi2)
+    {
+        _entityApi2 = entityApi2;
+    }
+    public static void InitEntityApi2_Post(DLLEvents entityApi2Post)
+    {
+        _entityApi2_Post = entityApi2Post;
+    }
+    public static void InitNewDllFunctions(NewDLLEvents newDllFunctions)
+    {
+        _newDllFunctions = newDllFunctions;
+    }
+    public static void InitNewDllFunctions_Post(NewDLLEvents newDllFunctionsPost)
+    {
+        _newDLLFunctions_Post = newDllFunctionsPost;
+    }
+    #endregion
 }
 #pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针

@@ -4,13 +4,13 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeGlobalVars
+public struct NativeGlobalVars : INativeStruct
 {
     internal float time;
     internal float frametime;
     internal float force_retouch;
-    internal string_t mapname;
-    internal string_t startspot;
+    internal NativeStringHandle mapname;
+    internal NativeStringHandle startspot;
     internal float deathmatch;
     internal float coop;
     internal float teamplay;

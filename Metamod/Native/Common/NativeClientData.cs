@@ -3,7 +3,7 @@
 namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeClientData
+public struct NativeClientData : INativeStruct
 {
     internal NativeVector3f origin;
     internal NativeVector3f velocity;

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Struct.Engine;
 
-public class StringHandle : BaseManaged<string_t>
+public class StringHandle : BaseManaged<NativeStringHandle>
 {
     private nint _ptr = IntPtr.Zero;
     private bool _need_release = false;
@@ -13,7 +13,7 @@ public class StringHandle : BaseManaged<string_t>
     {
         _need_release = false;
     }
-    internal StringHandle(string_t str) : base(str) 
+    internal StringHandle(NativeStringHandle str) : base(str) 
     { 
         _need_release = false; 
     }

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Metamod;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeMetaGlobals
+public struct NativeMetaGlobals : INativeStruct
 {
     internal MetaResult mres;          // writable; plugin's return flag
     internal MetaResult prev_mres;     // readable; return flag of the previous plugin called

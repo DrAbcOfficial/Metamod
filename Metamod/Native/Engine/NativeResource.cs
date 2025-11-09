@@ -5,7 +5,7 @@ namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
 #pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
-public unsafe struct NativeResource
+public unsafe struct NativeResource : INativeStruct
 {
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
     internal byte[] szFileName; // File name to download/precache.

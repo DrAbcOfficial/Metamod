@@ -3,7 +3,7 @@
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeCVar
+public struct NativeCVar : INativeStruct
 {
     internal nint name;
     internal nint str;

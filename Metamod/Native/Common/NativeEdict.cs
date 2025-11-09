@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Common;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeEdict
+public struct NativeEdict : INativeStruct
 {
     internal int free;
     internal int serialnumber;

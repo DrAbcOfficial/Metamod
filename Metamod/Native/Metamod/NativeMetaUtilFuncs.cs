@@ -1,4 +1,5 @@
 ﻿using Metamod.Enum.Metamod;
+using Metamod.Native;
 using Metamod.Native.Common;
 using Metamod.Native.Engine;
 using Metamod.Native.Game;
@@ -6,7 +7,7 @@ using Metamod.Native.Metamod;
 using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeMetaUtilFuncs
+public struct NativeMetaUtilFuncs : INativeStruct
 {
     internal LogDelegate pfnLogConsole;
     internal LogDelegate pfnLogMessage;

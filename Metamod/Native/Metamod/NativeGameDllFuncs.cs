@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Metamod.Native.Metamod;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NativeGameDllFuncs
+public struct NativeGameDllFuncs : INativeStruct
 {
     internal nint dllapi_table;
     internal nint newapi_table;
