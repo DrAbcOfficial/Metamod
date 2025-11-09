@@ -91,7 +91,7 @@ public abstract class PluginEntry
         return result ? 1 : 0;
     }
 
-    protected static int Native_Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
+    protected static unsafe int Native_Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
     {
         MetaGlobals metaGlobals = new(pMGlobals);
         GameDllFuncs gameDllFuncs = new(pGamedllFuncs);
@@ -100,18 +100,28 @@ public abstract class PluginEntry
         var pinterface = GetPluginInterface();
         bool result = pinterface.Meta_Attach(now, metaGlobals, gameDllFuncs);
 
-        var original = Marshal.PtrToStructure<NativeMetaFuncs>(pFunctionTable);
+     
+        // 本地方法：将托管 delegate 转换为函数指针并写入到宿主内存（按字段偏移）
+        static void WriteDelegateField<TDelegate>(nint basePtr, string fieldName, TDelegate? del) where TDelegate : Delegate
+        {
+            IntPtr offset = Marshal.OffsetOf<NativeMetaFuncs>(fieldName);
+            nint dest = (nint)(basePtr + offset.ToInt64());
+            IntPtr fp = del == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(del);
+            Marshal.WriteIntPtr(dest, fp);
+        }
         NativeMetaFuncs funcs = MetaFunctions.GetNative();
-        original.pfnGetEntityAPI = funcs.pfnGetEntityAPI;
-        original.pfnGetEntityAPI_Post = funcs.pfnGetEntityAPI_Post;
-        original.pfnGetEntityAPI2 = funcs.pfnGetEntityAPI2;
-        original.pfnGetEntityAPI2_Post = funcs.pfnGetEntityAPI2_Post;
-        original.pfnGetNewDLLFunctions = funcs.pfnGetNewDLLFunctions;
-        original.pfnGetNewDLLFunctions_Post = funcs.pfnGetNewDLLFunctions_Post;
-        original.pfnGetEngineFunctions = funcs.pfnGetEngineFunctions;
-        original.pfnGetEngineFunctions_Post = funcs.pfnGetEngineFunctions_Post;
-        original.pfnGetStudioBlendingInterface = funcs.pfnGetStudioBlendingInterface;
-        original.pfnGetStudioBlendingInterface_Post = funcs.pfnGetStudioBlendingInterface_Post;
+        // 替换调用方式，显式指定委托类型
+        WriteDelegateField(pFunctionTable, "pfnGetEntityAPI", funcs.pfnGetEntityAPI);
+        WriteDelegateField(pFunctionTable, "pfnGetEntityAPI_Post", funcs.pfnGetEntityAPI_Post);
+        WriteDelegateField(pFunctionTable, "pfnGetEntityAPI2", funcs.pfnGetEntityAPI2);
+        WriteDelegateField(pFunctionTable, "pfnGetEntityAPI2_Post", funcs.pfnGetEntityAPI2_Post);
+        WriteDelegateField(pFunctionTable, "pfnGetNewDLLFunctions", funcs.pfnGetNewDLLFunctions);
+        WriteDelegateField(pFunctionTable, "pfnGetNewDLLFunctions_Post", funcs.pfnGetNewDLLFunctions_Post);
+        WriteDelegateField(pFunctionTable, "pfnGetEngineFunctions", funcs.pfnGetEngineFunctions);
+        WriteDelegateField(pFunctionTable, "pfnGetEngineFunctions_Post", funcs.pfnGetEngineFunctions_Post);
+        WriteDelegateField(pFunctionTable, "pfnGetStudioBlendingInterface", funcs.pfnGetStudioBlendingInterface);
+        WriteDelegateField(pFunctionTable, "pfnGetStudioBlendingInterface_Post", funcs.pfnGetStudioBlendingInterface_Post);
+
         return result ? 1 : 0;
     }
 
