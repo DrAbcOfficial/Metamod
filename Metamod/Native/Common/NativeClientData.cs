@@ -43,8 +43,7 @@ public struct NativeClientData : INativeStruct
 
     internal int deadflag;
 
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
-    internal byte[] physinfo;
+    internal unsafe fixed byte physinfo[256];
 
     // For mods
     internal int iuser1;

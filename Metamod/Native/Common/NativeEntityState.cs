@@ -40,10 +40,9 @@ public struct NativeEntityState : INativeStruct
     internal float animtime;
     internal float framerate;
     internal int body;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    internal byte[] controller;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    internal byte[]blending;
+
+    internal unsafe fixed byte controller[4];
+    internal unsafe fixed byte blending[4];
     internal NativeVector3f velocity;
 
     // Send bbox down to client for use during prediction.
