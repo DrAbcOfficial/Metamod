@@ -17,7 +17,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            _native.pfnLogConsole((NativePluginInfo*)Global.PluginInfo.NavitePtr, (byte*)strptr);
+            _native.pfnLogConsole((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -28,7 +28,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            _native.pfnLogMessage((NativePluginInfo*)Global.PluginInfo.NavitePtr, (byte*)strptr);
+            _native.pfnLogMessage((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -39,7 +39,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            _native.pfnLogError((NativePluginInfo*)Global.PluginInfo.NavitePtr, (byte*)strptr);
+            _native.pfnLogError((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -50,7 +50,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            _native.pfnLogDeveloper((NativePluginInfo*)Global.PluginInfo.NavitePtr, (byte*)strptr);
+            _native.pfnLogDeveloper((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -61,7 +61,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            _native.pfnCenterSay((NativePluginInfo*)Global.PluginInfo.NavitePtr, (byte*)strptr);
+            _native.pfnCenterSay((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -72,7 +72,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         nint strptr = Marshal.StringToHGlobalAnsi(str);
         unsafe
         {
-            _native.pfnCenterSayParms((NativePluginInfo*)Global.PluginInfo.NavitePtr, hudParams._native, (byte*)strptr);
+            _native.pfnCenterSayParms((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, hudParams._native, (byte*)strptr);
         }
         Marshal.FreeHGlobal(strptr);
     }
@@ -83,7 +83,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         unsafe
         {
 #pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
-            _native.pfnCallGameEntity((NativePluginInfo*)Global.PluginInfo.NavitePtr, (byte*)strptr, (NativeEntvars*)pev.GetUnmanagedPtr());
+            _native.pfnCallGameEntity((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, (NativeEntvars*)pev.GetUnmanagedPtr());
 #pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
         }
         Marshal.FreeHGlobal(strptr);
@@ -97,7 +97,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         unsafe
         {
 #pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
-            result = _native.pfnGetUserMsgID((NativePluginInfo*)Global.PluginInfo.NavitePtr, (byte*)strptr, (int*)temp);
+            result = _native.pfnGetUserMsgID((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, (int*)temp);
 #pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
         }
         size = Marshal.ReadInt32(temp);
@@ -112,7 +112,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         nint result = nint.Zero;
         unsafe
         {
-            result = _native.pfnGetUserMsgName((NativePluginInfo*)Global.PluginInfo.NavitePtr, msgid, (int*)temp);
+            result = _native.pfnGetUserMsgName((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, msgid, (int*)temp);
         }
         string? str = Marshal.PtrToStringUTF8(result);
         size = Marshal.ReadInt32(temp);
@@ -125,7 +125,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         nint result = nint.Zero;
         unsafe
         {
-            result = _native.pfnGetPluginPath((NativePluginInfo*)Global.PluginInfo.NavitePtr);
+            result = _native.pfnGetPluginPath((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr);
         }
         string? str = Marshal.PtrToStringUTF8(result);
         return str ?? string.Empty;
@@ -136,7 +136,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         nint result = nint.Zero;
         unsafe
         {
-            result = _native.pfnGetGameInfo((NativePluginInfo*)Global.PluginInfo.NavitePtr, type);
+            result = _native.pfnGetGameInfo((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, type);
         }
         string? str = Marshal.PtrToStringUTF8(result);
         return str ?? string.Empty;
@@ -148,7 +148,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         int res = 0;
         unsafe
         {
-            res = _native.pfnLoadPlugin((NativePluginInfo*)Global.PluginInfo.NavitePtr, (byte*)strptr, now, out pluginHandle);
+            res = _native.pfnLoadPlugin((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, now, out pluginHandle);
         }
         Marshal.FreeHGlobal(strptr);
         return res != 0;
@@ -160,7 +160,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         int res = 0;
         unsafe
         {
-            res = _native.pfnUnloadPlugin((NativePluginInfo*)Global.PluginInfo.NavitePtr, (byte*)strptr, now, reason);
+            res = _native.pfnUnloadPlugin((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (byte*)strptr, now, reason);
         }
         Marshal.FreeHGlobal(strptr);
         return res != 0;
@@ -171,7 +171,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         int res = 0;
         unsafe
         {
-            res = _native.pfnUnloadPluginByHandle((NativePluginInfo*)Global.PluginInfo.NavitePtr, handle, now, reason);
+            res = _native.pfnUnloadPluginByHandle((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, handle, now, reason);
         }
         return res != 0;
     }
@@ -182,7 +182,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         unsafe
         {
 #pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
-            result = _native.pfnIsQueryingClientCvar((NativePluginInfo*)Global.PluginInfo.NavitePtr, (NativeEdict*)player.GetUnmanagedPtr());
+            result = _native.pfnIsQueryingClientCvar((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr, (NativeEdict*)player.GetUnmanagedPtr());
 #pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
         }
         return Marshal.PtrToStringUTF8(result) ?? string.Empty;
@@ -193,7 +193,7 @@ public class MetaUtilFuncs(nint ptr) : BaseManaged<NativeMetaUtilFuncs>(ptr)
         int res = 0;
         unsafe
         {
-            res = _native.pfnMakeRequestID((NativePluginInfo*)Global.PluginInfo.NavitePtr);
+            res = _native.pfnMakeRequestID((NativePluginInfo*)MetaMod.PluginInfo.NavitePtr);
         }
         return res;
     }

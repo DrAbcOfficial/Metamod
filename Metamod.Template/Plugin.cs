@@ -40,38 +40,37 @@ public class Plugin : IPlugin
     }
     public bool Meta_Attach(PluginLoadTime now, MetaGlobals pMGlobals, GameDllFuncs pGamedllFuncs)
     {
-        Global.EngineFuncs.AddServerCommand("cs_fuck", () =>
+        MetaMod.EngineFuncs.AddServerCommand("cs_fuck", () =>
         {
-            Global.EngineFuncs.ServerPrint("Fuck World!\n");
-            Global.EngineFuncs.ServerPrint($"Plugin Info:\n" +
-                $"{(nameof(Global.PluginInfo.InterfaceVersion))}:{Global.PluginInfo.InterfaceVersion}\n" +
-                $"{(nameof(Global.PluginInfo.Name))}:{Global.PluginInfo.Name}\n" +
-                $"{(nameof(Global.PluginInfo.Version))}:{Global.PluginInfo.Version}\n" +
-                $"{(nameof(Global.PluginInfo.Date))}:{Global.PluginInfo.Date}\n" +
-                $"{(nameof(Global.PluginInfo.Author))}:{Global.PluginInfo.Author}\n" +
-                $"{(nameof(Global.PluginInfo.Url))}:{Global.PluginInfo.Url}\n" +
-                $"{(nameof(Global.PluginInfo.LogTag))}:{Global.PluginInfo.LogTag}\n" +
-                $"{(nameof(Global.PluginInfo.Loadable))}:{Global.PluginInfo.Loadable}\n" +
-                $"{(nameof(Global.PluginInfo.Unloadable))}:{Global.PluginInfo.Unloadable}\n");
+            MetaMod.EngineFuncs.ServerPrint("Fuck World!\n");
+            MetaMod.EngineFuncs.ServerPrint($"Plugin Info:\n" +
+                $"{(nameof(MetaMod.PluginInfo.InterfaceVersion))}:{MetaMod.PluginInfo.InterfaceVersion}\n" +
+                $"{(nameof(MetaMod.PluginInfo.Name))}:{MetaMod.PluginInfo.Name}\n" +
+                $"{(nameof(MetaMod.PluginInfo.Version))}:{MetaMod.PluginInfo.Version}\n" +
+                $"{(nameof(MetaMod.PluginInfo.Date))}:{MetaMod.PluginInfo.Date}\n" +
+                $"{(nameof(MetaMod.PluginInfo.Author))}:{MetaMod.PluginInfo.Author}\n" +
+                $"{(nameof(MetaMod.PluginInfo.Url))}:{MetaMod.PluginInfo.Url}\n" +
+                $"{(nameof(MetaMod.PluginInfo.LogTag))}:{MetaMod.PluginInfo.LogTag}\n" +
+                $"{(nameof(MetaMod.PluginInfo.Loadable))}:{MetaMod.PluginInfo.Loadable}\n" +
+                $"{(nameof(MetaMod.PluginInfo.Unloadable))}:{MetaMod.PluginInfo.Unloadable}\n");
         });
         DLLEvents _entityapiEvents = new();
         _entityapiEvents.GameInit += () =>
         {
-            Global.EngineFuncs.ServerPrint("Game Initialized!\n");
+            MetaMod.EngineFuncs.ServerPrint("Game Initialized!\n");
         };
         _entityapiEvents.ServerActivate += (edictList, edictCount, clientMax) =>
         {
-            Global.EngineFuncs.ServerPrint("Server Activated!\n");
+            MetaMod.EngineFuncs.ServerPrint("Server Activated!\n");
         };
-        MetaFunctions.InitEntityApi(_entityapiEvents);
         EngineEvents _engine = new();
         _engine.PrecacheModel += (model) =>
         {
-            Global.MetaGlobals.Result = MetaResult.MRES_IGNORED;
-            Global.EngineFuncs.ServerPrint($"Precached {model}!\n");
+            MetaMod.MetaGlobals.Result = MetaResult.MRES_IGNORED;
+            MetaMod.EngineFuncs.ServerPrint($"Precached {model}!\n");
             return 998;
         };
-        MetaFunctions.InitEngineFunctions(_engine);
+        MetaMod.RegisterEvents(entityApi: _entityapiEvents, engineFunctions: _engine);
         return true;
     }
 

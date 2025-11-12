@@ -35,7 +35,7 @@ public class StringHandle : BaseManaged<NativeStringHandle>
         }
         _ptr = ptr;
         _need_release = false;
-        _native.value = (int)(_ptr - Global.GlobalVars.StringBase);
+        _native.value = (int)(_ptr - MetaMod.GlobalVars.StringBase);
 
     }
     public void SetString(string str)
@@ -46,7 +46,7 @@ public class StringHandle : BaseManaged<NativeStringHandle>
         }
         _ptr = Marshal.StringToHGlobalAnsi(str);
         _need_release = true;
-        _native.value = (int)(_ptr - Global.GlobalVars.StringBase);
+        _native.value = (int)(_ptr - MetaMod.GlobalVars.StringBase);
     }
 
     public override string ToString()
@@ -56,7 +56,7 @@ public class StringHandle : BaseManaged<NativeStringHandle>
 
     public string GetString()
     {
-        nint ptr = Global.GlobalVars.StringBase + _native.value;
+        nint ptr = MetaMod.GlobalVars.StringBase + _native.value;
         return Marshal.PtrToStringUTF8(ptr) ?? string.Empty;
     }
 

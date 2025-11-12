@@ -1,13 +1,16 @@
-﻿using Metamod.Interface.Events;
+﻿using Metamod.Helper;
+using Metamod.Interface.Events;
 using Metamod.Interface.Events.NativeCaller;
 using Metamod.Native.Engine;
 using Metamod.Native.Game;
 using Metamod.Native.Metamod;
+using Metamod.Struct.Engine;
+using Metamod.Struct.Metamod;
 using System.Runtime.InteropServices;
 
 namespace Metamod.Interface;
 
-public class MetaFunctions
+public class MetaMod
 {
     #region 内部函数
     private static DLLEvents? _entityApi = null;
@@ -426,45 +429,59 @@ public class MetaFunctions
     #endregion
 
     #region 对外函数
-    public static void InitEntityApi(DLLEvents entityApi)
+    /// <summary>
+    /// 统一注册事件接口
+    /// </summary>
+    /// <param name="entityApi">实体API事件</param>
+    /// <param name="entityApiPost">实体API后置事件</param>
+    /// <param name="entityApi2">实体API2事件</param>
+    /// <param name="entityApi2Post">实体API2后置事件</param>
+    /// <param name="newDllFunctions">新DLL函数事件</param>
+    /// <param name="newDllFunctionsPost">新DLL函数后置事件</param>
+    /// <param name="engineFunctions">引擎函数事件</param>
+    /// <param name="engineFunctionsPost">引擎函数后置事件</param>
+    /// <param name="blendingInterface">混合接口事件</param>
+    /// <param name="blendingInterfacePost">混合接口后置事件</param>
+    public static void RegisterEvents(
+        DLLEvents? entityApi = null,
+        DLLEvents? entityApiPost = null,
+        DLLEvents? entityApi2 = null,
+        DLLEvents? entityApi2Post = null,
+        NewDLLEvents? newDllFunctions = null,
+        NewDLLEvents? newDllFunctionsPost = null,
+        EngineEvents? engineFunctions = null,
+        EngineEvents? engineFunctionsPost = null,
+        BlendingInterfaceEvent? blendingInterface = null,
+        BlendingInterfaceEvent? blendingInterfacePost = null)
     {
         _entityApi = entityApi;
-    }
-    public static void InitEntityApi_Post(DLLEvents entityApiPost)
-    {
         _entityApi_Post = entityApiPost;
-    }
-    public static void InitEntityApi2(DLLEvents entityApi2)
-    {
         _entityApi2 = entityApi2;
-    }
-    public static void InitEntityApi2_Post(DLLEvents entityApi2Post)
-    {
         _entityApi2_Post = entityApi2Post;
-    }
-    public static void InitNewDllFunctions(NewDLLEvents newDllFunctions)
-    {
         _newDllFunctions = newDllFunctions;
-    }
-    public static void InitNewDllFunctions_Post(NewDLLEvents newDllFunctionsPost)
-    {
         _newDLLFunctions_Post = newDllFunctionsPost;
-    }
-    public static void InitEngineFunctions(EngineEvents engineFunctions)
-    {
         _engineFunctions = engineFunctions;
-    }
-    public static void InitEngineFunctions_Post(EngineEvents engineFunctionsPost)
-    {
         _engineFunctions_Post = engineFunctionsPost;
-    }
-    public static void InitBlendingInterface(BlendingInterfaceEvent blendingInterface)
-    {
         _blendingInterface = blendingInterface;
-    }
-    public static void InitBlendingInterface_Post(BlendingInterfaceEvent blendingInterfacePost)
-    {
         _blendingInterface_Post = blendingInterfacePost;
     }
+    #endregion
+
+    #region 对外变量
+    public static EngineFuncs EngineFuncs => _engineFuncs ?? throw new NullReferenceException("EngineFuncs is NULL");
+    public static GlobalVars GlobalVars => _globalVars ?? throw new NullReferenceException("GlobalVars is NULL");
+    public static Utility Utility => _utility ?? throw new NullReferenceException("Utility is NULL");
+    public static MetaUtilFuncs MetaUtilFuncs => _metaUtilFuncs ?? throw new NullReferenceException("MetaUtilFuncs is NULL");
+    public static PluginInfo PluginInfo => _pluginInfo ?? throw new NullReferenceException("PluginInfo is NULL");
+    public static MetaGlobals MetaGlobals => _metaGlobals ?? throw new NullReferenceException("MetaGlobals is NULL");
+    public static GameDllFuncs GameDllFuncs => _gameDllFuncs ?? throw new NullReferenceException("GameDllFuncs is NULL");
+
+    internal static EngineFuncs? _engineFuncs;
+    internal static GlobalVars? _globalVars;
+    internal static Utility? _utility;
+    internal static MetaUtilFuncs? _metaUtilFuncs;
+    internal static PluginInfo? _pluginInfo;
+    internal static MetaGlobals? _metaGlobals;
+    internal static GameDllFuncs? _gameDllFuncs;
     #endregion
 }

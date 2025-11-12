@@ -26,9 +26,9 @@ public abstract class PluginEntry
     {
         EngineFuncs engineFuncs = new(pengfuncsFromEngine);
         GlobalVars globalVars = new(pGlobals);
-        Global._engineFuncs = engineFuncs;
-        Global._globalVars = globalVars;
-        Global._utility = new();
+        MetaMod._engineFuncs = engineFuncs;
+        MetaMod._globalVars = globalVars;
+        MetaMod._utility = new();
 
         var pinterface = GetPluginInterface();
         pinterface.GiveFnptrsToDll(engineFuncs, globalVars);
@@ -70,9 +70,9 @@ public abstract class PluginEntry
 
         var pinterface = GetPluginInterface();
         var pinfo = GetPluginInfo();
-        Global._pluginInfo = pinfo;
-        Global._metaUtilFuncs = new MetaUtilFuncs(pMetaUtilFuncs);
-        bool result = pinterface.Meta_Query(ifver, Global.MetaUtilFuncs);
+        MetaMod._pluginInfo = pinfo;
+        MetaMod._metaUtilFuncs = new MetaUtilFuncs(pMetaUtilFuncs);
+        bool result = pinterface.Meta_Query(ifver, MetaMod.MetaUtilFuncs);
         unsafe
         {
             nint ptr = Marshal.AllocHGlobal(sizeof(NativePluginInfo));
@@ -95,8 +95,8 @@ public abstract class PluginEntry
     {
         MetaGlobals metaGlobals = new(pMGlobals);
         GameDllFuncs gameDllFuncs = new(pGamedllFuncs);
-        Global._metaGlobals = metaGlobals;
-        Global._gameDllFuncs = gameDllFuncs;
+        MetaMod._metaGlobals = metaGlobals;
+        MetaMod._gameDllFuncs = gameDllFuncs;
         var pinterface = GetPluginInterface();
         bool result = pinterface.Meta_Attach(now, metaGlobals, gameDllFuncs);
 
@@ -109,7 +109,7 @@ public abstract class PluginEntry
             IntPtr fp = del == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(del);
             Marshal.WriteIntPtr(dest, fp);
         }
-        NativeMetaFuncs funcs = MetaFunctions.GetNative();
+        NativeMetaFuncs funcs = MetaMod.GetNative();
         // 替换调用方式，显式指定委托类型
         WriteDelegateField(pFunctionTable, "pfnGetEntityAPI", funcs.pfnGetEntityAPI);
         WriteDelegateField(pFunctionTable, "pfnGetEntityAPI_Post", funcs.pfnGetEntityAPI_Post);
@@ -121,7 +121,6 @@ public abstract class PluginEntry
         WriteDelegateField(pFunctionTable, "pfnGetEngineFunctions_Post", funcs.pfnGetEngineFunctions_Post);
         WriteDelegateField(pFunctionTable, "pfnGetStudioBlendingInterface", funcs.pfnGetStudioBlendingInterface);
         WriteDelegateField(pFunctionTable, "pfnGetStudioBlendingInterface_Post", funcs.pfnGetStudioBlendingInterface_Post);
-
         return result ? 1 : 0;
     }
 
