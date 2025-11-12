@@ -104,9 +104,9 @@ public abstract class PluginEntry
         // 本地方法：将托管 delegate 转换为函数指针并写入到宿主内存（按字段偏移）
         static void WriteDelegateField<TDelegate>(nint basePtr, string fieldName, TDelegate? del) where TDelegate : Delegate
         {
-            IntPtr offset = Marshal.OffsetOf<NativeMetaFuncs>(fieldName);
+            nint offset = Marshal.OffsetOf<NativeMetaFuncs>(fieldName);
             nint dest = (nint)(basePtr + offset.ToInt64());
-            IntPtr fp = del == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(del);
+            nint fp = del == null ? nint.Zero : Marshal.GetFunctionPointerForDelegate(del);
             Marshal.WriteIntPtr(dest, fp);
         }
         NativeMetaFuncs funcs = MetaMod.GetNative();

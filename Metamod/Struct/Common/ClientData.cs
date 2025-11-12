@@ -62,9 +62,7 @@ public class ClientData(nint ptr) : BaseManaged<NativeClientData>(ptr)
         OffVUser2 = Marshal.OffsetOf<NativeClientData>(nameof(NativeClientData.vuser2)).ToInt32();
         OffVUser3 = Marshal.OffsetOf<NativeClientData>(nameof(NativeClientData.vuser3)).ToInt32();
         OffVUser4 = Marshal.OffsetOf<NativeClientData>(nameof(NativeClientData.vuser4)).ToInt32();
-
         OffStartposInVector = Marshal.OffsetOf<NativeVector3f>(nameof(NativeVector3f.startpos)).ToInt32();
-
         OffViewModel = Marshal.OffsetOf<NativeClientData>(nameof(NativeClientData.viewmodel)).ToInt32();
         OffFlags = Marshal.OffsetOf<NativeClientData>(nameof(NativeClientData.flags)).ToInt32();
         OffWaterLevel = Marshal.OffsetOf<NativeClientData>(nameof(NativeClientData.waterlevel)).ToInt32();
@@ -100,212 +98,162 @@ public class ClientData(nint ptr) : BaseManaged<NativeClientData>(ptr)
         OffFUser4 = Marshal.OffsetOf<NativeClientData>(nameof(NativeClientData.fuser4)).ToInt32();
     }
 
-    // helper to get base unmanaged pointer without synchronization
-    private nint BasePtr => GetRawUnmanagedPtr();
-
-    private void EnsurePtr()
-    {
-        if (BasePtr == nint.Zero)
-            throw new InvalidOperationException("Underlying unmanaged pointer is zero.");
-    }
-
-    private static Vector3f ReadVectorFromPointer(IntPtr p)
-    {
-        if (p == IntPtr.Zero) return new Vector3f();
-        var x = BitConverter.Int32BitsToSingle(Marshal.ReadInt32(p, 0));
-        var y = BitConverter.Int32BitsToSingle(Marshal.ReadInt32(p, 4));
-        var z = BitConverter.Int32BitsToSingle(Marshal.ReadInt32(p, 8));
-        return new Vector3f(x, y, z);
-    }
-
-    private static void WriteVectorToPointer(IntPtr p, Vector3f v)
-    {
-        if (p == IntPtr.Zero) throw new InvalidOperationException("vector startpos pointer is null.");
-        Marshal.WriteInt32(p, 0, BitConverter.SingleToInt32Bits(v.X));
-        Marshal.WriteInt32(p, 4, BitConverter.SingleToInt32Bits(v.Y));
-        Marshal.WriteInt32(p, 8, BitConverter.SingleToInt32Bits(v.Z));
-    }
-
-    private IntPtr ReadVectorStartPtr(int vectorFieldOffset)
-    {
-        EnsurePtr();
-        return Marshal.ReadIntPtr(new IntPtr(BasePtr), vectorFieldOffset + OffStartposInVector);
-    }
-
-    private Vector3f ReadVectorField(int vectorFieldOffset)
-    {
-        var start = ReadVectorStartPtr(vectorFieldOffset);
-        return ReadVectorFromPointer(start);
-    }
-
-    private void WriteVectorField(int vectorFieldOffset, Vector3f v)
-    {
-        var start = ReadVectorStartPtr(vectorFieldOffset);
-        WriteVectorToPointer(start, v);
-    }
-
-    // Properties — 直接按偏移读写非托管内存
-
     public Vector3f Origin
     {
-        get => ReadVectorField(OffOrigin);
-        set => WriteVectorField(OffOrigin, value);
+        get => GetVector3fField(OffOrigin);
     }
 
     public Vector3f Velocity
     {
-        get => ReadVectorField(OffVelocity);
-        set => WriteVectorField(OffVelocity, value);
+        get => GetVector3fField(OffVelocity);
     }
 
     public int ViewModel
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffViewModel); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffViewModel, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffViewModel); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffViewModel, value); }
     }
 
     public Vector3f PunchAngle
     {
-        get => ReadVectorField(OffPunchAngle);
-        set => WriteVectorField(OffPunchAngle, value);
+        get => GetVector3fField(OffPunchAngle);
     }
 
     public int Flags
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffFlags); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffFlags, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffFlags); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffFlags, value); }
     }
 
     public int WaterLevel
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffWaterLevel); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffWaterLevel, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffWaterLevel); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffWaterLevel, value); }
     }
 
     public int WaterType
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffWaterType); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffWaterType, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffWaterType); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffWaterType, value); }
     }
 
     public Vector3f ViewOfs
     {
-        get => ReadVectorField(OffViewOfs);
-        set => WriteVectorField(OffViewOfs, value);
+        get => GetVector3fField(OffViewOfs);
     }
 
     public float Health
     {
-        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new IntPtr(BasePtr), OffHealth)); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffHealth, BitConverter.SingleToInt32Bits(value)); }
+        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new nint(BasePtr), OffHealth)); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffHealth, BitConverter.SingleToInt32Bits(value)); }
     }
 
     public int BInDuck
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffBInDuck); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffBInDuck, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffBInDuck); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffBInDuck, value); }
     }
 
     public int Weapons
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffWeapons); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffWeapons, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffWeapons); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffWeapons, value); }
     }
 
     public int FlTimeStepSound
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffFlTimeStepSound); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffFlTimeStepSound, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffFlTimeStepSound); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffFlTimeStepSound, value); }
     }
 
     public int FlDuckTime
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffFlDuckTime); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffFlDuckTime, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffFlDuckTime); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffFlDuckTime, value); }
     }
 
     public int FlSwimTime
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffFlSwimTime); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffFlSwimTime, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffFlSwimTime); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffFlSwimTime, value); }
     }
 
     public int WaterJumpTime
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffWaterJumpTime); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffWaterJumpTime, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffWaterJumpTime); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffWaterJumpTime, value); }
     }
 
     public float MaxSpeed
     {
-        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new IntPtr(BasePtr), OffMaxSpeed)); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffMaxSpeed, BitConverter.SingleToInt32Bits(value)); }
+        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new nint(BasePtr), OffMaxSpeed)); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffMaxSpeed, BitConverter.SingleToInt32Bits(value)); }
     }
 
     public float Fov
     {
-        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new IntPtr(BasePtr), OffFov)); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffFov, BitConverter.SingleToInt32Bits(value)); }
+        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new nint(BasePtr), OffFov)); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffFov, BitConverter.SingleToInt32Bits(value)); }
     }
 
     public int WeaponAnim
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffWeaponAnim); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffWeaponAnim, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffWeaponAnim); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffWeaponAnim, value); }
     }
 
     public int MId
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffMId); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffMId, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffMId); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffMId, value); }
     }
 
     public int AmmoShells
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffAmmoShells); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffAmmoShells, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffAmmoShells); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffAmmoShells, value); }
     }
 
     public int AmmoNails
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffAmmoNails); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffAmmoNails, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffAmmoNails); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffAmmoNails, value); }
     }
 
     public int AmmoCells
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffAmmoCells); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffAmmoCells, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffAmmoCells); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffAmmoCells, value); }
     }
 
     public int AmmoRockets
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffAmmoRockets); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffAmmoRockets, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffAmmoRockets); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffAmmoRockets, value); }
     }
 
     public float MFlNextAttack
     {
-        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new IntPtr(BasePtr), OffMFlNextAttack)); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffMFlNextAttack, BitConverter.SingleToInt32Bits(value)); }
+        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new nint(BasePtr), OffMFlNextAttack)); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffMFlNextAttack, BitConverter.SingleToInt32Bits(value)); }
     }
 
     public int TfState
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffTfState); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffTfState, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffTfState); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffTfState, value); }
     }
 
     public int PushMsec
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffPushMsec); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffPushMsec, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffPushMsec); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffPushMsec, value); }
     }
 
     public int DeadFlag
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffDeadFlag); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffDeadFlag, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffDeadFlag); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffDeadFlag, value); }
     }
 
     public string PhysInfo
@@ -314,7 +262,7 @@ public class ClientData(nint ptr) : BaseManaged<NativeClientData>(ptr)
         {
             EnsurePtr();
             var buf = new byte[PhysInfoSize];
-            Marshal.Copy(IntPtr.Add(new IntPtr(BasePtr), OffPhysInfo), buf, 0, PhysInfoSize);
+            Marshal.Copy(nint.Add(new nint(BasePtr), OffPhysInfo), buf, 0, PhysInfoSize);
             return Encoding.UTF8.GetString(buf).TrimEnd('\0');
         }
         set
@@ -324,80 +272,76 @@ public class ClientData(nint ptr) : BaseManaged<NativeClientData>(ptr)
             var buf = new byte[PhysInfoSize];
             Array.Clear(buf, 0, buf.Length);
             Array.Copy(bytes, buf, Math.Min(bytes.Length, buf.Length));
-            Marshal.Copy(buf, 0, IntPtr.Add(new IntPtr(BasePtr), OffPhysInfo), PhysInfoSize);
+            Marshal.Copy(buf, 0, nint.Add(new nint(BasePtr), OffPhysInfo), PhysInfoSize);
         }
     }
 
     public int IUser1
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffIUser1); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffIUser1, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffIUser1); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffIUser1, value); }
     }
 
     public int IUser2
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffIUser2); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffIUser2, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffIUser2); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffIUser2, value); }
     }
 
     public int IUser3
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffIUser3); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffIUser3, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffIUser3); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffIUser3, value); }
     }
 
     public int IUser4
     {
-        get { EnsurePtr(); return Marshal.ReadInt32(new IntPtr(BasePtr), OffIUser4); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffIUser4, value); }
+        get { EnsurePtr(); return Marshal.ReadInt32(new nint(BasePtr), OffIUser4); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffIUser4, value); }
     }
 
     public float FUser1
     {
-        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new IntPtr(BasePtr), OffFUser1)); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffFUser1, BitConverter.SingleToInt32Bits(value)); }
+        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new nint(BasePtr), OffFUser1)); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffFUser1, BitConverter.SingleToInt32Bits(value)); }
     }
 
     public float FUser2
     {
-        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new IntPtr(BasePtr), OffFUser2)); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffFUser2, BitConverter.SingleToInt32Bits(value)); }
+        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new nint(BasePtr), OffFUser2)); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffFUser2, BitConverter.SingleToInt32Bits(value)); }
     }
 
     public float FUser3
     {
-        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new IntPtr(BasePtr), OffFUser3)); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffFUser3, BitConverter.SingleToInt32Bits(value)); }
+        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new nint(BasePtr), OffFUser3)); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffFUser3, BitConverter.SingleToInt32Bits(value)); }
     }
 
     public float FUser4
     {
-        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new IntPtr(BasePtr), OffFUser4)); }
-        set { EnsurePtr(); Marshal.WriteInt32(new IntPtr(BasePtr), OffFUser4, BitConverter.SingleToInt32Bits(value)); }
+        get { EnsurePtr(); return BitConverter.Int32BitsToSingle(Marshal.ReadInt32(new nint(BasePtr), OffFUser4)); }
+        set { EnsurePtr(); Marshal.WriteInt32(new nint(BasePtr), OffFUser4, BitConverter.SingleToInt32Bits(value)); }
     }
 
     public Vector3f VUser1
     {
-        get => ReadVectorField(OffVUser1);
-        set => WriteVectorField(OffVUser1, value);
+        get => GetVector3fField(OffVUser1);
     }
 
     public Vector3f VUser2
     {
-        get => ReadVectorField(OffVUser2);
-        set => WriteVectorField(OffVUser2, value);
+        get => GetVector3fField(OffVUser2);
     }
 
     public Vector3f VUser3
     {
-        get => ReadVectorField(OffVUser3);
-        set => WriteVectorField(OffVUser3, value);
+        get => GetVector3fField(OffVUser3);
     }
 
     public Vector3f VUser4
     {
-        get => ReadVectorField(OffVUser4);
-        set => WriteVectorField(OffVUser4, value);
+        get => GetVector3fField(OffVUser4);
     }
 
     public override string ToString()

@@ -98,7 +98,7 @@ public struct NativeMetaUtilFuncs : INativeStruct
     internal unsafe delegate int UnloadPluginByHandleDelegate(NativePluginInfo* plid, nint plugin_handle, PluginLoadTime now, PluginUnloadReason reason);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal unsafe delegate IntPtr IsQueryingClientCvarDelegate(NativePluginInfo* plid, NativeEdict* player);
+    internal unsafe delegate nint IsQueryingClientCvarDelegate(NativePluginInfo* plid, NativeEdict* player);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal unsafe delegate int MakeRequestIDDelegate(NativePluginInfo* plid);

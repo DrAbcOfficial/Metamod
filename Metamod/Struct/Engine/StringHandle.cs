@@ -6,7 +6,7 @@ namespace Metamod.Struct.Engine;
 
 public class StringHandle : BaseManaged<NativeStringHandle>
 {
-    private nint _ptr = IntPtr.Zero;
+    private nint _ptr = nint.Zero;
     private bool _need_release = false;
 
     internal StringHandle() : base() 

@@ -112,7 +112,7 @@ internal static class <#= cls #>NativeCaller
         unsafe
         {
             byte* ppReject = (byte*)szRejectReason;
-            Marshal.Copy(rejectBytes, 0, (IntPtr)ppReject, rejectBytes.Length);
+            Marshal.Copy(rejectBytes, 0, (nint)ppReject, rejectBytes.Length);
             ppReject[rejectBytes.Length] = 0;
         }
         return result ? QBoolean.TRUE : QBoolean.FALSE;

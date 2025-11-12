@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using Metamod.Struct.Common;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -27,10 +28,25 @@ public abstract class BaseManaged<[DynamicallyAccessedMembers(DynamicallyAccesse
         SetupFromPtr(ptr);
     }
 
-    // 确保分配了非托管内存（如果当前没有），并把当前托管数据写入非托管内存（第一次分配时）
-    private void EnsureAllocated()
+    protected nint BasePtr => GetRawUnmanagedPtr();
+
+    protected void EnsurePtr()
     {
-        if (_ptr == IntPtr.Zero)
+        if (BasePtr == nint.Zero)
+            throw new InvalidOperationException("Underlying unmanaged pointer is zero.");
+    }
+
+    protected Vector3f GetVector3fField(int offset)
+    {
+        EnsurePtr();
+        nint fieldPtr = BasePtr + offset;
+        return new Vector3f(fieldPtr);
+    }
+
+    // 确保分配了非托管内存（如果当前没有），并把当前托管数据写入非托管内存（第一次分配时）
+    internal void EnsureAllocated()
+    {
+        if (_ptr == nint.Zero)
         {
             var size = Marshal.SizeOf<T>();
             _ptr = Marshal.AllocHGlobal(size);
@@ -49,7 +65,7 @@ public abstract class BaseManaged<[DynamicallyAccessedMembers(DynamicallyAccesse
         return _ptr;
     }
 
-    // 新增：仅返回内部保存的非托管指针，不做任何写回（用于只读/按字段直接访问）
+    // 返回内部保存的非托管指针，不做任何写回（用于只读/按字段直接访问）
     internal nint GetRawUnmanagedPtr()
     {
         return _ptr;
@@ -66,7 +82,7 @@ public abstract class BaseManaged<[DynamicallyAccessedMembers(DynamicallyAccesse
     // 从非托管内存读取最新值到托管副本
     internal void RefreshFromUnmanaged()
     {
-        if (_ptr == IntPtr.Zero)
+        if (_ptr == nint.Zero)
             throw new InvalidOperationException("No unmanaged pointer available to refresh from.");
         _native = Marshal.PtrToStructure<T>(_ptr);
         _fromNative = true;
@@ -98,7 +114,7 @@ public abstract class BaseManaged<[DynamicallyAccessedMembers(DynamicallyAccesse
 
     internal void SetupFromPtr(nint ptr)
     {
-        if (ptr == IntPtr.Zero)
+        if (ptr == nint.Zero)
             throw new ArgumentException("ptr cannot be zero.", nameof(ptr));
         _ptr = ptr;
         _native = Marshal.PtrToStructure<T>(ptr);
@@ -107,7 +123,7 @@ public abstract class BaseManaged<[DynamicallyAccessedMembers(DynamicallyAccesse
 
     ~BaseManaged()
     {
-        if (!_fromNative && _ptr != IntPtr.Zero)
+        if (!_fromNative && _ptr != nint.Zero)
             Marshal.FreeHGlobal(_ptr);
     }
 }
