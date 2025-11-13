@@ -1,10 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>DrAbc.MetaMod</PackageId>
+    <Title>MetaMod</Title>
+    <Authors>Dr.Abc</Authors>
+    <Product>MetaMod</Product>
+    <Description>Build MetaMod(GoldSrc) plugin with .net 9</Description>
+    <RepositoryUrl>https://github.com/DrAbcOfficial/Metamod.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>native;dll;game;GoldSrc;plugin;metamod;Half-Life;AOT</PackageTags>
+    <PackageOutputPath>./nuget</PackageOutputPath>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <Version>0.0.1-alpha</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
