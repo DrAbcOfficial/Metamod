@@ -18,7 +18,7 @@ jobs:
           dotnet-version: '8.0.x'
   
       - name: Publish dotnet lib
-        run: cd ${{github.workspace}}/Metamod && dotnet pack -c Release
+        run: cd ${{github.workspace}}/Metamod && dotnet publish -c Release && dotnet pack -c Release
       
       - name: Upload dotnet lib
         uses: actions/upload-artifact@v4
