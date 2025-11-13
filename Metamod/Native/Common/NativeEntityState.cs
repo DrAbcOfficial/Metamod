@@ -62,7 +62,7 @@ public struct NativeEntityState : INativeStruct
     internal int team;
     internal int playerclass;
     internal int health;
-    internal QBoolean spectator;
+    internal int spectator;
     internal int weaponmodel;
     internal int gaitsequence;
     // If standing on conveyor, e.g.

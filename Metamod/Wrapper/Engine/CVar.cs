@@ -18,6 +18,7 @@ public class CVar : BaseNativeWrapper<NativeCVar>
         PrintableOnly = 1 << 7,
         Unlogged = 1 << 8,
     }
+    internal unsafe CVar(nint ptr) : this((NativeCVar*)ptr) { }
     internal unsafe CVar(NativeCVar* native) : base(native) { }
     public string Name
     {

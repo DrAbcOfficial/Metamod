@@ -6,12 +6,12 @@ namespace Metamod.Native.Engine.PM;
 [StructLayout(LayoutKind.Sequential)]
 public struct NativePhySent : INativeStruct
 {
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
-    internal byte[] name;             // Name of model, or "player" or "world".
+    internal unsafe fixed byte name[32];             // Name of model, or "player" or "world".
     internal int player;
     internal NativeVector3f origin;               // Model's origin in world coordinates.
-    internal nint model;               // only for bsp models
-    internal nint studiomodel;         // SOLID_BBOX, but studio clip intersections.
+    //TODO: Finish model_t
+    internal /* model_s */ nint model;               // only for bsp models
+    internal /* model_s */ nint studiomodel;         // SOLID_BBOX, but studio clip intersections.
     internal NativeVector3f mins, maxs;            // only for non-bsp models
     internal int info;                 // For client or server to use to identify (index into edicts or cl_entities)
     internal NativeVector3f angles;               // rotated entities need this info for hull testing to work.
@@ -23,10 +23,8 @@ public struct NativePhySent : INativeStruct
     // Complex collision detection.
     internal float frame;
     internal int sequence;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    internal byte[] controller;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-    internal byte[] blending;
+    internal unsafe fixed byte controller[4];
+    internal unsafe fixed byte blending[2];
 
     internal int movetype;
     internal int takedamage;

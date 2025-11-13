@@ -1,5 +1,5 @@
 ﻿using Metamod.Native.Game;
-using Metamod.Struct.Engine;
+using Metamod.Wrapper.Engine;
 using System.Runtime.InteropServices;
 
 namespace Metamod.Interface.Events;

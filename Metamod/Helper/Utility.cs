@@ -1,6 +1,4 @@
-﻿using Metamod.Struct.Engine;
-
-namespace Metamod.Helper;
+﻿namespace Metamod.Helper;
 
 public class Utility
 {

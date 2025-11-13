@@ -1,14 +1,14 @@
 ﻿using Metamod.Enum.Metamod;
 using Metamod.Interface;
 using Metamod.Interface.Events;
-using Metamod.Struct.Engine;
-using Metamod.Struct.Metamod;
+using Metamod.Wrapper.Engine;
+using Metamod.Wrapper.Metamod;
 
 namespace Metamod.Template;
 
 public class Plugin : IPlugin
 {
-    private readonly static PluginInfo _pluginInfo = new()
+    private readonly static MetaPluginInfo _pluginInfo = new()
     {
         InterfaceVersion = InterfaceVersion.V5_16,
         Name = "C# Fuck World",
@@ -20,7 +20,7 @@ public class Plugin : IPlugin
         Loadable = PluginLoadTime.PT_ANYTIME,
         Unloadable = PluginLoadTime.PT_ANYTIME
     };
-    public PluginInfo GetPluginInfo()
+    public MetaPluginInfo GetPluginInfo()
     {
         return _pluginInfo;
     }
@@ -32,13 +32,13 @@ public class Plugin : IPlugin
     {
 
     }
-    public bool Meta_Query(InterfaceVersion interfaceVersion, MetaUtilFuncs pMetaUtilFuncs)
+    public bool Meta_Query(InterfaceVersion interfaceVersion, MetaUtilFunctions pMetaUtilFuncs)
     {
         if (interfaceVersion != _pluginInfo.InterfaceVersion)
             return false;
         return true;
     }
-    public bool Meta_Attach(PluginLoadTime now, MetaGlobals pMGlobals, GameDllFuncs pGamedllFuncs)
+    public bool Meta_Attach(PluginLoadTime now, MetaGlobals pMGlobals, MetaGameDLLFunctions pGamedllFuncs)
     {
         MetaMod.EngineFuncs.AddServerCommand("cs_fuck", () =>
         {

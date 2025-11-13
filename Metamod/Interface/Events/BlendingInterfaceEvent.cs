@@ -1,5 +1,5 @@
-﻿using Metamod.Struct.Common;
-using Metamod.Struct.Engine;
+﻿using Metamod.Wrapper.Common;
+using Metamod.Wrapper.Engine;
 
 namespace Metamod.Interface.Events;
 

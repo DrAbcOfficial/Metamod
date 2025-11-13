@@ -12,9 +12,9 @@ using Metamod.Native.Common;
 using Metamod.Native.Engine.PM;
 using Metamod.Native.Engine;
 using Metamod.Native.Game;
-using Metamod.Struct.Common;
-using Metamod.Struct.Engine;
-using Metamod.Struct.Engine.PM;
+using Metamod.Wrapper.Common;
+using Metamod.Wrapper.Engine;
+using Metamod.Wrapper.Engine.PM;
 using static Metamod.Native.Game.NativeDllFuncs;
 using System.Runtime.InteropServices;
 using Metamod.Enum.Metamod;
@@ -115,7 +115,7 @@ internal static class <#= cls #>NativeCaller
             Marshal.Copy(rejectBytes, 0, (nint)ppReject, rejectBytes.Length);
             ppReject[rejectBytes.Length] = 0;
         }
-        return result ? QBoolean.TRUE : QBoolean.FALSE;
+        return result ? 1 : 0;
     };
 
     internal static NativeClientDisconnectDelegate nativeOnClientDisconnectCaller = (nint pEntity) =>
@@ -217,9 +217,9 @@ internal static class <#= cls #>NativeCaller
         _dllEvents?.InvokeSysError(err);
     };
 
-    internal static NativePMMoveDelegate nativeOnPM_MoveCaller = (nint pm, QBoolean server) =>
+    internal static NativePMMoveDelegate nativeOnPM_MoveCaller = (nint pm, int server) =>
     {
-        _dllEvents?.InvokePM_Move(new PlayerMove(pm), server == QBoolean.TRUE);
+        _dllEvents?.InvokePM_Move(new PlayerMove(pm), server == 1);
     };
 
     internal static NativePMInitDelegate nativeOnPM_InitCaller = (nint pm) =>

@@ -1,7 +1,7 @@
 ﻿using Metamod.Enum.Metamod;
 using Metamod.Native.Metamod;
-using Metamod.Struct.Engine;
-using Metamod.Struct.Metamod;
+using Metamod.Wrapper.Engine;
+using Metamod.Wrapper.Metamod;
 using System.Runtime.InteropServices;
 
 namespace Metamod.Interface;
@@ -15,7 +15,7 @@ public abstract class PluginEntry
             throw new NullReferenceException(nameof(Interface));
         return Interface;
     }
-    public static PluginInfo GetPluginInfo()
+    public static MetaPluginInfo GetPluginInfo()
     {
         if (Interface == null)
             throw new NullReferenceException(nameof(Interface));
@@ -29,9 +29,6 @@ public abstract class PluginEntry
         MetaMod._engineFuncs = engineFuncs;
         MetaMod._globalVars = globalVars;
         MetaMod._utility = new();
-
-        var pinterface = GetPluginInterface();
-        pinterface.GiveFnptrsToDll(engineFuncs, globalVars);
     }
 
     protected static void Native_Meta_Init()
@@ -71,7 +68,7 @@ public abstract class PluginEntry
         var pinterface = GetPluginInterface();
         var pinfo = GetPluginInfo();
         MetaMod._pluginInfo = pinfo;
-        MetaMod._metaUtilFuncs = new MetaUtilFuncs(pMetaUtilFuncs);
+        MetaMod._metaUtilFuncs = new MetaUtilFunctions(pMetaUtilFuncs);
         bool result = pinterface.Meta_Query(ifver, MetaMod.MetaUtilFuncs);
         unsafe
         {
@@ -94,13 +91,13 @@ public abstract class PluginEntry
     protected static unsafe int Native_Meta_Attach(PluginLoadTime now, nint pFunctionTable, nint pMGlobals, nint pGamedllFuncs)
     {
         MetaGlobals metaGlobals = new(pMGlobals);
-        GameDllFuncs gameDllFuncs = new(pGamedllFuncs);
+        MetaGameDLLFunctions gameDllFuncs = new(pGamedllFuncs);
         MetaMod._metaGlobals = metaGlobals;
         MetaMod._gameDllFuncs = gameDllFuncs;
         var pinterface = GetPluginInterface();
         bool result = pinterface.Meta_Attach(now, metaGlobals, gameDllFuncs);
 
-     
+
         // 本地方法：将托管 delegate 转换为函数指针并写入到宿主内存（按字段偏移）
         static void WriteDelegateField<TDelegate>(nint basePtr, string fieldName, TDelegate? del) where TDelegate : Delegate
         {

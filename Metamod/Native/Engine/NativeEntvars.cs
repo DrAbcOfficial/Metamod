@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace Metamod.Native.Engine;
 
-#pragma warning disable CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct NativeEntvars : INativeStruct
 {
@@ -67,10 +66,8 @@ public unsafe struct NativeEntvars : INativeStruct
     internal float frame;            // % playback position in animation sequences (0..255)
     internal float animtime;     // world time when frame was set
     internal float framerate;        // animation playback rate (-8x to 8x)
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    internal byte[] controller; // bone controller setting (0..255)
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-    internal byte[] blending;   // blending amount between sub-sequences (0..255)
+    internal unsafe fixed byte controller[4]; // bone controller setting (0..255)
+    internal unsafe fixed byte blending[2];   // blending amount between sub-sequences (0..255)
 
     internal float scale;            // sprite rendering scale (0..255)
 
@@ -167,9 +164,8 @@ public unsafe struct NativeEntvars : INativeStruct
     internal NativeVector3f vuser2;
     internal NativeVector3f vuser3;
     internal NativeVector3f vuser4;
-    internal NativeEdict* euser1;
-    internal NativeEdict* euser2;
-    internal NativeEdict* euser3;
-    internal NativeEdict* euser4;
+    internal unsafe NativeEdict* euser1;
+    internal unsafe NativeEdict* euser2;
+    internal unsafe NativeEdict* euser3;
+    internal unsafe NativeEdict* euser4;
 };
-#pragma warning restore CS8500 // 这会获取托管类型的地址、获取其大小或声明指向它的指针

@@ -1,7 +1,7 @@
 ﻿using Metamod.Enum.Common;
 using Metamod.Native.Common;
-using Metamod.Struct.Common;
-using Metamod.Struct.Engine;
+using Metamod.Wrapper.Common;
+using Metamod.Wrapper.Engine;
 
 namespace Metamod.Interface.Events;
 
@@ -447,7 +447,7 @@ public class EngineEvents
     internal int InvokeGetPlayerUserId(Edict e) => GetPlayerUserId != null ? GetPlayerUserId.Invoke(e) : 0;
     internal void InvokeBuildSoundMsg(Edict entity, int channel, string sample, float volume, float attenuation, int fFlags, int pitch, int msg_dest, int msg_type, Vector3f pOrigin, Edict ed) => BuildSoundMsg?.Invoke(entity, channel, sample, volume, attenuation, fFlags, pitch, msg_dest, msg_type, pOrigin, ed);
     internal bool InvokeIsDedicatedServer() => IsDedicatedServer != null ? IsDedicatedServer.Invoke() : false;
-    internal CVar InvokeCVarGetPointer(string szVarName) => CVarGetPointer != null ? CVarGetPointer.Invoke(szVarName) : new CVar();
+    internal CVar? InvokeCVarGetPointer(string szVarName) => CVarGetPointer != null ? CVarGetPointer.Invoke(szVarName) : null;
     internal uint InvokeGetPlayerWONId(Edict e) => GetPlayerWONId != null ? GetPlayerWONId.Invoke(e) : 0u;
     internal void InvokeInfo_RemoveKey(ref string s, string key) => Info_RemoveKey?.Invoke(ref s, key);
     internal string InvokeGetPhysicsKeyValue(Edict ent, string key) => GetPhysicsKeyValue != null ? GetPhysicsKeyValue.Invoke(ent, key) : string.Empty;

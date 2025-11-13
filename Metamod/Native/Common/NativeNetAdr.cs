@@ -6,10 +6,8 @@ namespace Metamod.Native.Common;
 [StructLayout(LayoutKind.Sequential)]
 public struct NativeNetAdr : INativeStruct
 {
-    internal NetAdrType type;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    internal byte[] ip;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
-    internal byte[] ipx;
+    internal int type;
+    internal unsafe fixed byte ip[4];
+    internal unsafe fixed byte ipx[10];
     internal ushort port;
 }

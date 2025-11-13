@@ -4,8 +4,8 @@ using Metamod.Interface.Events.NativeCaller;
 using Metamod.Native.Engine;
 using Metamod.Native.Game;
 using Metamod.Native.Metamod;
-using Metamod.Struct.Engine;
-using Metamod.Struct.Metamod;
+using Metamod.Wrapper.Engine;
+using Metamod.Wrapper.Metamod;
 using System.Runtime.InteropServices;
 
 namespace Metamod.Interface;
@@ -471,17 +471,17 @@ public class MetaMod
     public static EngineFuncs EngineFuncs => _engineFuncs ?? throw new NullReferenceException("EngineFuncs is NULL");
     public static GlobalVars GlobalVars => _globalVars ?? throw new NullReferenceException("GlobalVars is NULL");
     public static Utility Utility => _utility ?? throw new NullReferenceException("Utility is NULL");
-    public static MetaUtilFuncs MetaUtilFuncs => _metaUtilFuncs ?? throw new NullReferenceException("MetaUtilFuncs is NULL");
-    public static PluginInfo PluginInfo => _pluginInfo ?? throw new NullReferenceException("PluginInfo is NULL");
+    public static MetaUtilFunctions MetaUtilFuncs => _metaUtilFuncs ?? throw new NullReferenceException("MetaUtilFuncs is NULL");
+    public static MetaPluginInfo PluginInfo => _pluginInfo ?? throw new NullReferenceException("PluginInfo is NULL");
     public static MetaGlobals MetaGlobals => _metaGlobals ?? throw new NullReferenceException("MetaGlobals is NULL");
-    public static GameDllFuncs GameDllFuncs => _gameDllFuncs ?? throw new NullReferenceException("GameDllFuncs is NULL");
+    public static MetaGameDLLFunctions GameDllFuncs => _gameDllFuncs ?? throw new NullReferenceException("GameDllFuncs is NULL");
 
     internal static EngineFuncs? _engineFuncs;
     internal static GlobalVars? _globalVars;
     internal static Utility? _utility;
-    internal static MetaUtilFuncs? _metaUtilFuncs;
-    internal static PluginInfo? _pluginInfo;
+    internal static MetaUtilFunctions? _metaUtilFuncs;
+    internal static MetaPluginInfo? _pluginInfo;
     internal static MetaGlobals? _metaGlobals;
-    internal static GameDllFuncs? _gameDllFuncs;
+    internal static MetaGameDLLFunctions? _gameDllFuncs;
     #endregion
 }

@@ -3,10 +3,10 @@
 namespace Metamod.Native.Engine;
 
 [StructLayout(LayoutKind.Sequential)]
-public unsafe struct NativeKeyValueData : INativeStruct
+public struct NativeKeyValueData : INativeStruct
 {
-    internal byte* szClassName;  // in: entity classname
-    internal byte* szKeyName;        // in: name of key
-    internal byte* szValue;      // in: value of key
+    internal nint szClassName;  // in: entity classname
+    internal nint szKeyName;        // in: name of key
+    internal nint szValue;      // in: value of key
     internal int fHandled;		// out: DLL sets to true if key-value pair was understood
 }

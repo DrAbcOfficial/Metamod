@@ -11,6 +11,7 @@ public class Vector3f : BaseNativeWrapper<NativeVector3f>
         Z = z;
     }
     public Vector3f() : base() { }
+    internal unsafe Vector3f(nint ptr) : this((NativeVector3f*)ptr) { }
     internal unsafe Vector3f(NativeVector3f* nativePtr, bool ownsPointer = false) : base(nativePtr, ownsPointer){}
 
     /// <summary>

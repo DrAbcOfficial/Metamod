@@ -11,8 +11,8 @@
 
 using Metamod.Native.Common;
 using Metamod.Native.Engine;
-using Metamod.Struct.Common;
-using Metamod.Struct.Engine;
+using Metamod.Wrapper.Common;
+using Metamod.Wrapper.Engine;
 using Metamod.Enum.Common;
 using Metamod.Interface.Events;
 using static Metamod.Native.Engine.NativeEngineFuncs;
@@ -103,7 +103,7 @@ internal static class <#= cls #>NativeCaller
     internal static NativeFindEntityByStringDelegate nativeFindEntityByStringCaller = (nint pEdictStartSearchAfter, nint pszField, nint pszValue) =>
     {
         var res = _engineEvents?.InvokeFindEntityByString(new Edict(pEdictStartSearchAfter), Marshal.PtrToStringUTF8(pszField) ?? string.Empty, Marshal.PtrToStringUTF8(pszValue) ?? string.Empty);
-        return res?.GetUnmanagedPtr() ?? 0;
+        return res?.GetPointer() ?? 0;
     };
 
     internal static NativeGetEntityIllumDelegate nativeGetEntityIllumCaller = (nint pEnt) =>
@@ -114,19 +114,19 @@ internal static class <#= cls #>NativeCaller
     internal static NativeFindEntityInSphereDelegate nativeFindEntityInSphereCaller = (nint pEdictStartSearchAfter, nint org, float rad) =>
     {
         var res = _engineEvents?.InvokeFindEntityInSphere(new Edict(pEdictStartSearchAfter), new Vector3f(org), rad);
-        return res?.GetUnmanagedPtr() ?? 0;
+        return res?.GetPointer() ?? 0;
     };
 
     internal static NativeFindClientInPVSDelegate nativeFindClientInPVSCaller = (nint pEdict) =>
     {
         var res = _engineEvents?.InvokeFindClientInPVS(new Edict(pEdict));
-        return res?.GetUnmanagedPtr() ?? 0;
+        return res?.GetPointer() ?? 0;
     };
 
     internal static NativeEntitiesInPVSDelegate nativeEntitiesInPVSCaller = (nint pplayer) =>
     {
         var res = _engineEvents?.InvokeEntitiesInPVS(new Edict(pplayer));
-        return res?.GetUnmanagedPtr() ?? 0;
+        return res?.GetPointer() ?? 0;
     };
 
     internal static NativeMakeVectorsDelegate nativeMakeVectorsCaller = (nint rgflVector) =>
@@ -142,7 +142,7 @@ internal static class <#= cls #>NativeCaller
     internal static NativeCreateEntityDelegate nativeCreateEntityCaller = () =>
     {
         var e = _engineEvents?.InvokeCreateEntity();
-        return e?.GetUnmanagedPtr() ?? 0;
+        return e?.GetPointer() ?? 0;
     };
 
     internal static NativeRemoveEntityDelegate nativeRemoveEntityCaller = (nint e) =>
@@ -153,7 +153,7 @@ internal static class <#= cls #>NativeCaller
     internal static NativeCreateNamedEntityDelegate nativeCreateNamedEntityCaller = (int className) =>
     {
         var e = _engineEvents?.InvokeCreateNamedEntity(className);
-        return e?.GetUnmanagedPtr() ?? 0;
+        return e?.GetPointer() ?? 0;
     };
 
     internal static NativeMakeStaticDelegate nativeMakeStaticCaller = (nint ent) =>
@@ -193,36 +193,31 @@ internal static class <#= cls #>NativeCaller
 
     internal static NativeTraceLineDelegate nativeTraceLineCaller = (nint v1, nint v2, int fNoMonsters, nint pentToSkip, nint ptr) =>
     {
-        TraceResult tr = new TraceResult();
-        tr.SetupFromPtr(ptr);
+        TraceResult tr = new TraceResult(ptr);
         _engineEvents?.InvokeTraceLine(new Vector3f(v1), new Vector3f(v2), fNoMonsters, new Edict(pentToSkip), ref tr);
     };
 
     internal static NativeTraceTossDelegate nativeTraceTossCaller = (nint pent, nint pentToIgnore, nint ptr) =>
     {
-        TraceResult tr = new TraceResult();
-        tr.SetupFromPtr(ptr);
+        TraceResult tr = new TraceResult(ptr);
         _engineEvents?.InvokeTraceToss(new Edict(pent), new Edict(pentToIgnore), ref tr);
     };
 
     internal static NativeTraceMonsterHullDelegate nativeTraceMonsterHullCaller = (nint pEdict, nint v1, nint v2, int fNoMonsters, nint pentToSkip, nint ptr) =>
     {
-        TraceResult tr = new TraceResult();
-        tr.SetupFromPtr(ptr);
+        TraceResult tr = new TraceResult(ptr);
         return _engineEvents?.InvokeTraceMonsterHull(new Edict(pEdict), new Vector3f(v1), new Vector3f(v2), fNoMonsters, new Edict(pentToSkip), ref tr) ?? 0;
     };
 
     internal static NativeTraceHullDelegate nativeTraceHullCaller = (nint v1, nint v2, int fNoMonsters, int hullNumber, nint pentToSkip, nint ptr) =>
     {
-        TraceResult tr = new TraceResult();
-        tr.SetupFromPtr(ptr);
+        TraceResult tr = new TraceResult(ptr);
         _engineEvents?.InvokeTraceHull(new Vector3f(v1), new Vector3f(v2), fNoMonsters, hullNumber, new Edict(pentToSkip), ref tr);
     };
 
     internal static NativeTraceModelDelegate nativeTraceModelCaller = (nint v1, nint v2, int hullNumber, nint pent, nint ptr) =>
     {
-        TraceResult tr = new TraceResult();
-        tr.SetupFromPtr(ptr);
+        TraceResult tr = new TraceResult(ptr);
         _engineEvents?.InvokeTraceModel(new Vector3f(v1), new Vector3f(v2), hullNumber, new Edict(pent), ref tr);
     };
 
@@ -238,8 +233,7 @@ internal static class <#= cls #>NativeCaller
 
     internal static NativeTraceSphereDelegate nativeTraceSphereCaller = (nint v1, nint v2, int fNoMonsters, float radius, nint pentToSkip, nint ptr) =>
     {
-        TraceResult tr = new TraceResult();
-        tr.SetupFromPtr(ptr);
+        TraceResult tr = new TraceResult(ptr);
         _engineEvents?.InvokeTraceSphere(new Vector3f(v1), new Vector3f(v2), fNoMonsters, radius, new Edict(pentToSkip), ref tr);
     };
 
@@ -339,7 +333,7 @@ internal static class <#= cls #>NativeCaller
 
     internal static NativeCVarRegisterDelegate nativeCVarRegisterCaller = (nint pCvar) =>
     {
-        _engineEvents?.InvokeCVarRegister(new CVar());
+        _engineEvents?.InvokeCVarRegister(new CVar(pCvar));
     };
 
     internal static NativeCVarGetFloatDelegate nativeCVarGetFloatCaller = (nint szVarName) =>
@@ -523,22 +517,29 @@ internal static class <#= cls #>NativeCaller
 
     internal static NativeCRC32_InitDelegate nativeCRC32_InitCaller = (nint pulCRC) =>
     {
-        _engineEvents?.InvokeCRC32_Init(new CRC32(new NativeCRC32()));
+        _engineEvents?.InvokeCRC32_Init(new CRC32(pulCRC));
     };
 
     internal static NativeCRC32_ProcessBufferDelegate nativeCRC32_ProcessBufferCaller = (nint pulCRC, nint p, int len) =>
     {
-        _engineEvents?.InvokeCRC32_ProcessBuffer(new CRC32(new NativeCRC32()), p, len);
+        _engineEvents?.InvokeCRC32_ProcessBuffer(new CRC32(pulCRC), p, len);
     };
 
     internal static NativeCRC32_ProcessByteDelegate nativeCRC32_ProcessByteCaller = (nint pulCRC, byte ch) =>
     {
-        _engineEvents?.InvokeCRC32_ProcessByte(new CRC32(new NativeCRC32()), ch);
+        _engineEvents?.InvokeCRC32_ProcessByte(new CRC32(pulCRC), ch);
     };
 
     internal static NativeCRC32_FinalDelegate nativeCRC32_FinalCaller = (NativeCRC32 pulCRC) =>
     {
-        return _engineEvents?.InvokeCRC32_Final(new CRC32(pulCRC))?._native ?? new NativeCRC32();
+        unsafe
+        {
+            var ret = _engineEvents?.InvokeCRC32_Final(new CRC32(pulCRC));
+            if(ret == null)
+                return new NativeCRC32();
+            else
+                return *((NativeCRC32*)ret.GetPointer());
+        }
     };
 
     internal static NativeRandomLongDelegate nativeRandomLongCaller = (int lLow, int lHigh) =>
@@ -601,7 +602,7 @@ internal static class <#= cls #>NativeCaller
 
     internal static NativeCvar_RegisterVariableDelegate nativeCvar_RegisterVariableCaller = (nint variable) =>
     {
-        _engineEvents?.InvokeCVar_RegisterVariable(new CVar());
+        _engineEvents?.InvokeCVar_RegisterVariable(new CVar(variable));
     };
 
     internal static NativeFadeClientVolumeDelegate nativeFadeClientVolumeCaller = (nint pEdict, int fadePercent, int fadeOutSeconds, int holdTime, int fadeInSeconds) =>
@@ -617,7 +618,7 @@ internal static class <#= cls #>NativeCaller
     internal static NativeCreateFakeClientDelegate nativeCreateFakeClientCaller = (nint netname) =>
     {
         var e = _engineEvents?.InvokeCreateFakeClient(Marshal.PtrToStringUTF8(netname) ?? string.Empty);
-        return e?.GetUnmanagedPtr() ?? 0;
+        return e?.GetPointer() ?? 0;
     };
 
     internal static NativeRunPlayerMoveDelegate nativeRunPlayerMoveCaller = (nint fakeclient, nint viewangles, float forwardmove, float sidemove, float upmove, ushort buttons, byte impulse, byte msec) =>
@@ -821,7 +822,7 @@ internal static class <#= cls #>NativeCaller
 
     internal static NativeCvar_DirectSetDelegate nativeCvar_DirectSetCaller = (nint cvar, nint value) =>
     {
-        _engineEvents?.InvokeCvar_DirectSet(new CVar(), Marshal.PtrToStringUTF8(value) ?? string.Empty);
+        _engineEvents?.InvokeCvar_DirectSet(new CVar(cvar), Marshal.PtrToStringUTF8(value) ?? string.Empty);
     };
 
     internal static NativeForceUnmodifiedDelegate nativeForceUnmodifiedCaller = (int type, nint mins, nint maxs, nint filename) =>

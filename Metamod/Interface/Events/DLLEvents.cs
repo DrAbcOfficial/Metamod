@@ -1,6 +1,6 @@
-﻿using Metamod.Struct.Common;
-using Metamod.Struct.Engine;
-using Metamod.Struct.Engine.PM;
+﻿using Metamod.Wrapper.Common;
+using Metamod.Wrapper.Engine;
+using Metamod.Wrapper.Engine.PM;
 
 namespace Metamod.Interface.Events;
 

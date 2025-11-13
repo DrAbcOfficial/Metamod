@@ -8,9 +8,9 @@ namespace Metamod.Native.Engine.PM;
 public struct NativePlayerMove : INativeStruct
 {
     internal int player_index;  // So we don't try to run the PM_CheckStuck nudging too quickly.
-    internal QBoolean server;        // For debugging, are we running physics code on server side?
+    internal int server;        // For debugging, are we running physics code on server side?
 
-    internal QBoolean multiplayer;   // 1 == multiplayer server
+    internal int multiplayer;   // 1 == multiplayer server
     internal float time;          // realtime on host, for reckoning duck timing
     internal float frametime;       // Duration of this frame
 
@@ -26,7 +26,7 @@ public struct NativePlayerMove : INativeStruct
     // For ducking/dead
     internal NativeVector3f view_ofs;      // Our eye position.
     internal float flDuckTime;    // Time we started duck
-    internal QBoolean bInDuck;       // In process of ducking or ducked already?
+    internal int bInDuck;       // In process of ducking or ducked already?
 
     // For walking/falling
     internal int flTimeStepSound;  // Next time we can play a step sound
@@ -47,7 +47,7 @@ public struct NativePlayerMove : INativeStruct
     internal float friction;
     internal int oldbuttons;    // Buttons last usercmd
     internal float waterjumptime; // Amount of time left in jumping out of water cycle.
-    internal QBoolean dead;          // Are we a dead player?
+    internal int dead;          // Are we a dead player?
     internal int deadflag;
     internal int spectator;     // Should we use spectator physics model?
     internal int movetype;      // Our movement type, NOCLIP, WALK, FLY
@@ -57,8 +57,7 @@ public struct NativePlayerMove : INativeStruct
     internal int watertype;
     internal int oldwaterlevel;
 
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
-    internal byte[] sztexturename;
+    internal unsafe fixed byte sztexturename[256];
     internal byte chtexturetype;
 
     internal float maxspeed;
@@ -80,35 +79,36 @@ public struct NativePlayerMove : INativeStruct
     // world state
     // Number of entities to clip against.
     internal int numphysent;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-    internal NativePhySent[] physents;
-    // Number of momvement entities (ladders)
-    internal int nummoveent;
-    // just a list of ladders
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-    internal NativePhySent[] moveents;
 
-    // All things being rendered, for tracing against things you don't actually collide with
-    internal int numvisent;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-    internal NativePhySent[] visents;
+    //TODO: FUCK ME
+    //internal unsafe fixed NativePhySent physents[64];
+    //// Number of momvement entities (ladders)
+    //internal int nummoveent;
+    //// just a list of ladders
+    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+    //internal NativePhySent[] moveents;
 
-    // input to run through physics.
-    NativeUserCmd cmd;
+    //// All things being rendered, for tracing against things you don't actually collide with
+    //internal int numvisent;
+    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+    //internal NativePhySent[] visents;
 
-    // Trace results for objects we collided with.
-    int numtouch;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-    NativePMTrace[] touchindex;
+    //// input to run through physics.
+    //NativeUserCmd cmd;
 
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
-    byte[] physinfo; // Physics info string
+    //// Trace results for objects we collided with.
+    //int numtouch;
+    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+    //NativePMTrace[] touchindex;
 
-    nint movevars;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    NativeVector3f[] player_mins;
-    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-    NativeVector3f[] player_maxs;
+    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+    //byte[] physinfo; // Physics info string
+
+    //nint movevars;
+    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+    //NativeVector3f[] player_mins;
+    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+    //NativeVector3f[] player_maxs;
 
     // Common functions
     //TODO: Implement these

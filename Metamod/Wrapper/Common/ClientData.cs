@@ -4,6 +4,7 @@ namespace Metamod.Wrapper.Common;
 
 public class ClientData : BaseNativeWrapper<NativeClientData>
 {
+    internal unsafe ClientData(nint ptr) : base((NativeClientData*)ptr) { }
     private Vector3f? _origin;
     public Vector3f Origin
     {

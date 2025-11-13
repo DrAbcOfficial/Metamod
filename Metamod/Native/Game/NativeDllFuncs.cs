@@ -105,7 +105,7 @@ public struct NativeDllFuncs : INativeStruct
 
     //szRejectReason len 128
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate QBoolean NativeClientConnectDelegate(nint pEntity, nint pszName, nint pszAddress, nint szRejectReason);
+    internal delegate int NativeClientConnectDelegate(nint pEntity, nint pszName, nint pszAddress, nint szRejectReason);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void NativeClientDisconnectDelegate(nint pEntity);
@@ -150,7 +150,7 @@ public struct NativeDllFuncs : INativeStruct
     internal delegate void NativeSysErrorDelegate(nint error_string);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void NativePMMoveDelegate(nint ppmove, QBoolean server);
+    internal delegate void NativePMMoveDelegate(nint ppmove, int server);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void NativePMInitDelegate(nint ppmove);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
