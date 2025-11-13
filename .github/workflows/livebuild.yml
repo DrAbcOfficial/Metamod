@@ -16,6 +16,17 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+      
+      - name: Install T4
+        run: dotnet tool install -g dotnet-t4
+
+      - name: Process T4
+        run: |
+          find . -type f -name "*.tt" \
+          -print0 | while IFS= read -r -d '' ttFile; do
+            echo "Processing template: $ttFile"
+            t4 "$ttFile"
+          done
   
       - name: Publish dotnet lib
         run: cd ${{github.workspace}}/Metamod && dotnet publish -c Release && dotnet pack -c Release
