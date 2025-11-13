@@ -39,7 +39,7 @@ namespace  <#= pluginNamespace #>
 {
     /// <summary>
     /// 自动生成的插件入口类
-    /// 切在该文件中修改，可能会被覆盖，请在 Plugin.cs 中实现自定义逻辑
+    /// 在该文件中修改可能会被覆盖，请在 Plugin.cs 中实现自定义逻辑
     /// 基于 T4 模板生成，包含所有必要的非托管调用包装
     /// </summary>
     public class <#= pluginClassName #> : PluginEntry
