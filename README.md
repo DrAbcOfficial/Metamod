@@ -2,7 +2,10 @@
 
 Write metamod plugin based on .NET 9 AOT
 
-<--- nuget package will be here ---->
+[![](https://img.shields.io/nuget/v/DrAbc.MetaMod.svg?label=MetaMod&logo=NuGet)](https://www.nuget.org/packages/DrAbc.MetaMod)
+![NuGet Downloads](https://img.shields.io/nuget/dt/DrAbc.MetaMod?label=Downloads)
+
+
 
 
 ## Usage
@@ -16,3 +19,8 @@ To quickly set up your first MetaMod plugin, refer to the template repository:
 1. Create new project from the template repository
 2. Customize the plugin logic for your needs
 3. Publish with .NET 9 AOT
+
+```
+//In your project
+dotnet publish -c Release -r win-x86 -o ./build -p:PublishAot=true
+```
