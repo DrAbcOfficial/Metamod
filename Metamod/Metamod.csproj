@@ -11,7 +11,7 @@
     <Authors>Dr.Abc</Authors>
     <Product>MetaMod</Product>
     <Description>Build MetaMod(GoldSrc) plugin with .net 9</Description>
-    <RepositoryUrl>https://github.com/DrAbcOfficial/Metamod.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/DrAbcOfficial/MetaMod.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>native;dll;game;GoldSrc;plugin;metamod;Half-Life;AOT</PackageTags>
     <PackageOutputPath>./nuget</PackageOutputPath>
