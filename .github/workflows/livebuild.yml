@@ -1,0 +1,28 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+jobs:  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+  
+      - name: Publish dotnet lib
+        run: cd ${{github.workspace}}/Metamod && dotnet pack -c Release
+      
+      - name: Upload dotnet lib
+        uses: actions/upload-artifact@v4
+        with:
+          name: Metamod
+          path: |
+            ${{github.workspace}}/Metamod/nuget/*.nupkg
